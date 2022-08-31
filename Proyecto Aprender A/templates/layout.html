@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='navbar-top-fixed.css')}}">
     <script src="{{url_for('static', filename='bootstrap/js/bootstrap.min.js')}}"></script>
     <script src="{{url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <title>{% block titulo %} {% endblock %}</title>
@@ -19,7 +20,9 @@
     </nav>
 </head>
 <body>
-      {% block contenido %} {% endblock %}
+
+  {% block contenido %} {% endblock %}
+
 <!-- FOOTER -->
 
       <div class="container">
