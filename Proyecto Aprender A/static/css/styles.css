@@ -1,0 +1,5 @@
+.img-ust img {
+    width: 480px;
+    height: 600px;
+    object-fit: cover;
+}
