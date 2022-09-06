@@ -1,0 +1,9 @@
+input:invalid { 
+    animation: shake .3s;
+}
+
+@keyframes shake {
+    25% { transform: translate(4px) }
+    50% { transform: translate(-4px) }
+    75% { transform: translate(4px) }
+}
