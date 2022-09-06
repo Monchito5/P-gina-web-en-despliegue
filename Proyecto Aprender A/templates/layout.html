@@ -16,6 +16,7 @@
 <!-- ================================ -->
     <nav class="navbar bg-light fixed-top">
       <div class="container-fluid">
+        <img src="{{url_for('static', filename='assets/book-open.svg')}}" alt="" width="70" height="44" class="d-inline-block align-text-top">
         <a class="navbar-brand" href="#">Learn To</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
           <span class="navbar-toggler-icon"></span>
@@ -55,14 +56,14 @@
         </div>
       </div>
     </nav>
-    
 </head>
+
 <body>
-
+  
   {% block contenido %} {% endblock %}
-
+<!-- ======================= -->
 <!-- FOOTER -->
-
+<!-- ======================= -->
       <div class="container">
   <footer class="py-5">
     <div class="row">
