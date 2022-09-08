@@ -6,9 +6,13 @@ learntoApp = Flask(__name__)
 def index():
     return render_template('home.html')
 
-@learntoApp.route('/login')
-def login():
-    return render_template('login.html')
+@learntoApp.route('/loginRegister')
+def loginRegister():
+    return render_template('loginRegister.html')
+
+@learntoApp.route('/loginUser')
+def loginUser():
+    return render_template('loginUser.html')
 
 @learntoApp.route('/user/<nombre>')
 def user(nombre):
