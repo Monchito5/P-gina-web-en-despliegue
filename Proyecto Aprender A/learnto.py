@@ -7,7 +7,7 @@ def index():
     return render_template('home.html')
 
 @learntoApp.route('/login')
-def index():
+def login():
     return render_template('login.html')
 
 @learntoApp.route('/user/<nombre>')
