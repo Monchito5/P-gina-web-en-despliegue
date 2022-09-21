@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block titulo %} Learn To - Inicio de sesión {% endblock %}
 {% block contenido %}
-<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, minimum-scale=1.0">
-<link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" >
+<link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
 
 <!-- ============================== -->
 <!-- Login -->
@@ -26,8 +26,9 @@
        
        </div>
        <input type="submit" value="Login" class="button">
+       <hr>
        <p>Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.</p>
-       <p>¿No tienes una cuenta? <a class="link" ref="{{ ('/loginRegister') }}" >Registrate </a></p>
+       <p>¿No tienes una cuenta? <a class="btn btn-secondary ms-2 my-2" href="{{ ('/loginRegister') }}" >Registrate </a></p>
    </div>
   </form>
 
