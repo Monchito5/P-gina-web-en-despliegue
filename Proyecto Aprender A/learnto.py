@@ -1,10 +1,17 @@
 from flask import Flask, render_template, session, url_for, request
 from werkzeug.security import generate_password_hash
 from flask_mysqldb import MySQL
-
-from config import config
+import datetime
+#from config import config
 
 learntoApp = Flask(__name__)
+
+learntoApp.config["DEBUG"] = True
+learntoApp.config["MYSQL_HOST"] = "localhost"
+learntoApp.config["MYSQL_USER"] = "root"
+learntoApp.config["MYSQL_PASSWORD"] = "mysql"
+learntoApp.config["MYSQL_DB"] = "learnto"
+
 db = MySQL(learntoApp)
 
 @learntoApp.route('/')
