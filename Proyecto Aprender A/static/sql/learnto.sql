@@ -33,8 +33,8 @@ CREATE TABLE `articulo` (
   `titulo` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `contenido` text COLLATE utf8_spanish_ci NOT NULL,
   `vistas` int(11) NOT NULL,
-  `fechaP` date NOT NULL,
-  `categoriaCA` varchar(20) COLLATE utf8_spanish_ci NOT NULL
+  `fechap` date NOT NULL,
+  `categoriaca` varchar(20) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -45,9 +45,9 @@ CREATE TABLE `articulo` (
 
 CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `edad` int(5) NOT NULL,
-  `gradoE` varchar(20) COLLATE utf8_spanish_ci NOT NULL
+  `nameu` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `ageu` int(5) NOT NULL,
+  `gradoe` varchar(20) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla de usuario';
 
 --
