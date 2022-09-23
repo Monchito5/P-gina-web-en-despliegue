@@ -1,8 +1,15 @@
-from flask import Flask, render_template, session, url_for, request
+from multiprocessing import connection
+from flask import Flask, render_template, session, url_for, request, redirect, jsonify
 from werkzeug.security import generate_password_hash
+# from flask-login import LoginManager(learntoApp)
 from flask_mysqldb import MySQL
-import datetime
+# import datetime
 #from config import config
+
+
+# login_manager = LoginManager(learntoApp)
+
+# app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
 
 learntoApp = Flask(__name__)
 
@@ -12,7 +19,17 @@ learntoApp.config["MYSQL_USER"] = "root"
 learntoApp.config["MYSQL_PASSWORD"] = "mysql"
 learntoApp.config["MYSQL_DB"] = "learnto"
 
-db = MySQL(learntoApp)
+conexion = MySQL(learntoApp)
+
+@learntoApp.before_request
+def before_request():
+    print("Antes de la petición...")
+
+
+@learntoApp.after_request
+def after_request(response):
+    print("Después de la petición")
+    return response
 
 @learntoApp.route('/')
 def index():
@@ -44,5 +61,25 @@ def user(nombre):
     }
     return render_template('user.html', data=data)
 
+def query_string():
+    print(request)
+    print(request.args)
+    print(request.args.get('param1'))
+    print(request.args.get('param2'))
+    return "Ok"
+
+def pagina_no_encontrada(error):
+    # return render_template('404.html'), 404
+    return redirect(url_for('index'))
+
 if __name__=='__main__':
+    learntoApp.add_url_rule('/query_string', view_func=query_string)
+    learntoApp.register_error_handler(404, pagina_no_encontrada)
     learntoApp.run(debug=True, port=3300)
+
+# @login_manager.user_loader
+# def load_user(user_id):
+#     for user in users:
+#         if user.id == int(user_id):
+#             return user
+#     return None
