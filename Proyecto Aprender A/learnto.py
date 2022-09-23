@@ -43,9 +43,9 @@ def loginRegister():
         passwordu = request.form['passwordu']
         passwordencryption = generate_password_hash(passwordu)
         
-        registerU = db.connection.cursor()
+        registerU = conexion.connection.cursor()
         registerU.execute("INSERT INTO usuario (nameu, emailu, passwordu), VALUES(%s, %s, %s)", (nameu, emailu, passwordu))
-        db.connection.commit()
+        conexion.connection.commit()
         return render_template('home.html')
     return render_template('loginRegister.html')
 
