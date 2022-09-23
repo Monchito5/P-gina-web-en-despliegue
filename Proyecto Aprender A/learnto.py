@@ -61,19 +61,19 @@ def user(nombre):
     }
     return render_template('user.html', data=data)
 
-def query_string():
-    print(request)
-    print(request.args)
-    print(request.args.get('param1'))
-    print(request.args.get('param2'))
-    return "Ok"
+# def query_string():
+#     print(request)
+#     print(request.args)
+#     print(request.args.get('param1'))
+#     print(request.args.get('param2'))
+#     return "Ok"
 
 def pagina_no_encontrada(error):
     # return render_template('404.html'), 404
     return redirect(url_for('index'))
 
 if __name__=='__main__':
-    learntoApp.add_url_rule('/query_string', view_func=query_string)
+    # learntoApp.add_url_rule('/query_string', view_func=query_string)
     learntoApp.register_error_handler(404, pagina_no_encontrada)
     learntoApp.run(debug=True, port=3300)
 
