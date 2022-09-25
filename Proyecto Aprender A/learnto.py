@@ -17,7 +17,6 @@ learntoApp = Flask(__name__)
 def before_request():
     print("Antes de la petición...")
 
-
 @learntoApp.after_request
 def after_request(response):
     print("Después de la petición")
