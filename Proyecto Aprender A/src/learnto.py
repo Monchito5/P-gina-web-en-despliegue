@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash
 # from flask-login import LoginManager(learntoApp)
 from flask_mysqldb import MySQL
 # import datetime
-#from config import config
+from config import config
 
 
 # login_manager = LoginManager(learntoApp)
@@ -12,14 +12,6 @@ from flask_mysqldb import MySQL
 # app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
 
 learntoApp = Flask(__name__)
-
-learntoApp.config["DEBUG"] = True
-learntoApp.config["MYSQL_HOST"] = "localhost"
-learntoApp.config["MYSQL_USER"] = "root"
-learntoApp.config["MYSQL_PASSWORD"] = "mysql"
-learntoApp.config["MYSQL_DB"] = "learnto"
-
-conexion = MySQL(learntoApp)
 
 @learntoApp.before_request
 def before_request():
@@ -34,6 +26,26 @@ def after_request(response):
 @learntoApp.route('/')
 def index():
     return render_template('home.html')
+
+def pagina_no_encontrada(error):
+    return render_template('404.html'), 404
+    return redirect(url_for('home.html'))
+
+if __name__=='__main__':
+    learntoApp.config.from_object(config['development'])
+    # learntoApp.add_url_rule('/query_string', view_func=query_string)
+    learntoApp.register_error_handler(404, pagina_no_encontrada)
+    learntoApp.run(debug=True, port=3300)
+
+learntoApp.config["DEBUG"] = True
+learntoApp.config["MYSQL_HOST"] = "localhost"
+learntoApp.config["MYSQL_USER"] = "root"
+learntoApp.config["MYSQL_PASSWORD"] = "mysql"
+learntoApp.config["MYSQL_DB"] = "learnto"
+
+conexion = MySQL(learntoApp)
+
+
 
 @learntoApp.route('/loginRegister', methods=['GET', 'POST'])
 def loginRegister():
@@ -67,15 +79,6 @@ def user(nombre):
 #     print(request.args.get('param1'))
 #     print(request.args.get('param2'))
 #     return "Ok"
-
-def pagina_no_encontrada(error):
-    # return render_template('404.html'), 404
-    return redirect(url_for('index'))
-
-if __name__=='__main__':
-    # learntoApp.add_url_rule('/query_string', view_func=query_string)
-    learntoApp.register_error_handler(404, pagina_no_encontrada)
-    learntoApp.run(debug=True, port=3300)
 
 # @login_manager.user_loader
 # def load_user(user_id):

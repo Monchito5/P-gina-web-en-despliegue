@@ -9,4 +9,4 @@ class DevelompentConfig(config):
     MYSQL_PASSWORD  = 'mysql'
     MYSQL_DB        = 'learnto'
 
-config = {'Development' : DevelompentConfig}
+config = {'development' : DevelompentConfig}

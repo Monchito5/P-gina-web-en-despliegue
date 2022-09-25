@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 20-09-2022 a las 18:20:40
--- Versión del servidor: 5.7.21-log
--- Versión de PHP: 7.2.1
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 25-09-2022 a las 22:55:39
+-- Versión del servidor: 10.4.24-MariaDB
+-- Versión de PHP: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -46,6 +45,7 @@ CREATE TABLE `articulo` (
 CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
   `nameu` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `fullname` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `ageu` int(5) NOT NULL,
   `gradoe` varchar(20) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla de usuario';
