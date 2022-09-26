@@ -47,7 +47,7 @@ CREATE TABLE `user` (
   `username` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `password` char(102) COLLATE utf8_unicode_ci NOT NULL,
   `fullname` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `ageu` int(5) NOT NULL,
+  `age` int(5) NOT NULL,
   `schoolgrade` varchar(20) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla de usuario';
 
@@ -65,7 +65,7 @@ ALTER TABLE `article`
 -- Indices de la tabla `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`idu`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
