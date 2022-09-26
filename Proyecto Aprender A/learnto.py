@@ -21,8 +21,8 @@ db = MySQL(learntoApp)
 login_manager_app = LoginManager(learntoApp)
 
 @login_manager_app.user_loader
-def load_user(idu):
-    return ModelUser.get_by_id(db, idu)
+def load_user(id):
+    return ModelUser.get_by_id(db, id)
 
 
 @learntoApp.before_request
@@ -42,11 +42,11 @@ def index():
 @learntoApp.route('/loginRegister', methods=['GET', 'POST'])
 def loginRegister():
     if request.method == 'GET':
-        # print(request.form['nameu'])
-        # print(request.form['emailu'])
-        # print(request.form['passwordu'])
-        usuario = User(0, request.form['nameu'], request.form['emailu'], request.form['passwordu'])
-        logged_user = ModelUser.login(db, usuario)
+        # print(request.form['username'])
+        # print(request.form['email'])
+        # print(request.form['password'])
+        user = User(0, request.form['username'], request.form['email'], request.form['password'])
+        logged_user = ModelUser.login(db, user)
         if logged_user != None:
             if logged_user.password:
                 login_user(logged_user)
@@ -68,10 +68,10 @@ def logout():
 @learntoApp.route('/loginUser', methods=['GET', 'POST'])
 def loginUser():
     if request.method == 'POST':
-        # print(request.form['nameu'])
-        # print(request.form['passwordu'])
-        usuario = User(0, request.form['nameu'],  request.form['passwordu'])
-        logged_user = ModelUser.login(db, usuario)
+        # print(request.form['username'])
+        # print(request.form['password'])
+        user = User(0, request.form['username'],  request.form['password'])
+        logged_user = ModelUser.login(db, user)
         if logged_user != None:
             if logged_user.password:
                 login_user(logged_user)
@@ -111,6 +111,10 @@ def protected():
 
 if __name__=='__main__':
     learntoApp.config.from_object(config['development'])
+    learntoApp.config.update(
+    DEBUG=True,
+    SECRET_KEY="secret_sauce",
+)
     csrf.init_app(learntoApp)
     # learntoApp.add_url_rule('/query_string', view_func=query_string)
     learntoApp.register_error_handler(404, pagina_no_encontrada)

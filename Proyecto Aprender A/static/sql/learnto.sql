@@ -24,30 +24,31 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `articulo`
+-- Estructura de tabla para la tabla `article`
 --
 
-CREATE TABLE `articulo` (
+CREATE TABLE `article` (
   `id` int(11) NOT NULL,
-  `titulo` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `contenido` text COLLATE utf8_spanish_ci NOT NULL,
-  `vistas` int(11) NOT NULL,
-  `fechap` date NOT NULL,
-  `categoriaca` varchar(20) COLLATE utf8_spanish_ci NOT NULL
+  `title` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `content` text COLLATE utf8_spanish_ci NOT NULL,
+  `views` int(11) NOT NULL,
+  `pdate` date NOT NULL,
+  `clchannel` varchar(20) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `usuario`
+-- Estructura de tabla para la tabla `user`
 --
 
-CREATE TABLE `usuario` (
-  `idu` int(11) NOT NULL,
-  `nameu` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `password` char(102) COLLATE utf8_unicode_ci NOT NULL,
   `fullname` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `ageu` int(5) NOT NULL,
-  `gradoe` varchar(20) COLLATE utf8_spanish_ci NOT NULL
+  `schoolgrade` varchar(20) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla de usuario';
 
 --
@@ -55,15 +56,15 @@ CREATE TABLE `usuario` (
 --
 
 --
--- Indices de la tabla `articulo`
+-- Indices de la tabla `article`
 --
-ALTER TABLE `articulo`
+ALTER TABLE `article`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `usuario`
+-- Indices de la tabla `user`
 --
-ALTER TABLE `usuario`
+ALTER TABLE `user`
   ADD PRIMARY KEY (`idu`);
 
 --
@@ -71,26 +72,26 @@ ALTER TABLE `usuario`
 --
 
 --
--- AUTO_INCREMENT de la tabla `articulo`
+-- AUTO_INCREMENT de la tabla `article`
 --
-ALTER TABLE `articulo`
+ALTER TABLE `article`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `usuario`
+-- AUTO_INCREMENT de la tabla `user`
 --
-ALTER TABLE `usuario`
-  MODIFY `idu` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `articulo`
+-- Filtros para la tabla `article`
 --
-ALTER TABLE `articulo`
-  ADD CONSTRAINT `articulo_ibfk_1` FOREIGN KEY (`id`) REFERENCES `usuario` (`idu`);
+ALTER TABLE `article`
+  ADD CONSTRAINT `article_ibfk_1` FOREIGN KEY (`id`) REFERENCES `user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
