@@ -3,9 +3,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(UserMixin):
 
-    def __init__(self, idu, nameu, emailu, passwordu, is_admin=False):
+    def __init__(self, idu, nameu, fullname, emailu, passwordu, is_admin=False):
         self.idu = idu
         self.nameu = nameu
+        self.fullname = fullname
         self.emailu = emailu
         self.passwordu = generate_password_hash(passwordu)
         self.is_admin = is_admin

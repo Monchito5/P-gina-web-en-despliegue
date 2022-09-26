@@ -1,21 +1,34 @@
 from multiprocessing import connection
-from flask import Flask, render_template, session, url_for, request, redirect, jsonify
+import re
+from flask import Flask, render_template, session, url_for, request, redirect, jsonify, flash
 from werkzeug.security import generate_password_hash
-# from flask-login import LoginManager(learntoApp)
+from flask_wtf.csrf import CSRFProtect
+from flask_login import LoginManager, login_user, logout_user, login_required
 from flask_mysqldb import MySQL
-# import datetime
+import datetime
 from config import config
 
+# Models:
+from models.modelUser import ModelUser
 
-# login_manager = LoginManager(learntoApp)
-
-# app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
+# Entities:
+from models.entities.User import User
 
 learntoApp = Flask(__name__)
+
+csrf = CSRFProtect()
+db = MySQL(learntoApp)
+login_manager_app = LoginManager(learntoApp)
+
+@login_manager_app.user_loader
+def load_user(idu):
+    return ModelUser.get_by_id(db, idu)
+
 
 @learntoApp.before_request
 def before_request():
     print("Antes de la petición...")
+
 
 @learntoApp.after_request
 def after_request(response):
@@ -26,51 +39,59 @@ def after_request(response):
 def index():
     return render_template('home.html')
 
-def pagina_no_encontrada(error):
-    return render_template('404.html'), 404
-    return redirect(url_for('home.html'))
-
-if __name__=='__main__':
-    learntoApp.config.from_object(config['development'])
-    # learntoApp.add_url_rule('/query_string', view_func=query_string)
-    learntoApp.register_error_handler(404, pagina_no_encontrada)
-    learntoApp.run(debug=True, port=3300)
-
-learntoApp.config["DEBUG"] = True
-learntoApp.config["MYSQL_HOST"] = "localhost"
-learntoApp.config["MYSQL_USER"] = "root"
-learntoApp.config["MYSQL_PASSWORD"] = "mysql"
-learntoApp.config["MYSQL_DB"] = "learnto"
-
-conexion = MySQL(learntoApp)
-
-
-
 @learntoApp.route('/loginRegister', methods=['GET', 'POST'])
 def loginRegister():
-    if request.method == 'POST':
-        nameu = request.form['nameu']
-        emailu = request.form['emailu']
-        passwordu = request.form['passwordu']
-        passwordencryption = generate_password_hash(passwordu)
-        
-        registerU = conexion.connection.cursor()
-        registerU.execute("INSERT INTO usuario (nameu, emailu, passwordu), VALUES(%s, %s, %s)", (nameu, emailu, passwordu))
-        conexion.connection.commit()
-        return render_template('home.html')
-    return render_template('loginRegister.html')
+    if request.method == 'GET':
+        # print(request.form['nameu'])
+        # print(request.form['emailu'])
+        # print(request.form['passwordu'])
+        usuario = User(0, request.form['nameu'], request.form['emailu'], request.form['passwordu'])
+        logged_user = ModelUser.login(db, usuario)
+        if logged_user != None:
+            if logged_user.password:
+                login_user(logged_user)
+                return redirect(url_for('index'))
+            else:
+                flash("Invalid password...")
+                return render_template('loginRegister.html')
+        else:
+            flash("User not found...")
+            return render_template('loginRegister.html')
+    else:
+            return render_template('loginRegister.html')
 
-@learntoApp.route('/loginUser')
+@learntoApp.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
+@learntoApp.route('/loginUser', methods=['GET', 'POST'])
 def loginUser():
-    return render_template('loginUser.html')
+    if request.method == 'POST':
+        # print(request.form['nameu'])
+        # print(request.form['passwordu'])
+        usuario = User(0, request.form['nameu'],  request.form['passwordu'])
+        logged_user = ModelUser.login(db, usuario)
+        if logged_user != None:
+            if logged_user.password:
+                login_user(logged_user)
+                return redirect(url_for('index'))
+            else:
+                flash("Invalid password...")
+                return render_template('loginUser.html')
+        else:
+            flash("User not found...")
+            return render_template('loginUser.html')
+    else:
+            return render_template('loginUser.html')
 
-@learntoApp.route('/user/<nombre>')
-def user(nombre):
-    data={
-        'titulo':'Usuario',
-        'nombre':nombre
-    }
-    return render_template('user.html', data=data)
+# @learntoApp.route('/user/<nombre>')
+# def user(nombre):
+#     data={
+#         'titulo':'Usuario',
+#         'nombre':nombre
+#     }
+#     return render_template('user.html', data=data)
 
 # def query_string():
 #     print(request)
@@ -78,6 +99,22 @@ def user(nombre):
 #     print(request.args.get('param1'))
 #     print(request.args.get('param2'))
 #     return "Ok"
+
+def pagina_no_encontrada(error):
+    return render_template('404.html'), 404
+    return redirect(url_for('index'))
+
+@learntoApp.route('/protected')
+@login_required
+def protected():
+    return "<h1>Esta es una vista protegida, solo para usuarios autenticados.</h1>"
+
+if __name__=='__main__':
+    learntoApp.config.from_object(config['development'])
+    csrf.init_app(learntoApp)
+    # learntoApp.add_url_rule('/query_string', view_func=query_string)
+    learntoApp.register_error_handler(404, pagina_no_encontrada)
+    learntoApp.run(debug=True, port=3300)
 
 # @login_manager.user_loader
 # def load_user(user_id):

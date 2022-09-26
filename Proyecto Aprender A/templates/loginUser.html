@@ -8,8 +8,21 @@
 <!-- Login -->
 <!-- ============================== -->
 <form action="/loginUser" method="POST" class="formulario">
-    
+  {% with messages = get_flashed_messages() %}
+
+  {% if messages %}
+  <br />
+  {% for message in messages %}
+  <div class="alert alert-primary alert-dismissible" role="alert">
+      <strong>{{ message }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  {% endwith %}    
   <h1>Login</h1>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <div class="contenedor">
        
     <div class="input-contenedor">

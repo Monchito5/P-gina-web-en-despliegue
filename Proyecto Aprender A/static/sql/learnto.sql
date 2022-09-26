@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-09-2022 a las 22:55:39
+-- Tiempo de generación: 26-09-2022 a las 03:40:29
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -43,7 +43,7 @@ CREATE TABLE `articulo` (
 --
 
 CREATE TABLE `usuario` (
-  `id` int(11) NOT NULL,
+  `idu` int(11) NOT NULL,
   `nameu` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `fullname` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `ageu` int(5) NOT NULL,
@@ -64,7 +64,7 @@ ALTER TABLE `articulo`
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`idu`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -80,7 +80,7 @@ ALTER TABLE `articulo`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idu` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -90,7 +90,7 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `articulo`
 --
 ALTER TABLE `articulo`
-  ADD CONSTRAINT `articulo_ibfk_1` FOREIGN KEY (`id`) REFERENCES `usuario` (`id`);
+  ADD CONSTRAINT `articulo_ibfk_1` FOREIGN KEY (`id`) REFERENCES `usuario` (`idu`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

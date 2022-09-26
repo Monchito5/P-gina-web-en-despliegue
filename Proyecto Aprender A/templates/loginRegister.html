@@ -8,15 +8,33 @@
 <!-- Login -->
 <!-- ============================== -->
 <form action="/loginRegister" method="GET" class="formulario">
-    
+   {% with messages = get_flashed_messages() %}
+
+   {% if messages %}
+   <br />
+   {% for message in messages %}
+   <div class="alert alert-primary alert-dismissible" role="alert">
+       <strong>{{ message }}</strong>
+       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+   </div>
+   {% endfor %}
+   {% endif %}
+ 
+   {% endwith %} 
   <h1>Registrate</h1>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <div class="contenedor">
    
     <div class="input-contenedor">
        <i class="fas fa-user icon"></i>
-       <input type="text" placeholder="Nombre Completo" name="nameu">
+       <input type="text" placeholder="Nombre Completo" name="fullname">
     </div>
        
+    <div class="input-contenedor">
+      <i class="fas fa-user icon"></i>
+      <input type="text" placeholder="Apodo" name="nameu">
+   </div>
+
     <div class="input-contenedor">
        <i class="fas fa-envelope icon"></i>
        <input type="text" placeholder="Correo Electronico" name="emailu">
