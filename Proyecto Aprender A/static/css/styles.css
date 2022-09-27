@@ -24,7 +24,7 @@ h1{
 input[type="text"],
 input[type="password"]{
     font-size: 20px;
-    width: 82%;
+    width: 100%;
     padding: 10px;
     border: none;
 }
