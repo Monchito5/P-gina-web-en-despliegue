@@ -41,11 +41,11 @@ def index():
 
 @learntoApp.route('/loginRegister', methods=['GET', 'POST'])
 def loginRegister():
-    if request.method == 'GET':
+    if request.method == 'POST':
         # print(request.form['username'])
         # print(request.form['email'])
         # print(request.form['password'])
-        user = User(0, request.form['username'], request.form['email'], request.form['password'])
+        user = User(0,  request.form['fullname'], request.form['username'], request.form['email'], request.form['password'])
         logged_user = ModelUser.login(db, user)
         if logged_user != None:
             if logged_user.password:
@@ -60,10 +60,6 @@ def loginRegister():
     else:
             return render_template('loginRegister.html')
 
-@learntoApp.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for('index'))
 
 @learntoApp.route('/loginUser', methods=['GET', 'POST'])
 def loginUser():
@@ -84,6 +80,11 @@ def loginUser():
             return render_template('loginUser.html')
     else:
             return render_template('loginUser.html')
+
+@learntoApp.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 # @learntoApp.route('/user/<nombre>')
 # def user(nombre):
@@ -111,10 +112,7 @@ def protected():
 
 if __name__=='__main__':
     learntoApp.config.from_object(config['development'])
-    learntoApp.config.update(
-    DEBUG=True,
-    SECRET_KEY="secret_sauce",
-)
+    learntoApp.config.update(DEBUG=True, SECRET_KEY="secret_sauce")
     csrf.init_app(learntoApp)
     # learntoApp.add_url_rule('/query_string', view_func=query_string)
     learntoApp.register_error_handler(404, pagina_no_encontrada)

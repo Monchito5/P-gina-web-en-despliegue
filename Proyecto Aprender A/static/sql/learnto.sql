@@ -45,6 +45,7 @@ CREATE TABLE `article` (
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `password` char(102) COLLATE utf8_unicode_ci NOT NULL,
   `fullname` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `age` int(5) NOT NULL,
