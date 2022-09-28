@@ -42,23 +42,23 @@ def index():
 @learntoApp.route('/loginRegister', methods=['GET', 'POST'])
 def loginRegister():
     if request.method == 'POST':
-        # print(request.form['username'])
-        # print(request.form['email'])
-        # print(request.form['password'])
-        user = User(0,  request.form['fullname'], request.form['username'], request.form['email'], request.form['password'])
-        logged_user = ModelUser.login(db, user)
-        if logged_user != None:
-            if logged_user.password:
-                login_user(logged_user)
-                return redirect(url_for('index'))
-            else:
-                flash("Invalid password...")
-                return render_template('loginRegister.html')
-        else:
-            flash("User not found...")
-            return render_template('loginRegister.html')
-    else:
-            return render_template('loginRegister.html')
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        fullname = request.form['fullname']
+        age = request.form['age']
+        schoolgrade = request.form['schoolgrade']
+        hash = generate_password_hash(password) 
+
+        regUser = db.connection.cursor()
+
+        query = "INSERT INTO user (username, email, password, fullname, age, schoolgrade) VALUES (%s, %s, %s, %s, %s, %s)"
+
+        regUser.execute(query, (username, email, hash, fullname, age, schoolgrade))
+
+        db.connection.commit()
+        return redirect("/")
+    return render_template('loginRegister.html')
 
 
 @learntoApp.route('/loginUser', methods=['GET', 'POST'])
@@ -66,7 +66,7 @@ def loginUser():
     if request.method == 'POST':
         # print(request.form['username'])
         # print(request.form['password'])
-        user = User(0, request.form['username'],  request.form['password'])
+        user = User(0, request.form['email'],  request.form['password'])
         logged_user = ModelUser.login(db, user)
         if logged_user != None:
             if logged_user.password:

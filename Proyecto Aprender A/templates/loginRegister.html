@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block titulo %} Learn To - Inicio de sesión {% endblock %}
 {% block contenido %}
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" >
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.0/css/all.css" >
 <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
 
 <!-- ============================== -->
@@ -13,7 +13,7 @@
   <div class="contenedor">
    
     <div class="input-contenedor">
-       <i class="fas fa-user icon"></i>
+      <i class="fa-sharp fa-solid fa-user icon"></i>
        <input type="text" placeholder="Nombre Completo" name="fullname">
     </div>
        
@@ -21,6 +21,25 @@
       <i class="fas fa-user icon"></i>
       <input type="text" placeholder="Apodo" name="username">
    </div>
+    
+    <div class="input-group mb-3">
+      <select class="form-select" id="inputGroupSelect02" name="schoolgrade">
+        <option selected>Elige tu nivel de estudios...</option>
+        <option value="ninguno">Ninguno</option>
+        <option value="primaria">Primaria</option>
+        <option value="secundaria">Secundaria</option>
+        <option value="preparatoria">Preparatoria</option>
+        <option value="licenciatura">Licenciatura</option>
+        <option value="ingenieria">Ingeniería</option>
+        <option value="doctorado">Doctorado</option>
+      </select>
+      <label class="input-group-text" for="inputGroupSelect02">Opciones</label>
+    </div>
+
+    <div class="input-contenedor wd-5">
+      <i class="fa-thin fa-input-numeric"></i>
+      <input type="number" placeholder="Ingresa tu edad" id="tentacles" name="age" min="0" max="100">
+    </div>
 
     <div class="input-contenedor">
        <i class="fas fa-envelope icon"></i>
@@ -32,9 +51,20 @@
        <input type="password" placeholder="Contraseña" name="password">
     </div>
        
+    <div class="col-12">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+        <label class="form-check-label" for="invalidCheck">
+         Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.
+        </label>
+        <div class="invalid-feedback">
+          Es necesario aceptar los términos y condiciones para continuar con el registro.
+        </div>
+      </div>
+    </div>
+
     <input type="submit" value="Registrate" class="button">
-       <hr>
-       <p>Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.</p>
+      <hr>
        <p>¿Ya tienes una cuenta? <a class="btn btn-secondary ms-2 my-2" href="/loginUser">Iniciar Sesion</a></p>
 
   </div>
