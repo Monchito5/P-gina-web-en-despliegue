@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-09-2022 a las 03:40:29
+-- Tiempo de generación: 29-09-2022 a las 05:33:01
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -46,9 +46,9 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `email` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `password` char(102) COLLATE utf8_unicode_ci NOT NULL,
+  `password` char(102) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `fullname` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `age` int(5) NOT NULL,
+  `age` varchar(5) COLLATE utf8_spanish_ci NOT NULL,
   `schoolgrade` varchar(20) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla de usuario';
 

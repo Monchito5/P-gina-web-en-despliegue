@@ -57,7 +57,7 @@ def loginRegister():
         regUser.execute(query, (username, email, hash, fullname, age, schoolgrade))
 
         db.connection.commit()
-        return redirect("/")
+        return redirect("loginUser.html")
     return render_template('loginRegister.html')
 
 
@@ -73,10 +73,10 @@ def loginUser():
                 login_user(logged_user)
                 return redirect(url_for('index'))
             else:
-                flash("Invalid password...")
+                flash("Contraseña incorrecta...")
                 return render_template('loginUser.html')
         else:
-            flash("User not found...")
+            flash("El usuario no se encuentra...")
             return render_template('loginUser.html')
     else:
             return render_template('loginUser.html')
