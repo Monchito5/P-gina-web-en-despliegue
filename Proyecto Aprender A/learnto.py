@@ -86,21 +86,6 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-# @learntoApp.route('/user/<nombre>')
-# def user(nombre):
-#     data={
-#         'titulo':'Usuario',
-#         'nombre':nombre
-#     }
-#     return render_template('user.html', data=data)
-
-# def query_string():
-#     print(request)
-#     print(request.args)
-#     print(request.args.get('param1'))
-#     print(request.args.get('param2'))
-#     return "Ok"
-
 def pagina_no_encontrada(error):
     return render_template('404.html'), 404
     return redirect(url_for('index'))
@@ -117,10 +102,3 @@ if __name__=='__main__':
     # learntoApp.add_url_rule('/query_string', view_func=query_string)
     learntoApp.register_error_handler(404, pagina_no_encontrada)
     learntoApp.run(debug=True, port=3300)
-
-# @login_manager.user_loader
-# def load_user(user_id):
-#     for user in users:
-#         if user.id == int(user_id):
-#             return user
-#     return None
