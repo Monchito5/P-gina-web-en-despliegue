@@ -102,10 +102,18 @@ def homeUser():
 
 @learntoApp.route('/user')
 @login_required
-def protecte():
-    return "<h1>Esta es una vista protegida, solo para usuarios autenticados.</h1>"
 def user():
     return render_template('user.html')
+
+# @learntoApp.route('/homeUser')
+# def homeUser():
+#     login_required()
+#     return redirect(url_for('homeUser'))
+
+# @learntoApp.route('/user')
+# def user():
+#     login_required()
+#     return redirect(url_for('user'))
     
 
 if __name__=='__main__':
