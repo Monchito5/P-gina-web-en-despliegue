@@ -71,7 +71,7 @@ def loginUser():
         if logged_user != None:
             if logged_user.password:
                 login_user(logged_user)
-                return redirect(url_for('index'))
+                return redirect(url_for('homeUser'))
             else:
                 flash("Contraseña incorrecta...")
                 return render_template('loginUser.html')
@@ -95,10 +95,18 @@ def pagina_no_encontrada(error):
 def protected():
     return "<h1>Esta es una vista protegida, solo para usuarios autenticados.</h1>"
 
+@learntoApp.route("/homeUser")    
+@login_required
+def homeUser():
+    return render_template('homeUser.html')
+
 @learntoApp.route('/user')
 @login_required
+def protecte():
+    return "<h1>Esta es una vista protegida, solo para usuarios autenticados.</h1>"
 def user():
     return render_template('user.html')
+    
 
 if __name__=='__main__':
     learntoApp.config.from_object(config['development'])
