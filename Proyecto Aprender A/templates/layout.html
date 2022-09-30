@@ -8,6 +8,7 @@
     <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
     <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='navbar-top-fixed.css')}}">
+    <link rel="shortcut icon" href="{{url_for('static', filename='assets/book-open.svg')}}" type="image/x-icon">
     <title>{% block titulo %} {% endblock %}</title>
 
 <!-- ================================ -->
@@ -31,29 +32,18 @@
                 <a class="nav-link active" aria-current="page" href="#">Inicio</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Perfil -- {{ current_user.username }}</a>
+                <a class="nav-link active" aria-current="page" href="{{ ('/user') }}">Perfil -- {{ current_user.username }}</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Noticias</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
               </li>
             </ul>
             <form class="d-flex" role="search">
               <input class="form-control me-2" type="search" placeholder="Busca un artículo" aria-label="Busca un artículo">
               <button class="btn btn-outline-success" type="submit">Buscar</button>
             </form>
+            <hr>
+            <a class="btn btn-secondary my-2" aria-current="page" href="{{ ('/logout') }}">Cerrar Sesión</a>
           </div>
         </div>
       </div>

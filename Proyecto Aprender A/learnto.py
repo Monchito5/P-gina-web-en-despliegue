@@ -95,6 +95,11 @@ def pagina_no_encontrada(error):
 def protected():
     return "<h1>Esta es una vista protegida, solo para usuarios autenticados.</h1>"
 
+@learntoApp.route('/user')
+@login_required
+def user():
+    return render_template('user.html')
+
 if __name__=='__main__':
     learntoApp.config.from_object(config['development'])
     learntoApp.config.update(DEBUG=True, SECRET_KEY="secret_sauce")
