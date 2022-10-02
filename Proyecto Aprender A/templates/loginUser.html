@@ -2,7 +2,7 @@
 {% block titulo %} Learn To - Inicio de sesión {% endblock %}
 {% block contenido %}
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" >
-<link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/login_styles.css')}}">
 <link rel="stylesheet" href="{{url_for('static', filename='css/shakeanim.css')}}">
 <!-- ============================== -->
 <!-- Login -->
@@ -23,16 +23,16 @@
   {% endwith %}    
   <h1>Iniciar Sesión</h1>
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-  <div class="contenedor">
+  <div class="container">
        
-    <div class="input-contenedor">
-      <i class="fas fa-envelope icon"></i>
-      <input type="text" placeholder="Correo Electronico" name="email">
+    <div class="input-group mt-3 mb-3">
+      <img src="{{url_for('static', filename='assets/email-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
+      <input type="text" class="form-control" placeholder="Correo Electronico" name="email">
     </div>
        
-    <div class="input-contenedor">
-      <i class="fas fa-key icon"></i>
-      <input type="password" placeholder="Contraseña" name="password">
+    <div class="input-group mt-3 mb-3"">
+      <img src="{{url_for('static', filename='assets/key-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
+      <input type="password" class="form-control" placeholder="Contraseña" name="password">
     </div>
        
     <input type="submit" value="Continuar" class="button">

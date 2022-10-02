@@ -93,13 +93,17 @@
       </div>
 
       <div class="col-md-5 offset-md-1 mb-3">
-        <form>
+        <form action="/loginUser" method="post">
           <h5>Inicia Sesión</h5>
           <p>Para ver más contenido únete a la comunidad.</p>
-          <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+          <!-- <div class="d-flex flex-column flex-sm-row w-100 gap-2">
             <label for="newsletter1" class="visually-hidden">Correo Electrónico</label>
             <input id="newsletter1" type="text" class="form-control" placeholder="Email address">
-            <button class="btn btn-primary" type="button">Iniciar sesión</button>
+          <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+            <label for="newsletter1" class="visually-hidden">Contraseña</label>
+            <input type="password" class="form-control" placeholder="Contraseña" name="password">
+          </div> -->
+            <a class="btn btn-primary" href="/loginUser">Iniciar Sesion</a>
           </div>
         </form>
       </div>

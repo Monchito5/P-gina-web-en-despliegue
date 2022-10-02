@@ -2,27 +2,30 @@
 {% block titulo %} Learn To - Inicio de sesión {% endblock %}
 {% block contenido %}
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.0/css/all.css" >
-<link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/login_styles.css')}}">
+<script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
 <!-- ============================== -->
 <!-- Login -->
 <!-- ============================== -->
+<main>
 <form action="/loginRegister" method="post" class="formulario">
   <h1>Registrate</h1>
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-  <div class="contenedor">
+  <div class="container">
    
-    <div class="input-contenedor">
-      <i class="fa-sharp fa-solid fa-user icon"></i>
-       <input type="text" placeholder="Nombre Completo" name="fullname">
+    <div class="input-group mt-3 mb-3">
+      <img src="{{url_for('static', filename='assets/user-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
+      <input type="text" class="form-control" placeholder="Nombre Completo" name="fullname">
     </div>
        
-    <div class="input-contenedor">
-      <i class="fas fa-user icon"></i>
-      <input type="text" placeholder="Apodo" name="username">
+    <div class="input-group mt-3 mb-3">
+      <img src="{{url_for('static', filename='assets/cat-profile-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
+      <input type="text" class="form-control" placeholder="Apodo" name="username">
    </div>
     
-    <div class="input-group mb-3">
+    <div class="input-group mt-3 mb-3">
+      <img src="{{url_for('static', filename='assets/student-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
       <select class="form-select" id="inputGroupSelect02" name="schoolgrade">
         <option selected>Elige tu nivel de estudios...</option>
         <option value="ninguno">Ninguno</option>
@@ -36,19 +39,19 @@
       <label class="input-group-text" for="inputGroupSelect02">Opciones</label>
     </div>
 
-    <div class="input-contenedor wd-5">
-      <i class="fa-thin fa-input-numeric"></i>
-      <input type="number" placeholder="Ingresa tu edad" id="tentacles" name="age" min="0" max="100">
+    <div class="input-group mt-3 mb-3p">
+      <img src="{{url_for('static', filename='assets/age-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1">
+      <input type="number" class="form-control" placeholder="Ingresa tu edad" id="tentacles" name="age" min="0" max="100">
     </div>
 
-    <div class="input-contenedor">
-       <i class="fas fa-envelope icon"></i>
-       <input type="text" placeholder="Correo Electronico" name="email">
+    <div class="input-group mt-3 mb-3">
+      <img src="{{url_for('static', filename='assets/email-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
+       <input type="text" class="form-control" placeholder="Correo Electronico" name="email">
     </div>
        
-    <div class="input-contenedor">
-      <i class="fas fa-key icon"></i>
-       <input type="password" placeholder="Contraseña" name="password">
+    <div class="input-group mt-3 mb-3">
+      <img src="{{url_for('static', filename='assets/key-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
+       <input type="password" class="form-control" placeholder="Contraseña" name="password">
     </div>
        
     <div class="col-12">
@@ -62,14 +65,14 @@
         </div>
       </div>
     </div>
-
+    <br>
     <input type="submit" value="Registrate" class="button">
       <hr>
        <p>¿Ya tienes una cuenta? <a class="btn btn-secondary ms-2 my-2" href="/loginUser">Iniciar Sesion</a></p>
 
   </div>
   </form>
-
+</main>
 <!-- ============================== -->
 <!-- Más código pero este es ejemplo de contraseña incorrecta anim -->
 <!-- ============================== -->
