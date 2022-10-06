@@ -57,7 +57,7 @@ def loginRegister():
         regUser.execute(query, (username, email, hash, fullname, age, schoolgrade))
 
         db.connection.commit()
-        return redirect("loginUser.html")
+        return redirect("/loginUser")
     return render_template('loginRegister.html')
 
 
@@ -84,11 +84,11 @@ def loginUser():
 @learntoApp.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('/index'))
 
 def pagina_no_encontrada(error):
     return render_template('404.html'), 404
-    return redirect(url_for('index'))
+    return redirect(url_for('/index'))
 
 @learntoApp.route('/protected')
 @login_required
