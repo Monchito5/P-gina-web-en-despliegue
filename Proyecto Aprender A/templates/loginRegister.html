@@ -16,17 +16,17 @@
    
     <div class="input-group mt-3 mb-3">
       <img src="{{url_for('static', filename='assets/user-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
-      <input type="text" class="form-control" placeholder="Nombre Completo" name="fullname">
+      <input type="text" class="form-control" placeholder="Nombre Completo" name="fullname" required>
     </div>
        
     <div class="input-group mt-3 mb-3">
       <img src="{{url_for('static', filename='assets/cat-profile-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
-      <input type="text" class="form-control" placeholder="Apodo" name="username">
+      <input type="text" class="form-control" placeholder="Apodo" name="username" required>
    </div>
     
     <div class="input-group mt-3 mb-3">
       <img src="{{url_for('static', filename='assets/student-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
-      <select class="form-select" id="inputGroupSelect02" name="schoolgrade">
+      <select class="form-select" id="inputGroupSelect02" name="schoolgrade" required>
         <option selected>Elige tu nivel de estudios...</option>
         <option value="ninguno">Ninguno</option>
         <option value="primaria">Primaria</option>
@@ -41,17 +41,17 @@
 
     <div class="input-group mt-3 mb-3p">
       <img src="{{url_for('static', filename='assets/age-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1">
-      <input type="number" class="form-control" placeholder="Ingresa tu edad" id="tentacles" name="age" min="0" max="100">
+      <input type="number" class="form-control" placeholder="Ingresa tu edad" id="tentacles" name="age" min="0" max="100" required>
     </div>
 
     <div class="input-group mt-3 mb-3">
       <img src="{{url_for('static', filename='assets/email-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
-       <input type="text" class="form-control" placeholder="Correo Electronico" name="email">
+       <input type="text" class="form-control" placeholder="Correo Electronico" name="email" required>
     </div>
        
     <div class="input-group mt-3 mb-3">
       <img src="{{url_for('static', filename='assets/key-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
-       <input type="password" class="form-control" placeholder="Contraseña" name="password">
+       <input type="password" class="form-control" placeholder="Contraseña" name="password" required>
     </div>
        
     <div class="col-12">

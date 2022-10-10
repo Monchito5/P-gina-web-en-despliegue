@@ -27,12 +27,12 @@
        
     <div class="input-group mt-3 mb-3">
       <img src="{{url_for('static', filename='assets/email-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
-      <input type="text" class="form-control" placeholder="Correo Electronico" name="email">
+      <input type="text" class="form-control" placeholder="Correo Electronico" name="email" required>
     </div>
        
     <div class="input-group mt-3 mb-3"">
       <img src="{{url_for('static', filename='assets/key-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
-      <input type="password" class="form-control" placeholder="Contraseña" name="password">
+      <input type="password" class="form-control" placeholder="Contraseña" name="password" required>
     </div>
        
     <input type="submit" value="Continuar" class="button">
