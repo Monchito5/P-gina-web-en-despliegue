@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-09-2022 a las 05:33:01
+-- Tiempo de generación: 19-10-2022 a las 06:07:32
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -49,8 +49,19 @@ CREATE TABLE `user` (
   `password` char(102) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `fullname` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `age` varchar(5) COLLATE utf8_spanish_ci NOT NULL,
-  `schoolgrade` varchar(20) COLLATE utf8_spanish_ci NOT NULL
+  `schoolgrade` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `auth` char(1) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla de usuario';
+
+--
+-- Volcado de datos para la tabla `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `email`, `password`, `fullname`, `age`, `schoolgrade`, `auth`) VALUES
+(1, 'Moncho32', 'guille2807lol@gmail.com', 'pbkdf2:sha256:260000$b0ml44v2mwv4XXe8$77fda936c53258842c0f1abb2258f15e04b58121e76be7cb9b8d7c0b20484a37', 'GUILLERMO DANIEL ZARAGOZA CASTRO', '29', 'preparatoria', 'A'),
+(2, 'Pancho', 'panchito5@gmail.com', 'pbkdf2:sha256:260000$qylavDl4SkA2cu3n$e9bc8aa4f8d8c583159dd75c18f7059416fdbb08b22f939ee02b22ee133f7c58', 'Francisco Valle', '54', 'primaria', ''),
+(3, 'Aitor García', 'erickmetali@gmail.com', 'pbkdf2:sha256:260000$pOTAyMP1xeoeiCj4$b8554a07acb34ca5c6dcba7613eda6816cad3c3349b09aef57f30189cd09f327', 'Eric Valle Verga', '38', 'licenciatura', ''),
+(4, 'Sandy', 'sandy12@gmail.com', 'pbkdf2:sha256:260000$vs65zJgsptT4gFRl$6d53f0fb58800445a0e412c743d2cbbc652d4be9d7337f96bd8bf76bbd02b187', 'Sandra', '22', 'licenciatura', '');
 
 --
 -- Índices para tablas volcadas
@@ -82,7 +93,7 @@ ALTER TABLE `article`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas

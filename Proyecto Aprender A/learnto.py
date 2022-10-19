@@ -39,6 +39,10 @@ def after_request(response):
 def index():
     return render_template('home.html')
 
+@learntoApp.route('/adminPage')
+def admin():
+    return render_template('admin.html')
+
 @learntoApp.route('/loginRegister', methods=['GET', 'POST'])
 def loginRegister():
     if request.method == 'POST':
@@ -84,7 +88,7 @@ def loginUser():
 @learntoApp.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('/index'))
+    return redirect(url_for('index'))
 
 def pagina_no_encontrada(error):
     return render_template('404.html'), 404
