@@ -90,6 +90,10 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@learntoApp.route('/passwordRecovery')
+def passwordR():
+    return render_template('passwordRecovery.html')
+
 def pagina_no_encontrada(error):
     return render_template('404.html'), 404
     return redirect(url_for('/index'))
