@@ -1,4 +1,5 @@
 from multiprocessing import connection
+import smtplib
 import re
 from flask import Flask, render_template, session, url_for, request, redirect, jsonify, flash
 from werkzeug.security import generate_password_hash
@@ -61,6 +62,22 @@ def loginRegister():
         regUser.execute(query, (username, email, hash, fullname, age, schoolgrade))
 
         db.connection.commit()
+        # ==============================
+        # Mail
+        # ==============================
+        user = User(None, username, email, password, fullname, age, schoolgrade, None)
+        logged_user = ModelUser.login(db, user)
+        login_user(logged_user)
+        
+        server = smtplib.SMTP_SSL(host= 'smpt@gmail.com', port = 587)
+        server = ehlo()
+        server = starttls()
+        server.login(user = 'learntoapplication@gmail.com', password = 'fgdkyxtwwnjhuzvl')
+        mail_content = 'Prueba 1'
+        server.sendmail(from_add = 'learntoapplication@gmail.com', to_addres = email, msg = mail_content)
+        server.quit()
+        return render_template('homeUser.html')
+
         return redirect("/loginUser")
     return render_template('loginRegister.html')
 
@@ -68,13 +85,13 @@ def loginRegister():
 @learntoApp.route('/loginUser', methods=['GET', 'POST'])
 def loginUser():
     if request.method == 'POST':
-        # print(request.form['username'])
-        # print(request.form['password'])
         user = User(0, request.form['email'],  request.form['password'])
         logged_user = ModelUser.login(db, user)
         if logged_user != None:
             if logged_user.password:
                 login_user(logged_user)
+                if logged_user == "A":
+                    return redirect(url_for('sUsuario'))
                 return redirect(url_for('homeUser'))
             else:
                 flash("Contraseña incorrecta...")
@@ -85,7 +102,18 @@ def loginUser():
     else:
             return render_template('loginUser.html')
 
+# ========================
+# Login --- admin
+# ========================
+@learntoApp.route('/sUsuario', methods = ['GET', 'POST'])
+def sUsuario():
+    cursor = db.connection.cursor()
+    cursor.execute("SELECT * FROM user")
+    row = cursor.fetchall()
+    return render_template('admin.html', user = row)
+
 @learntoApp.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('index'))

@@ -27,7 +27,7 @@
        
     <div class="input-group mt-3 mb-3">
       <img src="{{url_for('static', filename='assets/email-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
-      <input type="text" class="form-control" placeholder="Correo Electronico" name="email" required>
+      <input type="email" class="form-control" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" placeholder="Correo Electronico" name="email" required>
     </div>
        
     <div class="input-group mt-3 mb-3"">

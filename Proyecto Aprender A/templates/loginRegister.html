@@ -3,6 +3,7 @@
 {% block contenido %}
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.0/css/all.css" >
 <link rel="stylesheet" href="{{url_for('static', filename='css/login_styles.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/shakeanim.css')}}">
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
 <!-- ============================== -->
@@ -46,7 +47,7 @@
 
     <div class="input-group mt-3 mb-3">
       <img src="{{url_for('static', filename='assets/email-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
-       <input type="text" class="form-control" placeholder="Correo Electronico" name="email" required>
+       <input type="email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" class="form-control" placeholder="Correo Electronico" name="email"  required>
     </div>
        
     <div class="input-group mt-3 mb-3">
