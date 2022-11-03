@@ -40,9 +40,12 @@ def after_request(response):
 def index():
     return render_template('home.html')
 
-@learntoApp.route('/adminPage')
+@learntoApp.route('/admin')
 def admin():
-    return render_template('admin.html')
+    cursor = db.connection.cursor()
+    cursor.execute("SELECT * FROM user")
+    data = cursor.fetchall()
+    return render_template('admin.html', user = data)
 
 @learntoApp.route('/loginRegister', methods=['GET', 'POST'])
 def loginRegister():
@@ -62,6 +65,7 @@ def loginRegister():
         regUser.execute(query, (username, email, hash, fullname, age, schoolgrade))
 
         db.connection.commit()
+
         # ==============================
         # Mail
         # ==============================
@@ -70,8 +74,8 @@ def loginRegister():
         login_user(logged_user)
         
         server = smtplib.SMTP_SSL(host= 'smpt@gmail.com', port = 587)
-        server = ehlo()
-        server = starttls()
+        server.ehlo()
+        server.starttls()
         server.login(user = 'learntoapplication@gmail.com', password = 'fgdkyxtwwnjhuzvl')
         mail_content = 'Prueba 1'
         server.sendmail(from_add = 'learntoapplication@gmail.com', to_addres = email, msg = mail_content)
@@ -102,15 +106,6 @@ def loginUser():
     else:
             return render_template('loginUser.html')
 
-# ========================
-# Login --- admin
-# ========================
-@learntoApp.route('/sUsuario', methods = ['GET', 'POST'])
-def sUsuario():
-    cursor = db.connection.cursor()
-    cursor.execute("SELECT * FROM user")
-    row = cursor.fetchall()
-    return render_template('admin.html', user = row)
 
 @learntoApp.route('/logout')
 @login_required
@@ -140,17 +135,6 @@ def homeUser():
 @login_required
 def user():
     return render_template('user.html')
-
-# @learntoApp.route('/homeUser')
-# def homeUser():
-#     login_required()
-#     return redirect(url_for('homeUser'))
-
-# @learntoApp.route('/user')
-# def user():
-#     login_required()
-#     return redirect(url_for('user'))
-    
 
 if __name__=='__main__':
     learntoApp.config.from_object(config['development'])

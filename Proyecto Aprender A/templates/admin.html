@@ -13,20 +13,38 @@
           <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <table id="datatable_users" class="table table-striped">
                   <caption>
-                      DataTable.js Demo
+                      Vista de administrador
                   </caption>
                   <thead>
                       <tr>
-                          <th class="centered">#</th>
-                          <th class="centered">Name</th>
-                          <th class="centered">Email</th>
-                          <th class="centered">City</th>
-                          <th class="centered">Company</th>
-                          <th class="centered">Status</th>
-                          <th class="centered">Options</th>
+                          <th class="centered">#id</th>
+                          <th class="centered">Apodo</th>
+                          <th class="centered">Correo Electrónico</th>
+                          <th class="centered">Nombre Completo</th>
+                          <th class="centered">Edad</th>
+                          <th class="centered">Grado de estudios</th>
+                          <th class="centered">Tipo de Usuario</th>
+                          <th class="centered">Edición</th>
                       </tr>
                   </thead>
-                  <tbody id="tableBody_users"></tbody>
+                  <tbody>
+                    {% for row in user %}
+                        <tr>
+                            <td class="centered">{{ row.0 }}</td>
+                            <td class="centered">{{ row.1 }}</td>
+                            <td class="centered">{{ row.2 }}</td>
+                            <td class="centered">{{ row.4 }}</td>
+                            <td class="centered">{{ row.5 }}</td>
+                            <td class="centered">{{ row.6 }}</td>
+                            <td class="centered">{{ row.7 }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary"><i class="fa-solid fa-pencil"></i></button>
+                                <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+                            </td>
+                        </tr>
+
+                    {% endfor%}
+                  </tbody>
               </table>
           </div>
       </div>
@@ -37,6 +55,6 @@
   <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
   <!-- Custom JS -->
-  <script src="{{url_for('static', filename='js/users_table.js')}}"></script>
+  <!-- <script src="{{url_for('static', filename='js/users_table.js')}}"></script> -->
 </div>
 {% endblock %}

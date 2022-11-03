@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-10-2022 a las 18:35:28
+-- Tiempo de generación: 03-11-2022 a las 04:29:05
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -50,7 +50,7 @@ CREATE TABLE `user` (
   `fullname` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `age` varchar(5) COLLATE utf8_spanish_ci NOT NULL,
   `schoolgrade` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
-  `auth` char(1) COLLATE utf8_spanish_ci NOT NULL,
+  `auth` char(1) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'U',
   `dateregister` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla de usuario';
 
@@ -60,9 +60,12 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `fullname`, `age`, `schoolgrade`, `auth`, `dateregister`) VALUES
 (1, 'Moncho32', 'guille2807lol@gmail.com', 'pbkdf2:sha256:260000$b0ml44v2mwv4XXe8$77fda936c53258842c0f1abb2258f15e04b58121e76be7cb9b8d7c0b20484a37', 'GUILLERMO DANIEL ZARAGOZA CASTRO', '29', 'preparatoria', 'A', '2022-10-30'),
-(2, 'Pancho', 'panchito5@gmail.com', 'pbkdf2:sha256:260000$qylavDl4SkA2cu3n$e9bc8aa4f8d8c583159dd75c18f7059416fdbb08b22f939ee02b22ee133f7c58', 'Francisco Valle', '54', 'primaria', '', '2022-10-30'),
-(3, 'Aitor García', 'erickmetali@gmail.com', 'pbkdf2:sha256:260000$pOTAyMP1xeoeiCj4$b8554a07acb34ca5c6dcba7613eda6816cad3c3349b09aef57f30189cd09f327', 'Eric Valle Verga', '38', 'licenciatura', '', '2022-10-30'),
-(4, 'Sandy', 'sandy12@gmail.com', 'pbkdf2:sha256:260000$vs65zJgsptT4gFRl$6d53f0fb58800445a0e412c743d2cbbc652d4be9d7337f96bd8bf76bbd02b187', 'Sandra', '22', 'licenciatura', '', '2022-10-30');
+(2, 'Pancho', 'panchito5@gmail.com', 'pbkdf2:sha256:260000$qylavDl4SkA2cu3n$e9bc8aa4f8d8c583159dd75c18f7059416fdbb08b22f939ee02b22ee133f7c58', 'Francisco Valle', '54', 'primaria', 'U', '2022-10-30'),
+(3, 'Aitor García', 'erickmetali@gmail.com', 'pbkdf2:sha256:260000$pOTAyMP1xeoeiCj4$b8554a07acb34ca5c6dcba7613eda6816cad3c3349b09aef57f30189cd09f327', 'Eric Valle Verga', '38', 'licenciatura', 'U', '2022-10-30'),
+(4, 'Sandy', 'sandy12@gmail.com', 'pbkdf2:sha256:260000$vs65zJgsptT4gFRl$6d53f0fb58800445a0e412c743d2cbbc652d4be9d7337f96bd8bf76bbd02b187', 'Sandra', '22', 'licenciatura', 'U', '2022-10-30'),
+(6, 'Juanito34', 'learntoapplication@gmail.com', 'pbkdf2:sha256:260000$XjeJ3PKbQc2lcMk9$2f4cc7148da6645047aec1d90c3852dc0e9ca89b1e833706bb9c27c21e08966a', 'Juan Pérez', '26', 'secundaria', 'U', '2022-10-30'),
+(7, 'Juanito34', 'dsada', 'pbkdf2:sha256:260000$yxvukgsxOgTqig62$1d2c5147c11e2d3e8e960789136a14f4f86e6827ae42fe958cec06727ce4578f', 'Juan Pérez', '26', 'secundaria', 'U', '2022-10-30'),
+(8, 'Juanito34', 'guille2807lol@gmail.com', 'pbkdf2:sha256:260000$GBoRKhRCMPrP71ca$b22ae37bda9189b7475d9cb8ccb9d5e1c6eae598bdd647c100536a7a9791e66f', 'Juan Pérez', '27', 'secundaria', 'U', '2022-11-02');
 
 --
 -- Índices para tablas volcadas
@@ -94,7 +97,7 @@ ALTER TABLE `article`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Restricciones para tablas volcadas
