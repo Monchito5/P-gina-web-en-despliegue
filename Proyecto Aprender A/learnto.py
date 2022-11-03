@@ -95,7 +95,7 @@ def loginUser():
             if logged_user.password:
                 login_user(logged_user)
                 if logged_user == "A":
-                    return redirect(url_for('sUsuario'))
+                    return redirect(url_for('admin'))
                 return redirect(url_for('homeUser'))
             else:
                 flash("Contraseña incorrecta...")
