@@ -49,30 +49,34 @@ def admin():
     cursor.execute("SELECT * FROM user")
     data = cursor.fetchall()
     return render_template('admin.html', user = data)
-
-@learntoApp.route('/edit/<int:id>')
-def admin_edit(id):
-    cursor = db.connection.cursor()
-    cursor.execute("SELECT * FROM user WHERE id = {0}".format(id))
-    data = cursor.fetchall()
-
-
-@learntoApp.route('/Iadmin', methods = ['POST', 'GET'])
-def admin_new():
-    if request.method=='POST':
+    
+    # Agregar - Ruta del botón --------->
+@learntoApp.route('/add/', methods=['GET', 'POST'])
+def admin_add():
+    if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
+        password = request.form['password']
         fullname = request.form['fullname']
         age = request.form['age']
-        schoolgrade = request.form['schoolgrade']      
+        schoolgrade = request.form['schoolgrade']
+        hash = generate_password_hash(password) 
 
         regUser = db.connection.cursor()
-        regUser.execute("INSERT INTO user (username, email, fullname, age, schoolgrade) VALUES (%s, %s, %s, %s, %s)", (username, email, fullname, age, schoolgrade))
+        query = "INSERT INTO user (username, email, password, fullname, age, schoolgrade) VALUES (%s, %s, %s, %s, %s, %s)"
+        regUser.execute(query, (username, email, hash, fullname, age, schoolgrade))
         db.connection.commit()
+        user = User(None, username, email, password, fullname, age, schoolgrade, None)
+        logged_user = ModelUser.login(db, user)
+        login_user(logged_user)
+
+        flash('Usuario agregado exitosamente')
         return redirect(url_for('admin'))
     else:
-        return redirect(request.url)
-
+        flash('¡Algo salió mal!')
+        return redirect(url_for('admin'))
+    
+    # Eliminar - Ruta del botón --------->
 @learntoApp.route('/delete/<int:id>')
 def admin_delete(id):
         cursor = db.connection.cursor()
@@ -80,6 +84,32 @@ def admin_delete(id):
         db.connection.commit()
         flash('Usuario eliminado exitosamente')
         return redirect(url_for('admin'))
+    
+    # Editar - Ruta del botón --------->
+@learntoApp.route('/edit/<int:id>')
+def admin_edit(id):
+    cursor = db.connection.cursor()
+    cursor.execute("SELECT * FROM user WHERE id = {0}".format(id))
+    data = cursor.fetchall()
+    
+    # Editar - Actualización de los datos de usuario --------->
+@learntoApp.route('/edit_update/<int:id>', methods = ['POST'])
+def admin_edit_update(id):
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        fullname = request.form['fullname']
+        age = request.form['age']
+        schoolgrade = request.form['schoolgrade']
+        auth = request.form['auth']
+    cursor = db.connection.cursor()
+    cursor.execute("""UPDATE user
+    SET username = %s, email = %s, 
+        fullname = %s, schoolgrade = %s,
+        age = %s, auth = %s 
+    WHERE id = %s""", (username, email, fullname, age, schoolgrade, auth))
+    flash("Actualización de datos completada")
+    return redirect(url_for('admin'))
 
     # ==============================
     # Registro
