@@ -1,60 +1,69 @@
 {% extends "layout.html" %}
 {% block titulo %} Learn To {% endblock %}
 {% block contenido %}
+<script nonce="bd8cbfbb-3fca-470e-b301-3118dcb9fb70">(function(w,d){!function(Z,_,ba,bb){Z.zarazData=Z.zarazData||{};Z.zarazData.executed=[];Z.zaraz={deferred:[],listeners:[]};Z.zaraz.q=[];Z.zaraz._f=function(bc){return function(){var bd=Array.prototype.slice.call(arguments);Z.zaraz.q.push({m:bc,a:bd})}};for(const be of["track","set","debug"])Z.zaraz[be]=Z.zaraz._f(be);Z.zaraz.init=()=>{var bf=_.getElementsByTagName(bb)[0],bg=_.createElement(bb),bh=_.getElementsByTagName("title")[0];bh&&(Z.zarazData.t=_.getElementsByTagName("title")[0].text);Z.zarazData.x=Math.random();Z.zarazData.w=Z.screen.width;Z.zarazData.h=Z.screen.height;Z.zarazData.j=Z.innerHeight;Z.zarazData.e=Z.innerWidth;Z.zarazData.l=Z.location.href;Z.zarazData.r=_.referrer;Z.zarazData.k=Z.screen.colorDepth;Z.zarazData.n=_.characterSet;Z.zarazData.o=(new Date).getTimezoneOffset();Z.zarazData.q=[];for(;Z.zaraz.q.length;){const bl=Z.zaraz.q.shift();Z.zarazData.q.push(bl)}bg.defer=!0;for(const bm of[localStorage,sessionStorage])Object.keys(bm||{}).filter((bo=>bo.startsWith("_zaraz_"))).forEach((bn=>{try{Z.zarazData["z_"+bn.slice(7)]=JSON.parse(bm.getItem(bn))}catch{Z.zarazData["z_"+bn.slice(7)]=bm.getItem(bn)}}));bg.referrerPolicy="origin";bg.src="/cdn-cgi/zaraz/s.js?z="+btoa(encodeURIComponent(JSON.stringify(Z.zarazData)));bf.parentNode.insertBefore(bg,bf)};["complete","interactive"].includes(_.readyState)?zaraz.init():Z.addEventListener("DOMContentLoaded",zaraz.init)}(w,d,0,"script");})(window,document);</script>
+
 <!-- DataTable -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
   <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{url_for('static', filename='css/admin-anim_styles.css')}}">
   <link rel="stylesheet" href="{{url_for('static', filename='css/admin_styles.css')}}"/>
-<div class="container mt-5 p-3">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/animate-admin_copy.css')}}"/>
+<div class="container mt-5 p-3 table100 ver2 m-b-110">
   <div class="container my-4">
       <div class="row">
           <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-              <table id="datatable_users" class="table table-striped">
+              <table data-vertable="ver2" id="datatable_users" class="table table-striped">
                   <caption>
                       Vista de administrador
                   </caption>
-                  <thead>
+                  <thead class="row100 head">
                       <tr>
-                          <th class="centered">#id</th>
-                          <th class="centered">Apodo</th>
-                          <th class="centered">Correo Electrónico</th>
-                          <th class="centered">Nombre Completo</th>
-                          <th class="centered">Edad</th>
-                          <th class="centered">Grado de estudios</th>
-                          <th class="centered">Tipo de Usuario</th>
-                          <th class="centered">Edición</th>
+                          <th class="column100 column1 centered" data-column="column1">#id</th>
+                          <th class="column100 column2 centered" data-column="column2">Apodo</th>
+                          <th class="column100 column3 centered" data-column="column3">Correo Electrónico</th>
+                          <th class="column100 column4 centered" data-column="column4">Nombre Completo</th>
+                          <th class="column100 column5 centered" data-column="column5">Edad</th>
+                          <th class="column100 column6 centered" data-column="column6">Grado de estudios</th>
+                          <th class="column100 column7 centered" data-column="column7">Tipo de Usuario</th>
+                          <th class="column100 column8 centered" data-column="column8">Edición</th>
                       </tr>
                   </thead>
-                  <tbody>
+                  <tbody class="row100 head">
                     {% for row in user %}
                         <tr>
-                            <td class="centered">{{ row.0 }}</td>
-                            <td class="centered">{{ row.1 }}</td>
-                            <td class="centered">{{ row.2 }}</td>
-                            <td class="centered">{{ row.4 }}</td>
-                            <td class="centered">{{ row.5 }}</td>
-                            <td class="centered">{{ row.6 }}</td>
-                            <td class="centered">{{ row.7 }}</td>
-                            <td>
-                                <button class="btn btn-sm btn-primary"><i class="fa-solid fa-pencil"></i></button>
-                                <button class="btn btn-sm btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+                            <td class="column100 column1 centered" data-column="column1">{{ row.0 }}</td>
+                            <td class="column100 column2 centered" data-column="column2">{{ row.1 }}</td>
+                            <td class="column100 column3 centered" data-column="column3">{{ row.2 }}</td>
+                            <td class="column100 column4 centered" data-column="column4">{{ row.4 }}</td>
+                            <td class="column100 column5 centered" data-column="column5">{{ row.5 }}</td>
+                            <td class="column100 column6 centered" data-column="column6">{{ row.6 }}</td>
+                            <td class="column100 column7 centered" data-column="column7">{{ row.7 }}</td>
+                            <td class="column100 column8 centered" data-column="column8">
+                                <a href="/edit/{{row.0}}"><button class="btn btn-sm btn-primary m-1"><i class="fa-solid fa-pencil"></i></button></a>
+                                <a href="/delete/{{row.0}}"><button class="btn btn-sm btn-danger m-1"><i class="fa-solid fa-trash-can"></i></button></a>
                             </td>
                         </tr>
-
                     {% endfor%}
                   </tbody>
               </table>
           </div>
       </div>
   </div>
-  <!-- jQuery -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <!-- DataTable -->
-  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
+ <!-- Ventanas modales  -->
+  
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-23581568-13');
+  </script>
   <!-- Custom JS -->
-  <!-- <script src="{{url_for('static', filename='js/users_table.js')}}"></script> -->
+  <script src="{{url_for('static', filename='js/main.js')}}"></script>
+  <script src="{{url_for('static', filename='js/admin_table.js')}}"></script>
 </div>
 {% endblock %}

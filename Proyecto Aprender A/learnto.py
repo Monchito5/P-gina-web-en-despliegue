@@ -40,13 +40,50 @@ def after_request(response):
 def index():
     return render_template('home.html')
 
-@learntoApp.route('/admin')
+    # ==============================
+    # Rutas administrador y modales
+    # ==============================
+@learntoApp.route('/admin', methods = ['GET', 'POST'])
 def admin():
     cursor = db.connection.cursor()
     cursor.execute("SELECT * FROM user")
     data = cursor.fetchall()
     return render_template('admin.html', user = data)
 
+@learntoApp.route('/edit/<int:id>')
+def admin_edit(id):
+    cursor = db.connection.cursor()
+    cursor.execute("SELECT * FROM user WHERE id = {0}".format(id))
+    data = cursor.fetchall()
+
+
+@learntoApp.route('/Iadmin', methods = ['POST', 'GET'])
+def admin_new():
+    if request.method=='POST':
+        username = request.form['username']
+        email = request.form['email']
+        fullname = request.form['fullname']
+        age = request.form['age']
+        schoolgrade = request.form['schoolgrade']      
+
+        regUser = db.connection.cursor()
+        regUser.execute("INSERT INTO user (username, email, fullname, age, schoolgrade) VALUES (%s, %s, %s, %s, %s)", (username, email, fullname, age, schoolgrade))
+        db.connection.commit()
+        return redirect(url_for('admin'))
+    else:
+        return redirect(request.url)
+
+@learntoApp.route('/delete/<int:id>')
+def admin_delete(id):
+        cursor = db.connection.cursor()
+        cursor.execute("DELETE FROM user WHERE id = {0}".format(id))
+        db.connection.commit()
+        flash('Usuario eliminado exitosamente')
+        return redirect(url_for('admin'))
+
+    # ==============================
+    # Registro
+    # ==============================
 @learntoApp.route('/loginRegister', methods=['GET', 'POST'])
 def loginRegister():
     if request.method == 'POST':
@@ -59,16 +96,11 @@ def loginRegister():
         hash = generate_password_hash(password) 
 
         regUser = db.connection.cursor()
-
         query = "INSERT INTO user (username, email, password, fullname, age, schoolgrade) VALUES (%s, %s, %s, %s, %s, %s)"
-
         regUser.execute(query, (username, email, hash, fullname, age, schoolgrade))
-
         db.connection.commit()
 
-        # ==============================
         # Mail
-        # ==============================
         user = User(None, username, email, password, fullname, age, schoolgrade, None)
         logged_user = ModelUser.login(db, user)
         login_user(logged_user)
@@ -77,26 +109,28 @@ def loginRegister():
         server.ehlo()
         server.starttls()
         server.login(user = 'learntoapplication@gmail.com', password = 'fgdkyxtwwnjhuzvl')
-        mail_content = 'Prueba 1'
-        server.sendmail(from_add = 'learntoapplication@gmail.com', to_addres = email, msg = mail_content)
+        mensaje = 'Prueba 1'
+        server.sendmail(from_add = 'learntoapplication@gmail.com', to_addres = email, msg = mensaje)
         server.quit()
         return render_template('homeUser.html')
+    else:
+        return render_template('loginRegister.html')
 
-        return redirect("/loginUser")
-    return render_template('loginRegister.html')
-
-
+    # ==============================
+    # Login
+    # ==============================
 @learntoApp.route('/loginUser', methods=['GET', 'POST'])
 def loginUser():
     if request.method == 'POST':
         user = User(0, request.form['email'],  request.form['password'])
-        logged_user = ModelUser.login(db, user)
-        if logged_user != None:
-            if logged_user.password:
-                login_user(logged_user)
-                if logged_user == "A":
+        authUser = ModelUser.login(db, user)
+        if authUser is not None:
+            if authUser.password:
+                login_user(authUser)
+                if authUser.auth == 'A':
                     return redirect(url_for('admin'))
-                return redirect(url_for('homeUser'))
+                else:
+                    return render_template('homeUser.html')
             else:
                 flash("Contraseña incorrecta...")
                 return render_template('loginUser.html')
