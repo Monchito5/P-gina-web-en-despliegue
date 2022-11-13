@@ -9,7 +9,7 @@ from flask_login import LoginManager, login_user, logout_user, login_required
 from flask_mysqldb import MySQL
 import datetime
 from config import config
-
+import os
 # Models:
 from models.modelUser import ModelUser
 
