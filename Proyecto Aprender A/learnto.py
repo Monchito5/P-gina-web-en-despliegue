@@ -1,5 +1,6 @@
 from multiprocessing import connection
 import smtplib
+from email.message import EmailMessage 
 import re
 from flask import Flask, render_template, session, url_for, request, redirect, jsonify, flash
 from werkzeug.security import generate_password_hash
@@ -129,18 +130,35 @@ def loginRegister():
         query = "INSERT INTO user (username, email, password, fullname, age, schoolgrade) VALUES (%s, %s, %s, %s, %s, %s)"
         regUser.execute(query, (username, email, hash, fullname, age, schoolgrade))
         db.connection.commit()
-
-        # Mail
         user = User(None, username, email, password, fullname, age, schoolgrade, None)
         logged_user = ModelUser.login(db, user)
         login_user(logged_user)
-        
-        server = smtplib.SMTP_SSL(host= 'smpt@gmail.com', port = 587)
-        server.ehlo()
-        server.starttls()
-        server.login(user = 'learntoapplication@gmail.com', password = 'fgdkyxtwwnjhuzvl')
-        mensaje = 'Prueba 1'
-        server.sendmail(from_add = 'learntoapplication@gmail.com', to_addres = email, msg = mensaje)
+               
+               
+        email_subject = "Bienvenido a Learn To" 
+        sender_email_address = "learntoapplication@gmail.com" 
+        receiver_email_address = email 
+        email_smtp = "smtp.gmail.com" 
+        email_password = "fgdkyxtwwnjhuzvl" 
+       # Create an email message object 
+        message = EmailMessage() 
+        # Configure email headers 
+        message['Subject'] = email_subject 
+        message['D-Corporation'] = sender_email_address 
+        message['fullname'] = receiver_email_address 
+        # Set email body text 
+        message.set_content("Hola! Te damos la bienvenida a la plataforma de aprendizaje Aprender A") 
+        # Set smtp server and port 
+        server = smtplib.SMTP(email_smtp, '587') 
+        # Identify this client to the SMTP server 
+        server.ehlo() 
+        # Secure the SMTP connection 
+        server.starttls() 
+        # Login to email account 
+        server.login(sender_email_address, email_password) 
+        # Send email 
+        server.send_message(message) 
+        # Close connection to server 
         server.quit()
         return render_template('homeUser.html')
     else:
@@ -153,11 +171,11 @@ def loginRegister():
 def loginUser():
     if request.method == 'POST':
         user = User(0, request.form['email'],  request.form['password'])
-        authUser = ModelUser.login(db, user)
-        if authUser is not None:
-            if authUser.password:
-                login_user(authUser)
-                if authUser.auth == 'A':
+        logged_user = ModelUser.login(db, user)
+        if logged_user is not None:
+            if logged_user.password:
+                login_user(logged_user)
+                if logged_user.auth == 'A':
                     return redirect(url_for('admin'))
                 else:
                     return render_template('homeUser.html')
@@ -183,7 +201,7 @@ def passwordR():
 
 def pagina_no_encontrada(error):
     return render_template('404.html'), 404
-    return redirect(url_for('/index'))
+    # return redirect(url_for('/index'))
 
 @learntoApp.route('/protected')
 @login_required
@@ -198,7 +216,11 @@ def homeUser():
 @learntoApp.route('/user')
 @login_required
 def user():
-    return render_template('user.html')
+        if logged_user is not None:
+            logged_user = ModelUser.login(db, user)
+            return redirect(url_for('protected'))
+        else:
+            return render_template('user.html')
 
 if __name__=='__main__':
     learntoApp.config.from_object(config['development'])

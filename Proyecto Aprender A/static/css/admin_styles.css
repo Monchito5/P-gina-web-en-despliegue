@@ -11,7 +11,7 @@ body {
 
 @font-face {
     font-family: 'Montserrat-Regular';
-    src: url('MontserratAlternates-Regular.ttf') format('truetype');
+    src: url('fonts/MontserratAlternates-Regular.ttf') format('truetype');
   }
 
 .ps{overflow:hidden!important;overflow-anchor:none;-ms-overflow-style:none;touch-action:auto;-ms-touch-action:auto}
