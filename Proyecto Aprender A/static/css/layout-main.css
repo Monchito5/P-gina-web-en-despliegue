@@ -1,6 +1,7 @@
 body {
     background-color: #b9daf4;
     background-image: linear-gradient(180deg, #b9daf4 0%, #ffffff 50%, #ebd3ff  100%);    
+    background-repeat: no-repeat;
 }    
 .offcanvas {
     background-color: #b9daf4;

@@ -4,8 +4,7 @@
 <!-- ================================ -->
 <!-- BARRA DE NAVEGACIÓN -->
 <!-- ================================ -->
-<link rel="stylesheet" href="{{url_for('static', filename='css/card-slider_style.css')}}">
-<link rel="stylesheet" href="{{url_for('static', filename='css/swiper-bundle.min.css')}}">
+
 
 <main class="container">
   <div class="bg-light p-3 rounded mt-5 main-c">
@@ -39,80 +38,9 @@
       </div>
     </div>
 
-    <!-- Card -->
-    <div class="main-card">
-      <div class="container swiper">
-        <div class="slide-container">
-          <div class="card-wrapper swiper-wrapper">
-            <div class="card swiper-slide">
-              <div class="image-box">
-                <img src="{{url_for('static', filename='img/showImg/fullDev.jpg')}}" alt="" />
-              </div>
-              <div class="profile-details">
-                <img src="images/profile/profile1.jpg" alt="" />
-                <div class="name-job">
-                  <h3 class="name">David Cardlos</h3>
-                  <h4 class="job">Full Stack Developer</h4>
-                </div>
-              </div>
-            </div>
-            <div class="card swiper-slide">
-              <div class="image-box">
-                <img src="images/showImg/photographer.jpg" alt="" />
-              </div>
-              <div class="profile-details">
-                <img src="images/profile/profile2.jpg" alt="" />
-                <div class="name-job">
-                  <h3 class="name">Siliana Ramis</h3>
-                  <h4 class="job">Photographer</h4>
-                </div>
-              </div>
-            </div>
-            <div class="card swiper-slide">
-              <div class="image-box">
-                <img src="images/showImg/dataAna.jpg" alt="" />
-              </div>
-              <div class="profile-details">
-                <img src="images/profile/profile3.jpg" alt="" />
-                <div class="name-job">
-                  <h3 class="name">Richard Bond</h3>
-                  <h4 class="job">Data Analyst</h4>
-                </div>
-              </div>
-            </div>
-            <div class="card swiper-slide">
-              <div class="image-box">
-                <img src="images/showImg/appDev.jpg" alt="" />
-              </div>
-              <div class="profile-details">
-                <img src="images/profile/profile4.jpg" alt="" />
-                <div class="name-job">
-                  <h3 class="name">Priase</h3>
-                  <h4 class="job">App Developer</h4>
-                </div>
-              </div>
-            </div>
-            <div class="card swiper-slide">
-              <div class="image-box">
-                <img src="images/showImg/blogger.jpg" alt="" />
-              </div>
-              <div class="profile-details">
-                <img src="images/profile/profile5.jpg" alt="" />
-                <div class="name-job">
-                  <h3 class="name">James Laze</h3>
-                  <h4 class="job">Blogger</h4>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="swiper-button-next swiper-navBtn"></div>
-        <div class="swiper-button-prev swiper-navBtn"></div>
-        <div class="swiper-pagination"></div>
-      </div>
-    </div>
 
-  <div class="album py-5 bg-light articles-c">
+
+  <div class="album py-5 bg-light">
     <div class="container">
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -344,6 +272,4 @@
   </div>
 </div>
 </main>
-<script src="{{url_for('static', filename='js/card-slider.js')}}"></script>
-<script src="{{url_for('static', filename='js/swiper-bundle.min.js')}}"></script>
 {% endblock %}

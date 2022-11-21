@@ -1,6 +1,4 @@
 from multiprocessing import connection
-import smtplib
-from email.message import EmailMessage 
 import re
 from flask import Flask, render_template, session, url_for, request, redirect, jsonify, flash
 from werkzeug.security import generate_password_hash
@@ -9,6 +7,13 @@ from flask_login import LoginManager, login_user, logout_user, login_required
 from flask_mysqldb import MySQL
 import datetime
 from config import config
+import smtplib
+from smtplib import SMTPException
+from threading import Thread
+from flask_mail import Mail, Message
+from email.message import EmailMessage
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 import os
 # Models:
 from models.modelUser import ModelUser
@@ -17,8 +22,11 @@ from models.modelUser import ModelUser
 from models.entities.User import User
 
 learntoApp = Flask(__name__)
+learntoApp.config.from_object(config['development'])
 
-csrf = CSRFProtect()
+# Objects: 
+mail = Mail(learntoApp) 
+csrf = CSRFProtect(learntoApp)
 db = MySQL(learntoApp)
 login_manager_app = LoginManager(learntoApp)
 
@@ -44,15 +52,19 @@ def index():
     # ==============================
     # Rutas administrador y modales
     # ==============================
-@learntoApp.route('/admin', methods = ['GET', 'POST'])
+@learntoApp.route('/admin')
 def admin():
+    return render_template('admin.html')
+
+@learntoApp.route('/admin-operations', methods = ['GET', 'POST'])
+def admin_operations():
     cursor = db.connection.cursor()
     cursor.execute("SELECT * FROM user")
     data = cursor.fetchall()
-    return render_template('admin.html', user = data)
-    
+    return render_template('admin-operations.html', user = data)
+
     # Agregar - Ruta del botón --------->
-@learntoApp.route('/add/', methods=['GET', 'POST'])
+@learntoApp.route('/add', methods=['GET', 'POST'])
 def admin_add():
     if request.method == 'POST':
         username = request.form['username']
@@ -72,10 +84,10 @@ def admin_add():
         login_user(logged_user)
 
         flash('Usuario agregado exitosamente')
-        return redirect(url_for('admin'))
+        return redirect(url_for('admin_operations'))
     else:
         flash('¡Algo salió mal!')
-        return redirect(url_for('admin'))
+        return redirect(url_for('admin_operations'))
     
     # Eliminar - Ruta del botón --------->
 @learntoApp.route('/delete/<int:id>')
@@ -84,7 +96,7 @@ def admin_delete(id):
         cursor.execute("DELETE FROM user WHERE id = {0}".format(id))
         db.connection.commit()
         flash('Usuario eliminado exitosamente')
-        return redirect(url_for('admin'))
+        return redirect(url_for('admin_operations'))
     
     # Editar - Ruta del botón --------->
 @learntoApp.route('/edit/<int:id>')
@@ -110,7 +122,7 @@ def admin_edit_update(id):
         age = %s, auth = %s 
     WHERE id = %s""", (username, email, fullname, age, schoolgrade, auth))
     flash("Actualización de datos completada")
-    return redirect(url_for('admin'))
+    return redirect(url_for('admin_operations'))
 
     # ==============================
     # Registro
@@ -130,37 +142,14 @@ def loginRegister():
         query = "INSERT INTO user (username, email, password, fullname, age, schoolgrade) VALUES (%s, %s, %s, %s, %s, %s)"
         regUser.execute(query, (username, email, hash, fullname, age, schoolgrade))
         db.connection.commit()
+
         user = User(None, username, email, password, fullname, age, schoolgrade, None)
         logged_user = ModelUser.login(db, user)
         login_user(logged_user)
-               
-               
-        email_subject = "Bienvenido a Learn To" 
-        sender_email_address = "learntoapplication@gmail.com" 
-        receiver_email_address = email 
-        email_smtp = "smtp.gmail.com" 
-        email_password = "fgdkyxtwwnjhuzvl" 
-       # Create an email message object 
-        message = EmailMessage() 
-        # Configure email headers 
-        message['Subject'] = email_subject 
-        message['D-Corporation'] = sender_email_address 
-        message['fullname'] = receiver_email_address 
-        # Set email body text 
-        message.set_content("Hola! Te damos la bienvenida a la plataforma de aprendizaje Aprender A") 
-        # Set smtp server and port 
-        server = smtplib.SMTP(email_smtp, '587') 
-        # Identify this client to the SMTP server 
-        server.ehlo() 
-        # Secure the SMTP connection 
-        server.starttls() 
-        # Login to email account 
-        server.login(sender_email_address, email_password) 
-        # Send email 
-        server.send_message(message) 
-        # Close connection to server 
-        server.quit()
-        return render_template('homeUser.html')
+
+        msg = Message(subject="Bienvenido a Learn To", recipients=[email], html=render_template ("email-template.html"))
+        mail.send(msg)
+        return render_template('loginUser.html')
     else:
         return render_template('loginRegister.html')
 
@@ -216,16 +205,10 @@ def homeUser():
 @learntoApp.route('/user')
 @login_required
 def user():
-        if logged_user is not None:
-            logged_user = ModelUser.login(db, user)
-            return redirect(url_for('protected'))
-        else:
-            return render_template('user.html')
+    return render_template('user.html')
 
 if __name__=='__main__':
-    learntoApp.config.from_object(config['development'])
     learntoApp.config.update(DEBUG=True, SECRET_KEY="secret_sauce")
-    csrf.init_app(learntoApp)
     # learntoApp.add_url_rule('/query_string', view_func=query_string)
     learntoApp.register_error_handler(404, pagina_no_encontrada)
     learntoApp.run(debug=True, port=3300)

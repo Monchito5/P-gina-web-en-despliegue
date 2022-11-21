@@ -1,0 +1,208 @@
+{% extends "layout.html" %}
+{% block titulo %} Learn To {% endblock %}
+{% block contenido %}
+
+<script nonce="bd8cbfbb-3fca-470e-b301-3118dcb9fb70">(function(w,d){!function(Z,_,ba,bb){Z.zarazData=Z.zarazData||{};Z.zarazData.executed=[];Z.zaraz={deferred:[],listeners:[]};Z.zaraz.q=[];Z.zaraz._f=function(bc){return function(){var bd=Array.prototype.slice.call(arguments);Z.zaraz.q.push({m:bc,a:bd})}};for(const be of["track","set","debug"])Z.zaraz[be]=Z.zaraz._f(be);Z.zaraz.init=()=>{var bf=_.getElementsByTagName(bb)[0],bg=_.createElement(bb),bh=_.getElementsByTagName("title")[0];bh&&(Z.zarazData.t=_.getElementsByTagName("title")[0].text);Z.zarazData.x=Math.random();Z.zarazData.w=Z.screen.width;Z.zarazData.h=Z.screen.height;Z.zarazData.j=Z.innerHeight;Z.zarazData.e=Z.innerWidth;Z.zarazData.l=Z.location.href;Z.zarazData.r=_.referrer;Z.zarazData.k=Z.screen.colorDepth;Z.zarazData.n=_.characterSet;Z.zarazData.o=(new Date).getTimezoneOffset();Z.zarazData.q=[];for(;Z.zaraz.q.length;){const bl=Z.zaraz.q.shift();Z.zarazData.q.push(bl)}bg.defer=!0;for(const bm of[localStorage,sessionStorage])Object.keys(bm||{}).filter((bo=>bo.startsWith("_zaraz_"))).forEach((bn=>{try{Z.zarazData["z_"+bn.slice(7)]=JSON.parse(bm.getItem(bn))}catch{Z.zarazData["z_"+bn.slice(7)]=bm.getItem(bn)}}));bg.referrerPolicy="origin";bg.src="/cdn-cgi/zaraz/s.js?z="+btoa(encodeURIComponent(JSON.stringify(Z.zarazData)));bf.parentNode.insertBefore(bg,bf)};["complete","interactive"].includes(_.readyState)?zaraz.init():Z.addEventListener("DOMContentLoaded",zaraz.init)}(w,d,0,"script");})(window,document);</script>
+
+<!-- DataTable -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{url_for('static', filename='css/admin-anim_styles.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/admin_styles.css')}}"/>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/animate-admin_copy.css')}}"/>
+<div class="container mt-5 p-3 table100 ver2 m-b-110">
+  <div class="container my-4">
+      <div class="row">
+          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <table data-vertable="ver2" id="datatable_users" class="table table-striped">
+                  <caption>
+                      Vista de administrador
+                  </caption>
+                  <thead class="row100 head">
+                      <tr>
+                          <th class="column100 column1 centered" data-column="column1">#id</th>
+                          <th class="column100 column2 centered" data-column="column2">Apodo</th>
+                          <th class="column100 column3 centered" data-column="column3">Correo Electrónico</th>
+                          <th class="column100 column4 centered" data-column="column4">Nombre Completo</th>
+                          <th class="column100 column5 centered" data-column="column5">Edad</th>
+                          <th class="column100 column6 centered" data-column="column6">Grado de estudios</th>
+                          <th class="column100 column7 centered" data-column="column7">Tipo de Usuario</th>
+                          <th class="column100 column8 centered" data-column="column8">Edición</th>
+                      </tr>
+                  </thead>
+                  <tfoot class="row100">
+                    <tr>
+                      <td class="centered" colspan="8">
+                        <button class="btn btn-sm btn-success m-1 rowAdd" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#exampleModal" role="button"><i class="fa-solid fa-user-plus"></i></button>
+                      </td>
+                    </tr>
+                  </tfoot>
+                  <tbody class="row100 head">
+                    {% for row in user %}
+                        <tr>
+                            <td class="column100 column1 centered" data-column="column1">{{ row.0 }}</td>
+                            <td class="column100 column2 centered" data-column="column2">{{ row.1 }}</td>
+                            <td class="column100 column3 centered" data-column="column3">{{ row.2 }}</td>
+                            <td class="column100 column4 centered" data-column="column4">{{ row.4 }}</td>
+                            <td class="column100 column5 centered" data-column="column5">{{ row.5 }}</td>
+                            <td class="column100 column6 centered" data-column="column6">{{ row.6 }}</td>
+                            <td class="column100 column7 centered" data-column="column7">{{ row.7 }}</td>
+                            <td class="column100 column8 centered" data-column="column8">
+                                <a href="/edit/{{row.0}}"><button class="btn btn-sm btn-primary m-1"><i class="fa-solid fa-pencil"></i></button></a>
+                                <a href="/delete/{{row.0}}"><button class="btn btn-sm btn-danger m-1" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-trash-can"></i></button></a>
+                            </td>
+                        </tr>
+                    {% endfor%}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+<!-- ============================= -->
+<!-- Ventanas modales  -->
+<!-- ============================= -->
+
+ <!-- Ventana eliminar -->
+ <!-- Button trigger modal -->
+ <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+   Open Delete
+ </button>
+ 
+ <!-- Modal  agregar -->
+ <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Usuario</h1>
+         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+       </div>
+       <div class="modal-body">
+  <form action="/add/" method="post" class="formulario">
+  <h1>Registrate</h1>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="container">
+   
+    <div class="input-group mt-3 mb-3">
+      <img src="{{url_for('static', filename='assets/user-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
+      <input type="text" class="form-control" placeholder="Nombre Completo" name="fullname" required>
+    </div>
+       
+    <div class="input-group mt-3 mb-3">
+      <img src="{{url_for('static', filename='assets/cat-profile-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
+      <input type="text" class="form-control" placeholder="Apodo" name="username" required>
+   </div>
+    
+    <div class="input-group mt-3 mb-3">
+      <img src="{{url_for('static', filename='assets/student-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
+      <select class="form-select" id="inputGroupSelect02" name="schoolgrade" required>
+        <option selected>Elige tu nivel de estudios...</option>
+        <option value="Ninguno">Ninguno</option>
+        <option value="Primaria">Primaria</option>
+        <option value="Secundaria">Secundaria</option>
+        <option value="Preparatoria">Preparatoria</option>
+        <option value="Licenciatura">Licenciatura</option>
+        <option value="Ingenieria">Ingeniería</option>
+        <option value="Doctorado">Doctorado</option>
+      </select>
+      <label class="input-group-text" for="inputGroupSelect02">Opciones</label>
+    </div>
+
+    <div class="input-group mt-3 mb-3p">
+      <img src="{{url_for('static', filename='assets/age-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1">
+      <input type="number" class="form-control" placeholder="Ingresa tu edad" id="tentacles" name="age" min="0" max="100" required>
+    </div>
+
+    <div class="input-group mt-3 mb-3">
+      <img src="{{url_for('static', filename='assets/email-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
+       <input type="email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" class="form-control" placeholder="Correo Electronico" name="email"  required>
+    </div>
+       
+    <div class="input-group mt-3 mb-3">
+      <img src="{{url_for('static', filename='assets/key-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
+       <input type="password" class="form-control" placeholder="Contraseña" name="password" required>
+    </div>
+       
+    <div class="col-12">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+        <label class="form-check-label" for="invalidCheck">
+         Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.
+        </label>
+        <div class="invalid-feedback">
+          Es necesario aceptar los términos y condiciones para continuar con el registro.
+        </div>
+      </div>
+    </div>
+    <br>
+      <hr>
+  </div>
+  </form>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <a href="/add/"><button type="submit" class="btn btn-primary">Continuar</button></a>
+       </div>
+     </div>
+   </div>
+ </div>
+
+ <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Eliminar</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            ¿Está seguro de realizar esta operación?
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Continuar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Confirmación</h1>
+        </div>
+        <div class="modal-body">
+          Esta operación eliminará al usuario previamente seleccionado.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Open</a>
+ 
+  <!-- Scrollable modal -->
+
+  
+  
+  <script>
+    const myModal = document.getElementById('myModal')
+    const myInput = document.getElementById('myInput')
+    
+    myModal.addEventListener('shown.bs.modal', () => {
+      myInput.focus()
+    })
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-23581568-13');
+  </script>
+  <!-- Custom JS -->
+  <script src="{{url_for('static', filename='js/main.js')}}"></script>
+  <script src="{{url_for('static', filename='js/admin_table.js')}}"></script>
+</div>
+
+{% endblock %}

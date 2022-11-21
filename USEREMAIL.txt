@@ -1,0 +1,52 @@
+user: learntoApp
+gmail: learntoapplication@gmail.com
+password Gmail: learnto_2807
+password SMPT: fgdkyxtwwnjhuzvl
+
+
+
+
+        # Mail
+        user = User(None, username, email, password, fullname, age, schoolgrade, None)
+        logged_user = ModelUser.login(db, user)
+        login_user(logged_user)
+               
+        email_subject = "Bienvenido a Learn To" 
+        sender_email_address = "learntoapplication@gmail.com" 
+        receiver_email_address = email 
+        email_smtp = "smtp.gmail.com" 
+        email_password = "fgdkyxtwwnjhuzvl" 
+       # Create an email message object 
+        message = EmailMessage() 
+        # Configure email headers 
+        message['Subject'] = email_subject 
+        message['D-Corporation'] = sender_email_address 
+        message['fullname'] = receiver_email_address  
+        message.set_content("Hola! Te damos la bienvenida a la plataforma de aprendizaje Aprender A") 
+        server = smtplib.SMTP(email_smtp, '587') 
+        server.ehlo() 
+        server.starttls() 
+        server.login(sender_email_address, email_password) 
+        server.send_message(message) 
+        server.quit()
+
+
+
+
+
+
+
+
+peye
+message = Message(subject="¡Bienvenido!", recipients=[email], html=render_template ("gmail.html"))
+        mail.send(message)
+
+
+cunfi
+ MAIL_SERVER = "smtp.gmail.com"
+    MAIL_PORT = 465
+    MAIL_USERNAME = "polloskatechup@gmail.com"
+    MAIL_DEFAULT_SENDER = MAIL_USERNAME
+    MAIL_PASSWORD = "zuovgpxvcmwchqhc"
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = True

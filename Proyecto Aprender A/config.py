@@ -1,12 +1,5 @@
-import os
 class config:
     SECRET_KEY = 'monchito5'
-    MAIL_SERVER = 'smpt.gmail.com'
-    MAIL_PORT = 587
-    MAIL_USE_SSL = False
-    MAIL_USE_TLS = True
-    MAIL_USERNAME = 'learntoapplication@gmail.com'
-    MAIL_PASSWORD = os.environ.get('PASSWORD_EMAIL_CF')
 
 class DevelompentConfig(config):
     DEBUG = True
@@ -14,5 +7,13 @@ class DevelompentConfig(config):
     MYSQL_USER      = 'root'
     MYSQL_PASSWORD  = ''
     MYSQL_DB        = 'learnto'
+
+    MAIL_SERVER = "smtp.gmail.com"
+    MAIL_PORT = 465
+    MAIL_USERNAME = "learntoapplication@gmail.com"
+    MAIL_DEFAULT_SENDER = MAIL_USERNAME
+    MAIL_PASSWORD = "fgdkyxtwwnjhuzvl"
+    MAIL_USE_TLS = False
+    MAIL_USE_SSL = True
 
 config = {'development' : DevelompentConfig}
