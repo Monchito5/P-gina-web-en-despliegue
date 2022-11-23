@@ -14,12 +14,21 @@ background-image: url(pictures/013\ Heavy\ Rain.png);
 .articles-c {
 background-image: url(pictures/013\ Heavy\ Rain.png);
 }  
+
 .footer-c {
 margin-top: 20px;
 padding-bottom: 1%;
 background: #757F9A;  
 background: -webkit-linear-gradient(to right, #D7DDE8, #757F9A); 
 background: linear-gradient(to right, #D7DDE8, #757F9A); 
+}
+
+.redes-footer {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0;
+    height: auto;
 }
 
 .btn-primary {

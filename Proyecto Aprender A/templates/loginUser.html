@@ -1,9 +1,13 @@
 {% extends "layout.html" %}
 {% block titulo %} Learn To - Inicio de sesión {% endblock %}
-{% block contenido %}
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" >
+
+{% block css %} 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.0/css/all.css" >
 <link rel="stylesheet" href="{{url_for('static', filename='css/login_styles.css')}}">
 <link rel="stylesheet" href="{{url_for('static', filename='css/shakeanim.css')}}">
+{% endblock %}
+
+{% block contenido %}
 <!-- ============================== -->
 <!-- Login -->
 <!-- ============================== -->
@@ -43,9 +47,5 @@
    
   </div>
   </form>
-
-<!-- ============================== -->
-<!-- Más código pero este es ejemplo de contraseña incorrecta anim -->
-<!-- ============================== -->
 
 {% endblock %}

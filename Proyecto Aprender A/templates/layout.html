@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/layout-main.css')}}">
     <link rel="shortcut icon" href="{{url_for('static', filename='assets/book-open.svg')}}" type="image/x-icon">
     <title>{% block titulo %} {% endblock %}</title>
-
+    {% block css %} {% endblock %}
 <!-- ================================ -->
 <!-- BARRA DE NAVEGACIÓN -->
 <!-- ================================ -->
@@ -34,7 +34,7 @@
                 <a class="nav-link active" aria-current="page" href="{{ ('/') }}">Inicio</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ ('/user') }}">Perfil -- {{ current_user.username }}</a>
+                <a class="nav-link active" aria-current="page" href="{{ ('/perfilUser') }}">Perfil -- {{ current_user.username }}</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{ ('/homeUser') }}">Noticias</a>
@@ -100,6 +100,13 @@
             <h5>Inicia Sesión</h5>
             <p>Para ver más contenido únete a la comunidad.</p>
               <a class="btn btn-primary" href="/loginUser">Iniciar Sesion</a>
+              <br><br><div class="redes-footer">
+                <h5>Síguenos</h5>
+                  <a target="_blank" href="https://www.facebook.com/ApockGraficos"><i class="fab fa-facebook-square"></i></a>
+                  <a target="_blank" href="https://twitter.com/ApockGraficos"><i class="fab fa-twitter"></i></a>
+                  <a target="_blank" href="https://www.instagram.com/ApockGraficos"><i class="fab fa-instagram"></i></a>
+                  <a target="_blank" href="https://www.youtube.com/channel/UC15DkMZQ80aoW_Rqk4n2T_w"><i class="fab fa-youtube"></i></a>
+              </div>
             </div>
           </form>
         </div>
@@ -117,4 +124,6 @@
     </footer>
   </div>
 </div>
+
+{% block js %} {% endblock %}
 </html>

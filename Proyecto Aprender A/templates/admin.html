@@ -1,21 +1,21 @@
 {% extends "layout.html" %}
 {% block titulo %} Learn To {% endblock %}
-{% block contenido %}
+<!-- Custom CSS -->
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/admin_styles.css')}}"/>
+{% endblock %}
 
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="{{url_for('static', filename='css/admin_styles.css')}}"/>
+{% block contenido %}
+<!-- Nav -->
 <body>
 <div class="nav-admin container mt-5 p-2 m-b-110">
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Operaciones de administrador</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+          <a class="nav-link active" aria-current="page" href="{{ ('/admin') }}">Inicio</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -29,18 +29,14 @@
           </ul>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
     </div>
   </div>
 </nav>
 </div>
 
+
 <div class="container fondo-admin">
-
-
+<img class="img-fondo" src="{{url_for('static', filename='css/pictures/book-open.svg')}}" alt="">
 </div>
 </body>
 {% endblock %}

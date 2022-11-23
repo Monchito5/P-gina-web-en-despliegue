@@ -202,10 +202,10 @@ def protected():
 def homeUser():
     return render_template('homeUser.html')
 
-@learntoApp.route('/user')
+@learntoApp.route('/perfilUser')
 @login_required
-def user():
-    return render_template('user.html')
+def perfilUser():
+    return render_template('perfilUser.html')
 
 if __name__=='__main__':
     learntoApp.config.update(DEBUG=True, SECRET_KEY="secret_sauce")
