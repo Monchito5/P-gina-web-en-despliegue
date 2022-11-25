@@ -18,8 +18,8 @@
 <!-- ================================ -->
     <nav class="navbar bg-light fixed-top">
       <div class="container-fluid">
-        <a href="/"><img src="{{url_for('static', filename='assets/book-open.svg')}}" alt="" width="70" height="44" class="d-inline-block align-text-top"></a>
-        <a class="navbar-brand" href="{{ ('/') }}">Learn To</a>
+        <a href="/admin"><img src="{{url_for('static', filename='assets/book-open.svg')}}" alt="" width="70" height="44" class="d-inline-block align-text-top"></a>
+        <a class="navbar-brand" href="{{ ('/admin') }}">Operaciones de administrador</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -31,19 +31,27 @@
           <div class="offcanvas-body">
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ ('/') }}">Inicio</a>
+                <a class="nav-link active" aria-current="page" href="{{ ('/admin') }}">Inicio<img src="{{url_for('static', filename='assets/admin-icon.svg')}}" alt="" width="20" height="20" class="d-inline-block align-text-center m-1" ></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="{{ ('/perfilUser') }}">Perfil -- {{ current_user.username }}</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="{{ ('/homeUser') }}">Noticias</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Herramientas
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{{ ('/admin-view') }}">Usuarios<img src="{{url_for('static', filename='assets/user-icon.svg')}}" alt="" width="20" height="20" class="d-inline-block align-text-center m-1" ></a></li>
+                  <li><a class="dropdown-item" href="{{ ('/admin-operations') }}">Operaciones<img src="{{url_for('static', filename='assets/administrator-tools-icon.svg')}}" alt="" width="20" height="20" class="d-inline-block align-text-center m-1" ></a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{{ ('/admin-articles-view') }}">Artículos<img src="{{url_for('static', filename='assets/articles-icon.svg')}}" alt="" width="20" height="20" class="d-inline-block align-text-center m-1" ></a></li> 
+                  <li><a class="dropdown-item" href="{{ ('/admin-articles-operations') }}">Operaciones<img src="{{url_for('static', filename='assets/job-icon.svg')}}" alt="" width="20" height="20" class="d-inline-block align-text-center m-1" ></a></li> 
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{{ ('/admin-comments-view') }}">Comentarios<img src="{{url_for('static', filename='assets/comments-icon.svg')}}" alt="" width="20" height="20" class="d-inline-block align-text-center m-1" ></a></li> 
+                  <li><a class="dropdown-item" href="{{ ('/admin-articles-operations') }}">Operaciones<img src="{{url_for('static', filename='assets/db-config-icon.svg')}}" alt="" width="20" height="20" class="d-inline-block align-text-center m-1" ></a></li> 
+                </ul>
               </li>
             </ul>
-            <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Busca un artículo" aria-label="Busca un artículo">
-              <button class="btn btn-outline-success" type="submit">Buscar</button>
-            </form>
             <hr>
             <a class="btn btn-secondary my-2" aria-current="page" href="{{ ('/logout') }}">Cerrar Sesión</a>
           </div>
@@ -52,8 +60,8 @@
     </nav>
 </head>
 
-
-  {% block contenido %} {% endblock %}  
+<div class="container mt-5 py-5 mb-5">
+  {% block contenido %} {% endblock %}  </div>
 <!-- ======================= -->
 <!-- FOOTER -->
 <!-- ======================= -->

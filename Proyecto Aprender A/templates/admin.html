@@ -1,4 +1,4 @@
-{% extends "layout.html" %}
+{% extends "layout-for-admin.html" %}
 {% block titulo %} Learn To {% endblock %}
 <!-- Custom CSS -->
 {% block css %}
@@ -6,36 +6,8 @@
 {% endblock %}
 
 {% block contenido %}
-<!-- Nav -->
-<body>
-<div class="nav-admin container mt-5 p-2 m-b-110">
-<nav class="navbar navbar-expand-lg bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Operaciones de administrador</a>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ ('/admin') }}">Inicio</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Herramientas
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{ ('/admin-operations') }}">Usuarios</a></li>
-            <li><a class="dropdown-item" href="{{ ('/admin-operations') }}">Operaciones</a></li>
-            <!-- <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li> -->
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-</div>
 
-
-<div class="container fondo-admin">
+<div class="container mt-5 py-5 mb-5 fondo-admin">
 <img class="img-fondo" src="{{url_for('static', filename='css/pictures/book-open.svg')}}" alt="">
 </div>
 </body>

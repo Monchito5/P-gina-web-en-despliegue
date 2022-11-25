@@ -57,6 +57,13 @@ def index():
 def admin():
     return render_template('admin.html')
 
+@learntoApp.route('/admin-view', methods = ['GET', 'POST'])
+def admin_view():
+    cursor = db.connection.cursor()
+    cursor.execute("SELECT * FROM user")
+    data = cursor.fetchall()
+    return render_template('admin-view.html', user = data)
+
 @learntoApp.route('/admin-operations', methods = ['GET', 'POST'])
 def admin_operations():
     cursor = db.connection.cursor()
@@ -158,10 +165,6 @@ def loginRegister():
         regUser.execute(query, (username, email, hash, fullname, age, schoolgrade))
         db.connection.commit()
 
-        user = User(None, username, email, password, fullname, age, schoolgrade, None)
-        logged_user = ModelUser.login(db, user)
-        login_user(logged_user)
-
         msg = Message(subject="Bienvenido a Learn To", recipients=[email], html=render_template ("email-template.html"))
         mail.send(msg)
         return render_template('loginUser.html')
@@ -185,12 +188,12 @@ def loginUser():
                     return render_template('homeUser.html')
             else:
                 flash("Contraseña incorrecta...")
-                return render_template('loginUser.html')
+                return render_template('login.html')
         else:
             flash("El usuario no se encuentra...")
-            return render_template('loginUser.html')
+            return render_template('login.html')
     else:
-            return render_template('loginUser.html')
+            return render_template('login.html')
 
 
 @learntoApp.route('/logout')
