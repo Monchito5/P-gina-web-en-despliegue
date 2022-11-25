@@ -2,6 +2,7 @@ from multiprocessing import connection
 import re
 from flask import Flask, render_template, session, url_for, request, redirect, jsonify, flash
 from werkzeug.security import generate_password_hash
+from werkzeug.utils import secure_filename
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager, login_user, logout_user, login_required
 from flask_mysqldb import MySQL
@@ -73,16 +74,19 @@ def admin_add():
         fullname = request.form['fullname']
         age = request.form['age']
         schoolgrade = request.form['schoolgrade']
+        auth = request.form['auth']
         hash = generate_password_hash(password) 
-
+        if "img" not in request.files:
+            return redirect("/admin")
+        img  = request.files['img']
+        if img.filename == "":
+            return redirect("/admin")
+        filename = secure_filename(img.filename)
+        img.save(os.path.join(learntoApp.config['UPLOAD_FOLDER'],filename))
         regUser = db.connection.cursor()
-        query = "INSERT INTO user (username, email, password, fullname, age, schoolgrade) VALUES (%s, %s, %s, %s, %s, %s)"
-        regUser.execute(query, (username, email, hash, fullname, age, schoolgrade))
+        query = "INSERT INTO user (username, email, password, fullname, age, schoolgrade, auth, img) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        regUser.execute(query, (username, email, hash, fullname, age, schoolgrade, auth, filename))
         db.connection.commit()
-        user = User(None, username, email, password, fullname, age, schoolgrade, None)
-        logged_user = ModelUser.login(db, user)
-        login_user(logged_user)
-
         flash('Usuario agregado exitosamente')
         return redirect(url_for('admin_operations'))
     else:
@@ -106,21 +110,32 @@ def admin_edit(id):
     data = cursor.fetchall()
     
     # Editar - Actualización de los datos de usuario --------->
-@learntoApp.route('/edit_update/<int:id>', methods = ['POST'])
-def admin_edit_update(id):
+@learntoApp.route('/edit_update', methods = ['POST'])
+def admin_edit_update():
     if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
+        password = request.form['password']
         fullname = request.form['fullname']
         age = request.form['age']
         schoolgrade = request.form['schoolgrade']
         auth = request.form['auth']
-    cursor = db.connection.cursor()
-    cursor.execute("""UPDATE user
-    SET username = %s, email = %s, 
-        fullname = %s, schoolgrade = %s,
-        age = %s, auth = %s 
-    WHERE id = %s""", (username, email, fullname, age, schoolgrade, auth))
+        img = request.form['img']
+        updateUser = db.connection.cursor()
+        if request.files.get('newfoto'):
+            pathimg = './static/img/{}'.format(img)
+            if os.path.exists(pathimg):
+                os.remove(pathimg)
+            newfoto = request.files['newfoto']
+            filename = secure_filename(newfoto.filename)
+            newfoto.save(os.path.join(learntoApp.config['UPLOAD_FOLDER'], filename))
+            updateUser.execute("UPDATE user SET img = %s WHERE id = %s", (filename, id))
+        if password:
+            hash= generate_password_hash(password)
+            updateUser.execute("UPDATE user SET username = %s, email = %s, password = %s, fullname = %s, age = %s, schoolgrade = %s, auth = %s,  WHERE id = %s",(username, email, hash, fullname, age, schoolgrade, auth, id))
+        else:
+            updateUser.execute("UPDATE user SET username = %s, email = %s, fullname = %s, age = %s, schoolgrade = %s, auth = %s WHERE id = %s",(username, email, fullname, age, schoolgrade, auth, id))
+        db.connection.commit()
     flash("Actualización de datos completada")
     return redirect(url_for('admin_operations'))
 
@@ -188,9 +203,10 @@ def logout():
 def passwordR():
     return render_template('passwordRecovery.html')
 
-def pagina_no_encontrada(error):
-    return render_template('404.html'), 404
-    # return redirect(url_for('/index'))
+@learntoApp.errorhandler(401)
+def errorhandler401(e):
+    return render_template('404.html')
+
 
 @learntoApp.route('/protected')
 @login_required
@@ -210,5 +226,6 @@ def perfilUser():
 if __name__=='__main__':
     learntoApp.config.update(DEBUG=True, SECRET_KEY="secret_sauce")
     # learntoApp.add_url_rule('/query_string', view_func=query_string)
-    learntoApp.register_error_handler(404, pagina_no_encontrada)
+    learntoApp.config['UPLOAD_FOLDER'] = './static/uploads'
+    learntoApp.config['ALLOWED_IMAGE_EXTENSIONS'] = ['txt', 'pdf', 'JPEG','JPG','PNG','WEBP', 'GIF']
     learntoApp.run(debug=True, port=3300)

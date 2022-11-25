@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/admin-anim_styles.css')}}">
 <link rel="stylesheet" href="{{url_for('static', filename='css/admin_styles.css')}}"/>
 <link rel="stylesheet" href="{{url_for('static', filename='css/animate-admin_copy.css')}}"/>
+<link rel="stylesheet" href="{{url_for('static', filename='css/login_styles.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='css/shakeanim.css')}}">
 <!-- DataTable -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
 <!-- Font Awesome -->
@@ -60,12 +62,13 @@
                           <th class="column100 column5 centered" data-column="column5">Edad</th>
                           <th class="column100 column6 centered" data-column="column6">Grado de estudios</th>
                           <th class="column100 column7 centered" data-column="column7">Tipo de Usuario</th>
-                          <th class="column100 column8 centered" data-column="column8">Edición</th>
+                          <th class="column100 column7 centered" data-column="column8">Foto</th>
+                          <th class="column100 column8 centered" data-column="column9">Edición</th>
                       </tr>
                   </thead>
                   <tfoot class="row100">
                     <tr>
-                      <td class="centered" colspan="8">
+                      <td class="centered" colspan="9">
                         <button class="btn btn-sm btn-success m-1 rowAdd" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#exampleModal" role="button"><i class="fa-solid fa-user-plus"></i></button>
                       </td>
                     </tr>
@@ -80,9 +83,10 @@
                             <td class="column100 column5 centered" data-column="column5">{{ row.5 }}</td>
                             <td class="column100 column6 centered" data-column="column6">{{ row.6 }}</td>
                             <td class="column100 column7 centered" data-column="column7">{{ row.7 }}</td>
-                            <td class="column100 column8 centered" data-column="column8">
+                            <td class="column100 column8 centered" data-column="column8">{{ row.8 }}</td>
+                            <td class="column100 column9 centered" data-column="column9">
                                 <a href="/edit/{{row.0}}"><button class="btn btn-sm btn-primary m-1"><i class="fa-solid fa-pencil"></i></button></a>
-                                <a href="/delete/{{row.0}}"><button class="btn btn-sm btn-danger m-1" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-trash-can"></i></button></a>
+                                <a href="/delete/{{row.0}}"><button class="btn btn-sm btn-danger m-1" data-bs-toggle="modal" data-bs-target="#delete"><i class="fa-solid fa-trash-can"></i></button></a>
                             </td>
                         </tr>
                     {% endfor%}
@@ -97,12 +101,12 @@
 
  <!-- Ventana eliminar -->
  <!-- Button trigger modal -->
- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+ <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete">
    Open Delete
  </button>
  
  <!-- Modal  agregar -->
- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog">
      <div class="modal-content">
        <div class="modal-header">
@@ -110,7 +114,7 @@
          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
        </div>
        <div class="modal-body">
-  <form action="/add/" method="post" class="formulario">
+  <form action="/add" method="post" class="formulario">
   <h1>Registrate</h1>
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <div class="container">
@@ -154,7 +158,22 @@
       <img src="{{url_for('static', filename='assets/key-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
        <input type="password" class="form-control" placeholder="Contraseña" name="password" required>
     </div>
+
+    <div class="input-group mt-3 mb-3">
+      <img src="{{url_for('static', filename='assets/student-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
+      <select class="form-select" id="inputGroupSelect02" name="auth" required>
+        <option selected>Elige tu modo de perfil</option>
+        <option value="A">Administrador</option>
+        <option value="U">Usuario</option>
+      </select>
+      <label class="input-group-text" for="inputGroupSelect02">Opciones</label>
+    </div>
        
+    <div>
+      <label for="formFileLg" class="form-label">Agregar foto</label>
+      <input class="form-control form-control-lg" id="formFileLg" type="file" required>
+    </div>
+
     <div class="col-12">
       <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
@@ -173,13 +192,15 @@
        </div>
        <div class="modal-footer">
          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <a href="/add/"><button type="submit" class="btn btn-primary">Continuar</button></a>
+        <button type="submit" class="btn btn-primary">Continuar</button>
        </div>
      </div>
    </div>
  </div>
 
- <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+
+ 
+ <div class="modal fade" id="delete" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -211,6 +232,7 @@
       </div>
     </div>
   </div>
+
   <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Open</a>
  
   <!-- Scrollable modal -->
