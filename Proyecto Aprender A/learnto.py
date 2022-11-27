@@ -47,17 +47,18 @@ def after_request(response):
     return response
 
 @learntoApp.route('/')
-def index():
+def index():        
     return render_template('home.html')
-
     # ==============================
     # Rutas administrador y modales
     # ==============================
 @learntoApp.route('/admin')
+@login_required
 def admin():
     return render_template('admin.html')
 
 @learntoApp.route('/admin-view', methods = ['GET', 'POST'])
+@login_required
 def admin_view():
     cursor = db.connection.cursor()
     cursor.execute("SELECT * FROM user")
@@ -65,6 +66,7 @@ def admin_view():
     return render_template('admin-view.html', user = data)
 
 @learntoApp.route('/admin-operations', methods = ['GET', 'POST'])
+@login_required
 def admin_operations():
     cursor = db.connection.cursor()
     cursor.execute("SELECT * FROM user")
@@ -167,9 +169,9 @@ def loginRegister():
 
         msg = Message(subject="Bienvenido a Learn To", recipients=[email], html=render_template ("email-template.html"))
         mail.send(msg)
-        return render_template('loginUser.html')
+        return render_template('login.html')
     else:
-        return render_template('loginRegister.html')
+        return render_template('login.html')
 
     # ==============================
     # Login
@@ -206,10 +208,9 @@ def logout():
 def passwordR():
     return render_template('passwordRecovery.html')
 
-@learntoApp.errorhandler(401)
+@learntoApp.errorhandler(404)
 def errorhandler401(e):
     return render_template('404.html')
-
 
 @learntoApp.route('/protected')
 @login_required

@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{{url_for('static', filename='navbar-top-fixed.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/carrousel.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/layout-main.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='scss/bg-color.scss')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='scss/custom.scss')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='scss/variables.scss')}}">
     <link rel="shortcut icon" href="{{url_for('static', filename='assets/book-open.svg')}}" type="image/x-icon">
     <title>{% block titulo %} {% endblock %}</title>
     {% block css %} {% endblock %}
@@ -18,7 +21,7 @@
 <!-- ================================ -->
     <nav class="navbar bg-light fixed-top">
       <div class="container-fluid">
-        <a href="/admin"><img src="{{url_for('static', filename='assets/book-open.svg')}}" alt="" width="70" height="44" class="d-inline-block align-text-top"></a>
+        <a href="{{ ('/') }}"><img src="{{url_for('static', filename='assets/book-open.svg')}}" alt="" width="70" height="44" class="d-inline-block align-text-top"></a>
         <a class="navbar-brand" href="{{ ('/admin') }}">Operaciones de administrador</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
           <span class="navbar-toggler-icon"></span>
@@ -34,7 +37,7 @@
                 <a class="nav-link active" aria-current="page" href="{{ ('/admin') }}">Inicio<img src="{{url_for('static', filename='assets/admin-icon.svg')}}" alt="" width="20" height="20" class="d-inline-block align-text-center m-1" ></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ ('/perfilUser') }}">Perfil -- {{ current_user.username }}</a>
+                <a class="nav-link active" aria-current="page" href="{{ ('/perfilUser') }}">Perfil {{ current_user.username }}</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -53,7 +56,11 @@
               </li>
             </ul>
             <hr>
+            {% if current_user.is_anonymous %}
+            <p></p>
+            {% else %}
             <a class="btn btn-secondary my-2" aria-current="page" href="{{ ('/logout') }}">Cerrar Sesión</a>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -61,7 +68,8 @@
 </head>
 
 <div class="container mt-5 py-5 mb-5">
-  {% block contenido %} {% endblock %}  </div>
+  {% block contenido %} {% endblock %}
+</div>
 <!-- ======================= -->
 <!-- FOOTER -->
 <!-- ======================= -->
@@ -71,6 +79,15 @@
     <footer class="py-5">
       <div class="row">
         <div class="col-6 col-md-2 mb-3">
+          <h5>Secciones</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Inicio</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Noticias</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Sobre nosotros</a></li>
+          </ul>
+        </div>
+  
+        <div class="col-6 col-md-2 mb-3 invisible">
           <h5>Section</h5>
           <ul class="nav flex-column">
             <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
@@ -81,18 +98,7 @@
           </ul>
         </div>
   
-        <div class="col-6 col-md-2 mb-3">
-          <h5>Section</h5>
-          <ul class="nav flex-column">
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-          </ul>
-        </div>
-  
-        <div class="col-6 col-md-2 mb-3">
+        <div class="col-6 col-md-2 mb-3 invisible">
           <h5>Section</h5>
           <ul class="nav flex-column">
             <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
@@ -104,34 +110,33 @@
         </div>
   
         <div class="col-md-5 offset-md-1 mb-3">
+          {% if current_user.is_anonymous %}
           <form action="/loginUser" method="post">
             <h5>Inicia Sesión</h5>
             <p>Para ver más contenido únete a la comunidad.</p>
               <a class="btn btn-primary" href="/loginUser">Iniciar Sesion</a>
-              <br><br><div class="redes-footer">
+          <br><br>
+          {% else %}
+            <p></p>
+          {% endif %}
+              <div class="redes-footer">
                 <h5>Síguenos</h5>
-                  <a target="_blank" href="https://www.facebook.com/ApockGraficos"><i class="fab fa-facebook-square"></i></a>
-                  <a target="_blank" href="https://twitter.com/ApockGraficos"><i class="fab fa-twitter"></i></a>
-                  <a target="_blank" href="https://www.instagram.com/ApockGraficos"><i class="fab fa-instagram"></i></a>
-                  <a target="_blank" href="https://www.youtube.com/channel/UC15DkMZQ80aoW_Rqk4n2T_w"><i class="fab fa-youtube"></i></a>
+                  <a target="_blank" href="#"><img src="{{url_for('static', filename='assets/fb-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-top"></a>
+                  <a target="_blank" href="#"><img src="{{url_for('static', filename='assets/ig-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-top"></a>
+                  <a target="_blank" href="#"><img src="{{url_for('static', filename='assets/yt-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-top"></a>              
               </div>
-            </div>
           </form>
         </div>
       </div>
       <div class="container">
       <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
         <p>&copy; 2022 Learn To, D-Corp. Todos los derechos reservados.</p>
-        <ul class="list-unstyled d-flex">
-          <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
-          <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
-          <li class="ms-3"><a class="link-dark" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
-        </ul>
       </div>
     </div>
     </footer>
   </div>
 </div>
+
 
 {% block js %} {% endblock %}
 </html>

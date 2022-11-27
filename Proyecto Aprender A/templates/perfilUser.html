@@ -1,58 +1,376 @@
-{% extends "layout.html" %}
-{% block titulo %} Usuario {% endblock %}
-<!-- Custom CSS -->
-{% block css %}
-<link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-<link rel="stylesheet" href="{{url_for('static', filename='css/user_styles.css')}}">
-<style>
-    .mensaje a {
-        color: inherit;
-        margin-right: .5rem;
-        display: inline-block;
-    }
-    .mensaje a:hover {
-        color: #309B76;
-        transform: scale(1.4)
-    }
-    </style>
-{% endblock %}
+{% extends "layout-for-user.html" %}
+{% block titulo %} Perfil {{ current_user.username }} {% endblock %}
 
 {% block contenido %}
-<section class="perfil-usuario">
-    <div class="contenedor-perfil">
-        <div class="portada-perfil" style="background-image: url('http://localhost/multimedia/relleno/fondo-9.png');">
-            <div class="sombra"></div>
-            <div class="avatar-perfil">
-                <img src="http://localhost/multimedia/relleno/img-c9.png" alt="img">
-                <a href="#" class="cambiar-foto">
-                    <i class="fas fa-camera"></i> 
-                    <span>Cambiar foto</span>
-                </a>
-            </div>
-            <div class="datos-perfil">
-                <h4 class="titulo-usuario">{{ current_user.fullname }}</h4>
-                <p class="bio-usuario">Lorem ipsum dolor sit, amet consectetur adipisicing.</p>
-                <ul class="lista-perfil">
-                    <li>35 Seguidores</li>
-                    <li>7 Seguidos</li>
-                    <li>32 Publicaciones</li>
-                </ul>
-            </div>
-            <div class="opcciones-perfil">
-                <button type="">Cambiar portada</button>
-                <button type=""><i class="fas fa-wrench"></i></button>
-            </div>
-        </div>
-        <div class="menu-perfil">
-            <ul>
-                <li><a href="#" title=""><i class="icono-perfil fas fa-bullhorn"></i> Publicaciones</a></li>
-                <li><a href="#" title=""><i class="icono-perfil fas fa-info-circle"></i> Informacion</a></li>
-                <li><a href="#" title=""><i class="icono-perfil fas fa-grin"></i> Amigos 43</a></li>
-                <li><a href="#" title=""><i class="icono-perfil fas fa-camera"></i> Fotos</a></li>
-            </ul>
-        </div>
+<body id="page" class="logged-in not-pro not-player self not-team not-on-team mt-5">
+    <div class="ajax notice hide">
+      <h2></h2>
     </div>
-</section>
-</body>
+    <div id="wrap">
+        <div class="profile-masthead self">
+          <section class="profile-simple-masthead">
+      <div class="container-large masthead-wrapper">
+        <div class="masthead-avatar">
+          <img class="profile-avatar" alt="" src="https://cdn.dribbble.com/users/14060952/avatars/normal/data?1669524605" />
+        </div>
+        <div class="masthead-content">
+          <h1 class="masthead-profile-name">{{ current_user.fullname }}</h1>
+            <p class="masthead-profile-schoolgrade">{{ current_user.schoolgrade }}</p>
+            <p class="masthead-profile-specializations">
+            </p>
+          <div class="masthead-actions">
+            
+    <div class="profile-action-buttons">
+        <a class="form-btn outlined profile-action-item" href="/account/profile">Edit Profile</a>
+      
+      
+        <span class="profile-action-item action-menu-wrapper">
+          
+    <div class="profile-actions-menu actions-menu-relative-container js-actions-menu">
+      <a href="#" class="action-menu-trigger form-btn outlined">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="16" viewBox="0 0 16 16" width="16" role="img" class="icon fill-current"><clipPath id="a"><path d="m0 0h16v16h-16z"></path></clipPath><g clip-path="url(#a)"><path d="m8 6c-.53043 0-1.03914.21071-1.41421.58579-.37508.37507-.58579.88378-.58579 1.41421s.21071 1.03914.58579 1.41421c.37507.37508.88378.58579 1.41421.58579s1.03914-.21071 1.41421-.58579c.37508-.37507.58579-.88378.58579-1.41421s-.21071-1.03914-.58579-1.41421c-.37507-.37508-.88378-.58579-1.41421-.58579zm-6 0c-.53043 0-1.039141.21071-1.414214.58579-.375072.37507-.585786.88378-.585786 1.41421s.210714 1.03914.585786 1.41421c.375073.37508.883784.58579 1.414214.58579s1.03914-.21071 1.41421-.58579c.37508-.37507.58579-.88378.58579-1.41421s-.21071-1.03914-.58579-1.41421c-.37507-.37508-.88378-.58579-1.41421-.58579zm12 0c-.5304 0-1.0391.21071-1.4142.58579-.3751.37507-.5858.88378-.5858 1.41421s.2107 1.03914.5858 1.41421c.3751.37508.8838.58579 1.4142.58579s1.0391-.21071 1.4142-.58579c.3751-.37507.5858-.88378.5858-1.41421s-.2107-1.03914-.5858-1.41421c-.3751-.37508-.8838-.58579-1.4142-.58579z"></path></g></svg>
+      </a>
+      <div class="action-menu-container">
+        <ul class="action-menu-items">
+          <li><a class="show-list-ui" href="/Monchito5/listings">Add or remove from lists…</a></li>
+            <li class="edit-account"><a href="/account">Edit your account settings</a></li>
+            <li class="edit-profile"><a data-open-availability-modal="work-types" href="#">Edit work preferences</a></li>
+    
+      </div>
+    </div>
+        </span>
+    </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+      </div>
+      <div class="container-large">
+      <div class="profile-subnav">
+        <div class="profile-subnav-menu">
+          <nav class="scrolling-subnav">
+            <span class="scroll scroll-backward">
+              <a class="d-none" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" role="img" class="icon ">
+    <path d="M21.5265 8.77171C22.1578 8.13764 22.1578 7.10962 21.5265 6.47555C20.8951 5.84148 19.8714 5.84148 19.24 6.47555L11.9999 13.7465L4.75996 6.47573C4.12858 5.84166 3.10492 5.84166 2.47354 6.47573C1.84215 7.10979 1.84215 8.13782 2.47354 8.77188L10.8332 17.1671C10.8408 17.1751 10.8486 17.183 10.8565 17.1909C11.0636 17.399 11.313 17.5388 11.577 17.6103C11.5834 17.6121 11.5899 17.6138 11.5964 17.6154C12.132 17.7536 12.7242 17.6122 13.1435 17.1911C13.1539 17.1807 13.1641 17.1702 13.1742 17.1596L21.5265 8.77171Z"></path>
+    </svg>
+    </a>
+            </span>
+            <span class="scroll scroll-forward">
+              <a class="d-none" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" role="img" class="icon ">
+    <path d="M21.5265 8.77171C22.1578 8.13764 22.1578 7.10962 21.5265 6.47555C20.8951 5.84148 19.8714 5.84148 19.24 6.47555L11.9999 13.7465L4.75996 6.47573C4.12858 5.84166 3.10492 5.84166 2.47354 6.47573C1.84215 7.10979 1.84215 8.13782 2.47354 8.77188L10.8332 17.1671C10.8408 17.1751 10.8486 17.183 10.8565 17.1909C11.0636 17.399 11.313 17.5388 11.577 17.6103C11.5834 17.6121 11.5899 17.6138 11.5964 17.6154C12.132 17.7536 12.7242 17.6122 13.1435 17.1911C13.1539 17.1807 13.1641 17.1702 13.1742 17.1596L21.5265 8.77171Z"></path>
+    </svg>
+    </a>
+            </span>
+            <ul class="scrolling-subnav-list">
+    
+              <li class="shots empty">
+      <a href="/Monchito5/shots">
+        <span class="label">Shots</span>
+    
+          <span class="count">0</span>
+    </a></li>
+    
+    
+    
+    
+                <li class="boosted shots empty">
+      <a href="/Monchito5/boosts">
+        <span class="label">Boosted Shots</span>
+    
+          <span class="count">0</span>
+    </a></li>
+    
+    
+    
+              <li class="collections active">
+      <a href="/Monchito5/collections">
+        <span class="label">Collections</span>
+    
+          <span class="count">1</span>
+    </a></li>
+    
+    
+              <li class="liked shots empty">
+      <a href="/Monchito5/likes">
+        <span class="label">Liked Shots</span>
+    
+          <span class="count">0</span>
+    </a></li>
+    
+    
+    
+    
+              
+    
+              <li class="about empty">
+      <a href="/Monchito5/about">
+        <span class="label">About</span>
+    
+    </a></li>
+    
+    
+    
+    
+            </ul>
+          </nav>
+        </div>
+    
+      </div>
+    </div>
+    
+    
+      
+    
+      <div id="wrap-inner" class="flushed">
+        <div id="content" role="main">
+          
+    
+    
+    
+    <div id="main" class="main-full" data-user-id=14060952>
+      
+    
+      <div class="container-large">
+        <ol class="js-thumbnail-grid shots-group-list js-shots-group shots-grid">
+          
+    <li id="shot-group-6150129" class="shots-group-item " data-id="6150129">
+      <a class="shots-group" href="/Monchito5/collections/6150129-Background">
+        <div class="shots-group-thumbnails-container disabled-shot-section">
+          <div class="shots-group-thumbnails-content">
+              <div class="lazyload shot-image main-shot-image shot-image-0" data-bg="https://cdn.dribbble.com/users/2156796/screenshots/19992280/epam_3.gif?compress=1&amp;resize=1200x900"></div>
+    
+            <div class="other-shots-container">
+                  <div class="shot-image other-shot-image"></div>
+                  <div class="shot-image other-shot-image"></div>
+                  <div class="shot-image other-shot-image"></div>
+            </div>
+          </div>
+        </div>
+        <div class="shots-group-description-container">
+          <div class="collection-name">
+            Background
+          </div>
+          <div class="shots-group-meta">
+              <span class="shots-count">
+                1 Shot
+              </span>
+              <i>&#8226;</i>
+              <span class="designers-count">
+                1 Designer
+              </span>
+          </div>
+        </div>
+    </a></li>
+    
+        </ol>
+      </div>
+      
+      <div class="back-to-top" style="display: none">
+      <a href="#">
+        <img
+          width="50"
+          height="50"
+          class="lazyloading-hidden lazyload"
+          data-src="https://cdn.dribbble.com/assets/icon-backtotop-d9d209c36a169637612a8fe4a1f15ab9e5763a20dbe5b7706df4e23aadf6052e.png"
+          alt="Back to top"
+        />
+      </a>
+    </div>
+    
+    
+    </div>
+    
+        </div>
+      </div>
+    </div>
+    
+    <hr />
+    
+    <body id="page" class="logged-in not-pro not-player self not-team not-on-team mt-5">
+    <div class="ajax notice hide">
+      <h2></h2>
+    </div>
+    <div id="wrap">
+      
+        <div class="profile-masthead self">
+          <section class="profile-simple-masthead">
+      <div class="container-large masthead-wrapper">
+        <div class="masthead-avatar">
+          <img class="profile-avatar" alt="" src="https://cdn.dribbble.com/users/14060952/avatars/normal/data?1669524605" />
+        </div>
+        <div class="masthead-content">
+          <h1 class="masthead-profile-name">{{ current_user.fullname }}</h1>
+            <p class="masthead-profile-schoolgrade">{{ current_user.schoolgrade }}</p>
+            <p class="masthead-profile-specializations">
+            </p>
+          <div class="masthead-actions">
+            
+    <div class="profile-action-buttons">
+        <a class="form-btn outlined profile-action-item" href="/account/profile">Edit Profile</a>
+      
+      
+        <span class="profile-action-item action-menu-wrapper">
+          
+    <div class="profile-actions-menu actions-menu-relative-container js-actions-menu">
+      <a href="#" class="action-menu-trigger form-btn outlined">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="16" viewBox="0 0 16 16" width="16" role="img" class="icon fill-current"><clipPath id="a"><path d="m0 0h16v16h-16z"></path></clipPath><g clip-path="url(#a)"><path d="m8 6c-.53043 0-1.03914.21071-1.41421.58579-.37508.37507-.58579.88378-.58579 1.41421s.21071 1.03914.58579 1.41421c.37507.37508.88378.58579 1.41421.58579s1.03914-.21071 1.41421-.58579c.37508-.37507.58579-.88378.58579-1.41421s-.21071-1.03914-.58579-1.41421c-.37507-.37508-.88378-.58579-1.41421-.58579zm-6 0c-.53043 0-1.039141.21071-1.414214.58579-.375072.37507-.585786.88378-.585786 1.41421s.210714 1.03914.585786 1.41421c.375073.37508.883784.58579 1.414214.58579s1.03914-.21071 1.41421-.58579c.37508-.37507.58579-.88378.58579-1.41421s-.21071-1.03914-.58579-1.41421c-.37507-.37508-.88378-.58579-1.41421-.58579zm12 0c-.5304 0-1.0391.21071-1.4142.58579-.3751.37507-.5858.88378-.5858 1.41421s.2107 1.03914.5858 1.41421c.3751.37508.8838.58579 1.4142.58579s1.0391-.21071 1.4142-.58579c.3751-.37507.5858-.88378.5858-1.41421s-.2107-1.03914-.5858-1.41421c-.3751-.37508-.8838-.58579-1.4142-.58579z"></path></g></svg>
+      </a>
+      <div class="action-menu-container">
+        <ul class="action-menu-items">
+          <li><a class="show-list-ui" href="/Monchito5/listings">Add or remove from lists…</a></li>
+            <li class="edit-account"><a href="/account">Edit your account settings</a></li>
+            <li class="edit-profile"><a data-open-availability-modal="work-types" href="#">Edit work preferences</a></li>
+    
+      </div>
+    </div>
+        </span>
+    </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+      </div>
+      <div class="container-large">
+      <div class="profile-subnav">
+        <div class="profile-subnav-menu">
+          <nav class="scrolling-subnav">
+            <span class="scroll scroll-backward">
+              <a class="d-none" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" role="img" class="icon ">
+    <path d="M21.5265 8.77171C22.1578 8.13764 22.1578 7.10962 21.5265 6.47555C20.8951 5.84148 19.8714 5.84148 19.24 6.47555L11.9999 13.7465L4.75996 6.47573C4.12858 5.84166 3.10492 5.84166 2.47354 6.47573C1.84215 7.10979 1.84215 8.13782 2.47354 8.77188L10.8332 17.1671C10.8408 17.1751 10.8486 17.183 10.8565 17.1909C11.0636 17.399 11.313 17.5388 11.577 17.6103C11.5834 17.6121 11.5899 17.6138 11.5964 17.6154C12.132 17.7536 12.7242 17.6122 13.1435 17.1911C13.1539 17.1807 13.1641 17.1702 13.1742 17.1596L21.5265 8.77171Z"></path>
+    </svg>
+    </a>
+            </span>
+            <span class="scroll scroll-forward">
+              <a class="d-none" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" role="img" class="icon ">
+    <path d="M21.5265 8.77171C22.1578 8.13764 22.1578 7.10962 21.5265 6.47555C20.8951 5.84148 19.8714 5.84148 19.24 6.47555L11.9999 13.7465L4.75996 6.47573C4.12858 5.84166 3.10492 5.84166 2.47354 6.47573C1.84215 7.10979 1.84215 8.13782 2.47354 8.77188L10.8332 17.1671C10.8408 17.1751 10.8486 17.183 10.8565 17.1909C11.0636 17.399 11.313 17.5388 11.577 17.6103C11.5834 17.6121 11.5899 17.6138 11.5964 17.6154C12.132 17.7536 12.7242 17.6122 13.1435 17.1911C13.1539 17.1807 13.1641 17.1702 13.1742 17.1596L21.5265 8.77171Z"></path>
+    </svg>
+    </a>
+            </span>
+            <ul class="scrolling-subnav-list">
+    
+              <li class="shots empty">
+      <a href="/Monchito5/shots">
+        <span class="label">Shots</span>
+    
+          <span class="count">0</span>
+    </a></li>
+    
+    
+    
+    
+                <li class="boosted shots empty">
+      <a href="/Monchito5/boosts">
+        <span class="label">Boosted Shots</span>
+    
+          <span class="count">0</span>
+    </a></li>
+    
+    
+    
+              <li class="collections active">
+      <a href="/Monchito5/collections">
+        <span class="label">Collections</span>
+    
+          <span class="count">1</span>
+    </a></li>
+    
+    
+              <li class="liked shots empty">
+      <a href="/Monchito5/likes">
+        <span class="label">Liked Shots</span>
+    
+          <span class="count">0</span>
+    </a></li>
+    
+    
+    
+    
+              
+    
+              <li class="about empty">
+      <a href="/Monchito5/about">
+        <span class="label">About</span>
+    
+    </a></li>
+    
+    
+    
+    
+            </ul>
+          </nav>
+        </div>
+    
+      </div>
+    </div>
+    
+    
+      
+    
+      <div id="wrap-inner" class="flushed">
+        <div id="content" role="main">
+          
+    
+    
+    
+    <div id="main" class="main-full" data-user-id=14060952>
+      
+    
+      <div class="container-large">
+        <ol class="js-thumbnail-grid shots-group-list js-shots-group shots-grid">
+          
+    <li id="shot-group-6150129" class="shots-group-item " data-id="6150129">
+      <a class="shots-group" href="/Monchito5/collections/6150129-Background">
+        <div class="shots-group-thumbnails-container disabled-shot-section">
+          <div class="shots-group-thumbnails-content">
+              <div class="lazyload shot-image main-shot-image shot-image-0" data-bg="https://cdn.dribbble.com/users/2156796/screenshots/19992280/epam_3.gif?compress=1&amp;resize=1200x900"></div>
+    
+            <div class="other-shots-container">
+                  <div class="shot-image other-shot-image"></div>
+                  <div class="shot-image other-shot-image"></div>
+                  <div class="shot-image other-shot-image"></div>
+            </div>
+          </div>
+        </div>
+        <div class="shots-group-description-container">
+          <div class="collection-name">
+            Background
+          </div>
+          <div class="shots-group-meta">
+              <span class="shots-count">
+                1 Shot
+              </span>
+              <i>&#8226;</i>
+              <span class="designers-count">
+                1 Designer
+              </span>
+          </div>
+        </div>
+    </a></li>
+    
+        </ol>
+      </div>
+      
+      <div class="back-to-top" style="display: none">
+      <a href="#">
+        <img
+          width="50"
+          height="50"
+          class="lazyloading-hidden lazyload"
+          data-src="https://cdn.dribbble.com/assets/icon-backtotop-d9d209c36a169637612a8fe4a1f15ab9e5763a20dbe5b7706df4e23aadf6052e.png"
+          alt="Back to top"
+        />
+      </a>
+    </div>
+    
+    </div>
+    
+        </div>
+      </div>
+    </div>
+    
+    <hr />
 {% endblock %}
+
+

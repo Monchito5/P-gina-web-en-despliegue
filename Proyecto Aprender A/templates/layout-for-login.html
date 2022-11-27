@@ -1,11 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/animated-login.css')}}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="{{url_for('static', filename='assets/book-open.svg')}}" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}" />
     <title>{% block titulo %} {% endblock %}</title>
-   
     {% block css %} {% endblock %}
 
-{% block js %} {% endblock %}
+<!-- ================================ -->
+<!-- BARRA DE NAVEGACIÓN -->
+<!-- ================================ -->
+<nav class="navbar bg-light fixed-top shadow">
+    <div class="container-fluid">
+      <a href="/"><img src="{{url_for('static', filename='assets/book-open.svg')}}" alt="" width="70" height="44" class="d-inline-block align-text-top"></a>
+      <a class="navbar-brand" href="{{ ('/') }}">Learn To</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{ ('/') }}">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{ ('/perfilUser') }}">Perfil {{ current_user.username }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="{{ ('/homeUser') }}">Noticias</a>
+            </li>
+          </ul>
+          <hr>
+          {% if current_user.is_anonymous %}
+          <p></p>
+          {% else %}
+          <a class="btn btn-secondary my-2" aria-current="page" href="{{ ('/logout') }}">Cerrar Sesión</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+</head>
+
+{% block msj %}{% endblock %}
+
+<div class="container-fluid mt-5">
+{% block contenido %} {% endblock %}
+</div>
+<!-- ======================= -->
+<!-- FOOTER -->
+<!-- ======================= -->
+
+<div class="footer-c">
+  <div class="container">
+    <footer class="py-5">
+      <div class="row">
+        <div class="col-6 col-md-2 mb-3">
+          <h5>Secciones</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Inicio</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Noticias</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Sobre nosotros</a></li>
+          </ul>
+        </div>
+  
+        <div class="col-6 col-md-2 mb-3 invisible">
+          <h5>Section</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+          </ul>
+        </div>
+  
+        <div class="col-6 col-md-2 mb-3 invisible">
+          <h5>Section</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+          </ul>
+        </div>
+  
+        <div class="col-md-5 offset-md-1 mb-3">
+          {% if current_user.is_anonymous %}
+          <form action="/loginUser" method="post">
+            <h5>Inicia Sesión</h5>
+            <p>Para ver más contenido únete a la comunidad.</p>
+              <a class="btn btn-primary" href="/loginUser">Iniciar Sesion</a>
+          <br><br>
+          {% else %}
+            <p></p>
+          {% endif %}
+              <div class="redes-footer">
+                <h5>Síguenos</h5>
+                  <a target="_blank" href="#"><img src="{{url_for('static', filename='assets/fb-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-top"></a>
+                  <a target="_blank" href="#"><img src="{{url_for('static', filename='assets/ig-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-top"></a>
+                  <a target="_blank" href="#"><img src="{{url_for('static', filename='assets/yt-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-top"></a>              
+              </div>
+          </form>
+        </div>
+      </div>
+      <div class="container">
+      <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+        <p>&copy; 2022 Learn To, D-Corp. Todos los derechos reservados.</p>
+      </div>
+    </div>
+    </footer>
+  </div>
+</div>
+
+    {% block js %} {% endblock %}
+  </body>
 </html>

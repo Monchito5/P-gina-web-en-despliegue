@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="utf-8" />
+  <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+  <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/layout-main.css')}}">
+  <link rel="shortcut icon" href="{{url_for('static', filename='assets/book-open.svg')}}" type="image/x-icon">
+  <!--[if gte IE 7]><!-->
+<link rel="stylesheet" media="screen" href="https://cdn.dribbble.com/assets/profile-new-5da583f79ae0a3b4c733cfab4975b5fecf4556ccd896f5b5bc667b602174d4c0.css" />
+  <!-- <![endif]-->
+<script src="https://cdn.dribbble.com/assets/packs/js/pro-onboarding.e98c35b46121904c3ad8.js"></script>  
+<link rel="stylesheet" href="https://cdn.dribbble.com/assets/profile-new-async-ba6590f9b834746a7a74fcd7c894ef81eeef94dbb6fc72d15209462d4bc935ec.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://cdn.dribbble.com/assets/profile-new-async-ba6590f9b834746a7a74fcd7c894ef81eeef94dbb6fc72d15209462d4bc935ec.css"></noscript>
+<script src="https://cdn.dribbble.com/assets/packs/js/profile.1bb2971adfc37d0def70.js"></script>
+  <script>
+    if (location.hash.match(/^#\./) && window.history) {
+      window.history.replaceState({}, window.title, location.origin + location.pathname + location.search)
+    }
+  </script>
+  <noscript>
+    <style>ol.dribbbles { display: block !important }</style>
+  </noscript>
+  <title>{% block titulo %} {% endblock %}</title>
+  {% block css %} {% endblock %}
+<!-- ================================ -->
+<!-- BARRA DE NAVEGACIÓN -->
+<!-- ================================ -->
+  <nav class="navbar bg-light fixed-top shadow">
+    <div class="container-fluid">
+      <a href="/"><img src="{{url_for('static', filename='assets/book-open.svg')}}" alt="" width="70" height="44" class="d-inline-block align-text-top"></a>
+      <a class="navbar-brand" href="{{ ('/') }}">Learn To</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menú</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{ ('/') }}">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{{ ('/perfilUser') }}">Perfil {{ current_user.username }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="{{ ('/homeUser') }}">Noticias</a>
+            </li>
+          </ul>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Busca un artículo" aria-label="Busca un artículo">
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+          </form>
+          <hr>
+          {% if current_user.is_anonymous %}
+          <p></p>
+          {% else %}
+          <a class="btn btn-secondary my-2" aria-current="page" href="{{ ('/logout') }}">Cerrar Sesión</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+</head>
+
+{% block contenido %} {% endblock %}
+
+<!-- ======================= -->
+<!-- FOOTER -->
+<!-- ======================= -->
+
+<div class="footer-c">
+  <div class="container">
+    <footer class="py-5">
+      <div class="row">
+        <div class="col-6 col-md-2 mb-3">
+          <h5>Secciones</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Inicio</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Noticias</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Sobre nosotros</a></li>
+          </ul>
+        </div>
+  
+        <div class="col-6 col-md-2 mb-3 invisible">
+          <h5>Section</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+          </ul>
+        </div>
+  
+        <div class="col-6 col-md-2 mb-3 invisible">
+          <h5>Section</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+          </ul>
+        </div>
+  
+        <div class="col-md-5 offset-md-1 mb-3">
+          {% if current_user.is_anonymous %}
+          <form action="/loginUser" method="post">
+            <h5>Inicia Sesión</h5>
+            <p>Para ver más contenido únete a la comunidad.</p>
+              <a class="btn btn-primary" href="/loginUser">Iniciar Sesion</a>
+          <br><br>
+          {% else %}
+            <p></p>
+          {% endif %}
+              <div class="redes-footer">
+                <h5>Síguenos</h5>
+                  <a target="_blank" href="#"><img src="{{url_for('static', filename='assets/fb-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-top"></a>
+                  <a target="_blank" href="#"><img src="{{url_for('static', filename='assets/ig-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-top"></a>
+                  <a target="_blank" href="#"><img src="{{url_for('static', filename='assets/yt-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-top"></a>              
+              </div>
+          </form>
+        </div>
+      </div>
+      <div class="container">
+      <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+        <p>&copy; 2022 Learn To, D-Corp. Todos los derechos reservados.</p>
+      </div>
+    </div>
+    </footer>
+  </div>
+</div>
+
+{% block js %} {% endblock %}
+</body></html>
