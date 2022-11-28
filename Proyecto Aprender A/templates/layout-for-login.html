@@ -12,7 +12,7 @@
 <!-- ================================ -->
 <!-- BARRA DE NAVEGACIÓN -->
 <!-- ================================ -->
-<nav class="navbar bg-light fixed-top shadow">
+<nav class="navbar bg-light fixed-top shadow navbar-ly">
     <div class="container-fluid">
       <a href="/"><img src="{{url_for('static', filename='assets/book-open.svg')}}" alt="" width="70" height="44" class="d-inline-block align-text-top"></a>
       <a class="navbar-brand" href="{{ ('/') }}">Learn To</a>
@@ -50,15 +50,15 @@
 
 {% block msj %}{% endblock %}
 
-<div class="container-fluid mt-5">
+
 {% block contenido %} {% endblock %}
-</div>
+
 <!-- ======================= -->
 <!-- FOOTER -->
 <!-- ======================= -->
 
 <div class="footer-c">
-  <div class="container">
+  <div class="container-sm">
     <footer class="py-5">
       <div class="row">
         <div class="col-6 col-md-2 mb-3">
@@ -111,7 +111,7 @@
           </form>
         </div>
       </div>
-      <div class="container">
+      <div class="container-sm">
       <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
         <p>&copy; 2022 Learn To, D-Corp. Todos los derechos reservados.</p>
       </div>

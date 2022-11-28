@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+body {
+  padding-top: 20px;
+}
+
 body,
 input {
   font-family: "Poppins", sans-serif;

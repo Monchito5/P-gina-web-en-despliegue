@@ -6,15 +6,13 @@ from werkzeug.utils import secure_filename
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager, login_user, logout_user, login_required
 from flask_mysqldb import MySQL
-import datetime
+from datetime import datetime
 from config import config
 import smtplib
 from smtplib import SMTPException
 from threading import Thread
 from flask_mail import Mail, Message
 from email.message import EmailMessage
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 import os
 # Models:
 from models.modelUser import ModelUser
@@ -73,6 +71,12 @@ def admin_operations():
     data = cursor.fetchall()
     return render_template('admin-operations.html', user = data)
 
+    # Agregar ------->
+@learntoApp.route('/login-admin', methods = ['GET', 'POST'])
+@login_required
+def login_admin():
+    return render_template('login-admin.html')
+
     # Agregar - Ruta del botón --------->
 @learntoApp.route('/add', methods=['GET', 'POST'])
 def admin_add():
@@ -85,22 +89,28 @@ def admin_add():
         schoolgrade = request.form['schoolgrade']
         auth = request.form['auth']
         hash = generate_password_hash(password) 
-        if "img" not in request.files:
-            return redirect("/admin")
-        img  = request.files['img']
-        if img.filename == "":
-            return redirect("/admin")
-        filename = secure_filename(img.filename)
-        img.save(os.path.join(learntoApp.config['UPLOAD_FOLDER'],filename))
+        query = "INSERT INTO user (username, email, password, fullname, age, schoolgrade, auth, imgprofile) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        img = request.files['img']
+
+        now = datetime.now()
+        time = now.strftime("%Y%H%M%S")
+
+        if img.filename !='':
+            newNameFoto=time+img.filename
+            img.save("Proyecto Aprender A/uploads/profile/"+newNameFoto)
+
+        datos = (username, email, hash, fullname, age, schoolgrade, auth, newNameFoto)
         regUser = db.connection.cursor()
-        query = "INSERT INTO user (username, email, password, fullname, age, schoolgrade, auth, img) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-        regUser.execute(query, (username, email, hash, fullname, age, schoolgrade, auth, filename))
+        regUser.execute(query, datos)
         db.connection.commit()
+        
+        msg = Message(subject="Bienvenido a Learn To", recipients=[email], html=render_template ("email-template.html"))
+        mail.send(msg)
         flash('Usuario agregado exitosamente')
         return redirect(url_for('admin_operations'))
     else:
         flash('¡Algo salió mal!')
-        return redirect(url_for('admin_operations'))
+        return redirect(url_for('login-admin'))
     
     # Eliminar - Ruta del botón --------->
 @learntoApp.route('/delete/<int:id>')
@@ -131,14 +141,6 @@ def admin_edit_update():
         auth = request.form['auth']
         img = request.form['img']
         updateUser = db.connection.cursor()
-        if request.files.get('newfoto'):
-            pathimg = './static/img/{}'.format(img)
-            if os.path.exists(pathimg):
-                os.remove(pathimg)
-            newfoto = request.files['newfoto']
-            filename = secure_filename(newfoto.filename)
-            newfoto.save(os.path.join(learntoApp.config['UPLOAD_FOLDER'], filename))
-            updateUser.execute("UPDATE user SET img = %s WHERE id = %s", (filename, id))
         if password:
             hash= generate_password_hash(password)
             updateUser.execute("UPDATE user SET username = %s, email = %s, password = %s, fullname = %s, age = %s, schoolgrade = %s, auth = %s,  WHERE id = %s",(username, email, hash, fullname, age, schoolgrade, auth, id))
@@ -229,7 +231,5 @@ def perfilUser():
 
 if __name__=='__main__':
     learntoApp.config.update(DEBUG=True, SECRET_KEY="secret_sauce")
-    # learntoApp.add_url_rule('/query_string', view_func=query_string)
-    learntoApp.config['UPLOAD_FOLDER'] = './static/uploads'
     learntoApp.config['ALLOWED_IMAGE_EXTENSIONS'] = ['txt', 'pdf', 'JPEG','JPG','PNG','WEBP', 'GIF']
     learntoApp.run(debug=True, port=3300)

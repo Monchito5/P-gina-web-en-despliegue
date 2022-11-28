@@ -10,16 +10,13 @@
     <link rel="stylesheet" href="{{url_for('static', filename='navbar-top-fixed.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/carrousel.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/layout-main.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='scss/bg-color.scss')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='scss/custom.scss')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='scss/variables.scss')}}">
     <link rel="shortcut icon" href="{{url_for('static', filename='assets/book-open.svg')}}" type="image/x-icon">
     <title>{% block titulo %} {% endblock %}</title>
     {% block css %} {% endblock %}
 <!-- ================================ -->
 <!-- BARRA DE NAVEGACIÓN -->
 <!-- ================================ -->
-    <nav class="navbar bg-light fixed-top">
+    <nav class="navbar bg-light fixed-top navbar-ly">
       <div class="container-fluid">
         <a href="{{ ('/') }}"><img src="{{url_for('static', filename='assets/book-open.svg')}}" alt="" width="70" height="44" class="d-inline-block align-text-top"></a>
         <a class="navbar-brand" href="{{ ('/admin') }}">Operaciones de administrador</a>

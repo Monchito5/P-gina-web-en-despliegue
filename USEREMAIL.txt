@@ -38,7 +38,7 @@ password SMPT: fgdkyxtwwnjhuzvl
 
 
 peye
-message = Message(subject="�Bienvenido!", recipients=[email], html=render_template ("gmail.html"))
+message = Message(subject="�Bienvenido!", recipients=[email], html=render_template ("gmail.html"))
         mail.send(message)
 
 
@@ -50,3 +50,67 @@ cunfi
     MAIL_PASSWORD = "zuovgpxvcmwchqhc"
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
+
+         <form action="/add" class="sign-up-form" method="post">
+            <h2 class="title">Regístrar usuario</h2>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="input-field">
+                <i class="fas fa-user"></i>
+                <input name="fullname" type="text" placeholder="Nombre Completo" required>
+              </div>
+            <div class="input-field">
+              <i class="fas fa-user"></i>
+              <input name="username" type="text" placeholder="Username" required>
+            </div>
+            <div class="input-field mb-3 py-2">
+                <img src="{{url_for('static', filename='assets/number-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" style="opacity: 0.3;">
+                <input type="number" class="form-control" placeholder="Ingresa tu edad" id="tentacles" name="age" min="0" max="100" required>
+            </div>
+            <div class="input-field">
+              <i class="fas fa-envelope"></i>
+              <input name="email" type="email" placeholder="Email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" required>
+            </div>
+            <div class="input-field">
+              <i class="fas fa-lock"></i>
+              <input name="password" type="password" placeholder="Contraseña" required>
+            </div>
+            <div class="grid text-center rounded" style="background-color: rgba(216, 237, 255, 0);">
+                <div class="g-col-9">
+                    <div class="input-group mt-3 mb-2 g-start-2 input-school">
+                        <img src="{{url_for('static', filename='assets/school-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" style="opacity: 0.3;">
+                        <select class="form-select" id="inputGroupSelect02" name="schoolgrade" required>
+                          <option selected>Elige tu nivel de estudios...</option>
+                          <option value="Ninguno">Ninguno</option>
+                          <option value="Primaria">Primaria</option>
+                          <option value="Secundaria">Secundaria</option>
+                          <option value="Preparatoria">Preparatoria</option>
+                          <option value="Licenciatura">Licenciatura</option>
+                          <option value="Ingenieria">Ingeniería</option>
+                          <option value="Doctorado">Doctorado</option>
+                        </select>
+                        <label class="input-group-text" for="inputGroupSelect02">Opciones</label>
+                    </div>
+                </div>
+            </div>
+            <div class="grid text-center rounded" style="background-color: rgba(216, 237, 255, 0);">
+              <div class="g-col-9">
+                  <div class="input-group mt-3 mb-2 g-start-2 input-school">
+                      <img src="{{url_for('static', filename='assets/admin-user-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" style="opacity: 0.3;">
+                      <select class="form-select" id="inputGroupSelect02" name="auth" required>
+                        <option selected>Elige tu perfil...</option>
+                        <option value="Ninguno">Ninguno</option>
+                        <option value="U">Usuario</option>
+                        <option value="A">Administrador</option>
+                      </select>
+                      <label class="input-group-text" for="inputGroupSelect02">Opciones</label>
+                  </div>
+              </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="formFile" class="form-label">Selecciona una foto de perfil</label>
+            <input name="img" class="form-control" type="file" id="formFile">
+          </div>
+            <br>
+            <input type="submit" class="btn-b" value="Continuar" required>
+          </form>

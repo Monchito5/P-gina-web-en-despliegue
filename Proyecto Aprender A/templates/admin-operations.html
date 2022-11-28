@@ -6,8 +6,7 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/admin-anim_styles.css')}}">
 <link rel="stylesheet" href="{{url_for('static', filename='css/admin_styles.css')}}"/>
 <link rel="stylesheet" href="{{url_for('static', filename='css/animate-admin_copy.css')}}"/>
-<link rel="stylesheet" href="{{url_for('static', filename='css/login_styles.css')}}">
-<link rel="stylesheet" href="{{url_for('static', filename='css/shakeanim.css')}}">
+
 <!-- DataTable -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
 <!-- Font Awesome -->
@@ -40,7 +39,7 @@
                   <tfoot class="row100">
                     <tr>
                       <td class="centered" colspan="9">
-                        <button class="btn btn-sm btn-success m-1 rowAdd" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#exampleModal" role="button"><i class="fa-solid fa-user-plus"></i></button>
+                        <a href="{{ '/login-admin' }}"><button class="btn btn-sm btn-success m-1 rowAdd" role="button"><i class="fa-solid fa-user-plus"></i></button></a>
                       </td>
                     </tr>
                   </tfoot>
@@ -76,100 +75,6 @@
    Open Delete
  </button>
  
- <!-- Modal  agregar -->
- <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
-     <div class="modal-content">
-       <div class="modal-header">
-         <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar Usuario</h1>
-         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-       </div>
-       <div class="modal-body">
-  <form action="/add" method="post" class="formulario">
-  <h1>Registrate</h1>
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-  <div class="container">
-   
-    <div class="input-group mt-3 mb-3">
-      <img src="{{url_for('static', filename='assets/user-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
-      <input type="text" class="form-control" placeholder="Nombre Completo" name="fullname" required>
-    </div>
-       
-    <div class="input-group mt-3 mb-3">
-      <img src="{{url_for('static', filename='assets/cat-profile-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
-      <input type="text" class="form-control" placeholder="Apodo" name="username" required>
-   </div>
-    
-    <div class="input-group mt-3 mb-3">
-      <img src="{{url_for('static', filename='assets/student-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
-      <select class="form-select" id="inputGroupSelect02" name="schoolgrade" required>
-        <option selected>Elige tu nivel de estudios...</option>
-        <option value="Ninguno">Ninguno</option>
-        <option value="Primaria">Primaria</option>
-        <option value="Secundaria">Secundaria</option>
-        <option value="Preparatoria">Preparatoria</option>
-        <option value="Licenciatura">Licenciatura</option>
-        <option value="Ingenieria">Ingeniería</option>
-        <option value="Doctorado">Doctorado</option>
-      </select>
-      <label class="input-group-text" for="inputGroupSelect02">Opciones</label>
-    </div>
-
-    <div class="input-group mt-3 mb-3p">
-      <img src="{{url_for('static', filename='assets/age-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1">
-      <input type="number" class="form-control" placeholder="Ingresa tu edad" id="tentacles" name="age" min="0" max="100" required>
-    </div>
-
-    <div class="input-group mt-3 mb-3">
-      <img src="{{url_for('static', filename='assets/email-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
-       <input type="email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" class="form-control" placeholder="Correo Electronico" name="email"  required>
-    </div>
-       
-    <div class="input-group mt-3 mb-3">
-      <img src="{{url_for('static', filename='assets/key-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
-       <input type="password" class="form-control" placeholder="Contraseña" name="password" required>
-    </div>
-
-    <div class="input-group mt-3 mb-3">
-      <img src="{{url_for('static', filename='assets/student-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-center m-1" >
-      <select class="form-select" id="inputGroupSelect02" name="auth" required>
-        <option selected>Elige tu modo de perfil</option>
-        <option value="A">Administrador</option>
-        <option value="U">Usuario</option>
-      </select>
-      <label class="input-group-text" for="inputGroupSelect02">Opciones</label>
-    </div>
-       
-    <div>
-      <label for="formFileLg" class="form-label">Agregar foto</label>
-      <input class="form-control form-control-lg" id="formFileLg" type="file" required>
-    </div>
-
-    <div class="col-12">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-        <label class="form-check-label" for="invalidCheck">
-         Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.
-        </label>
-        <div class="invalid-feedback">
-          Es necesario aceptar los términos y condiciones para continuar con el registro.
-        </div>
-      </div>
-    </div>
-    <br>
-      <hr>
-  </div>
-  </form>
-       </div>
-       <div class="modal-footer">
-         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="submit" class="btn btn-primary">Continuar</button>
-       </div>
-     </div>
-   </div>
- </div>
-
-
  
  <div class="modal fade" id="delete" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -202,13 +107,7 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Open</a>
- 
-  <!-- Scrollable modal -->
-
-  
+  </div>  
 </div>
 
 {% endblock %}
