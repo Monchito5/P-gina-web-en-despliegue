@@ -71,13 +71,70 @@ def admin_operations():
     data = cursor.fetchall()
     return render_template('admin-operations.html', user = data)
 
-    # Agregar ------->
+@learntoApp.route('/admin-articles-view', methods = ['GET', 'POST'])
+@login_required
+def articles_view():
+    cursor = db.connection.cursor()
+    cursor.execute("SELECT * FROM articles")
+    data = cursor.fetchall()
+    return render_template('articles-view.html', articles = data)
+
+@learntoApp.route('/admin-articles-operations', methods = ['GET', 'POST'])
+@login_required
+def articles_operations():
+    cursor = db.connection.cursor()
+    cursor.execute("SELECT * FROM articles")
+    data = cursor.fetchall()
+    return render_template('articles-operations.html', articles = data)
+
+    # Agregar artículo ------->
+
+    # Agregar artículo - Ruta del botón --------->
+
+    # Eliminar artículo ------->
+
+    # Eliminar artículo - Ruta del botón --------->
+
+    # Editar artículo ------->
+
+    # Editar artículo - Ruta del botón --------->
+
+    # Agregar usuario ------->
+
+@learntoApp.route('/admin-comments-view', methods = ['GET', 'POST'])
+@login_required
+def comments_view():
+    cursor = db.connection.cursor()
+    cursor.execute("SELECT * FROM comments")
+    data = cursor.fetchall()
+    return render_template('comments-view.html', comments = data)
+
+@learntoApp.route('/admin-comments-operations', methods = ['GET', 'POST'])
+@login_required
+def comments_operations():
+    cursor = db.connection.cursor()
+    cursor.execute("SELECT * FROM comments")
+    data = cursor.fetchall()
+    return render_template('comments-operations.html', comments = data)
+
+    # Agregar comentario ------->
+
+    # Agregar comentario - Ruta del botón --------->
+
+    # Eliminar comentario ------->
+
+    # Eliminar comentario - Ruta del botón --------->
+
+    # Editar comentario ------->
+
+    # Editar comentario - Ruta del botón --------->
+
 @learntoApp.route('/login-admin', methods = ['GET', 'POST'])
 @login_required
 def login_admin():
     return render_template('login-admin.html')
 
-    # Agregar - Ruta del botón --------->
+    # Agregar usuario - Ruta del botón --------->
 @learntoApp.route('/add', methods=['GET', 'POST'])
 def admin_add():
     if request.method == 'POST':
@@ -112,7 +169,7 @@ def admin_add():
         flash('¡Algo salió mal!')
         return redirect(url_for('login-admin'))
     
-    # Eliminar - Ruta del botón --------->
+    # Eliminar usuario - Ruta del botón --------->
 @learntoApp.route('/delete/<int:id>')
 def admin_delete(id):
         cursor = db.connection.cursor()
@@ -121,7 +178,7 @@ def admin_delete(id):
         flash('Usuario eliminado exitosamente')
         return redirect(url_for('admin_operations'))
     
-    # Editar - Ruta del botón --------->
+    # Editar usuario - Ruta del botón --------->
 @learntoApp.route('/edit/<int:id>')
 def admin_edit(id):
     cursor = db.connection.cursor()

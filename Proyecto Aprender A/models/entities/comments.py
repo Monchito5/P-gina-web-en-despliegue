@@ -6,4 +6,3 @@ class comments:
     idc: int
     date: str
     contents :str
-    reaction: str

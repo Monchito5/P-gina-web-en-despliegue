@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-11-2022 a las 05:55:18
+-- Tiempo de generación: 29-11-2022 a las 05:03:18
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -33,7 +33,6 @@ CREATE TABLE `article` (
   `idc` int(11) NOT NULL,
   `title` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `content` text COLLATE utf8_spanish_ci NOT NULL,
-  `views` int(11) NOT NULL,
   `pdate` date NOT NULL,
   `learningchannel` varchar(20) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -47,8 +46,7 @@ CREATE TABLE `article` (
 CREATE TABLE `comments` (
   `idc` int(11) NOT NULL,
   `date` date NOT NULL,
-  `contents` text COLLATE utf8_spanish_ci NOT NULL,
-  `reaction` varchar(50) COLLATE utf8_spanish_ci NOT NULL
+  `contents` text COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -77,8 +75,8 @@ INSERT INTO `user` (`id`, `username`, `email`, `password`, `fullname`, `age`, `s
 (1, 'Monchonetreitor', 'guille2807lol@gmail.com', 'pbkdf2:sha256:260000$BFFHjvkFCqVYnpUD$37275b500b1a32af81d6c47eda631d942c90ca31085d297febc9d70175e2df4d', 'GUILLERMO DANIEL ZARAGOZA CASTRO', '20', 'preparatoria', 'A', ''),
 (2, 'Pancho', 'panchito5@gmail.com', 'pbkdf2:sha256:260000$qylavDl4SkA2cu3n$e9bc8aa4f8d8c583159dd75c18f7059416fdbb08b22f939ee02b22ee133f7c58', 'Francisco Valle', '54', 'primaria', 'U', ''),
 (19, 'Eric Aitor García', 'eric007garcia@gmail.com', 'pbkdf2:sha256:260000$bWjYTV1FURrRFpH8$f343f9f1c3074f8423ba903b1e12be4c8f25e94310fbb85b518be6155da2b0d6', 'Eric Fernando García Y Ramos', '37', 'Licenciatura', 'U', ''),
-(23, 'Oscarín', 'learntoapplication@gmail.com', 'pbkdf2:sha256:260000$b1ZpJvprQ2lZhMyw$d40c23ced06b9731371fa8f7fa799783ce365e5bf1f2fe930996b85e80fb5312', 'Óscar Maya', '27', 'Licenciatura', 'U', ''),
-(26, 'RouSan', 'sandyros.16.09@gmail.com', 'pbkdf2:sha256:260000$uzmpjPnpnz8wIbyI$2839948e48ee38520465eefa88d0d55b5e3a2db5e9620afbd7166a20bf5e2ced', 'Sandra Yessica Del Rocío Zaragoza Castro', '21', 'Licenciatura', 'U', '');
+(26, 'RouSan', 'sandyros.16.09@gmail.com', 'pbkdf2:sha256:260000$uzmpjPnpnz8wIbyI$2839948e48ee38520465eefa88d0d55b5e3a2db5e9620afbd7166a20bf5e2ced', 'Sandra Yessica Del Rocío Zaragoza Castro', '21', 'Licenciatura', 'U', ''),
+(30, 'Oscarín', 'learntoapplication@gmail.com', 'pbkdf2:sha256:260000$XRwrijcJMmaIBzmu$0ab98942af421ede92da3b0afa19114ea14453309eb7a0fd5f8d72970348fa51', 'Óscar Maya', '25', 'Ingenieria', 'U', '2022005317learn.png');
 
 --
 -- Índices para tablas volcadas
@@ -124,7 +122,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Restricciones para tablas volcadas
