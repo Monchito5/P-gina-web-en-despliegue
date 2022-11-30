@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-11-2022 a las 05:03:18
+-- Tiempo de generación: 30-11-2022 a las 04:02:07
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -24,10 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `article`
+-- Estructura de tabla para la tabla `articles`
 --
 
-CREATE TABLE `article` (
+CREATE TABLE `articles` (
   `ida` int(11) NOT NULL,
   `id` int(11) NOT NULL,
   `idc` int(11) NOT NULL,
@@ -36,6 +36,13 @@ CREATE TABLE `article` (
   `pdate` date NOT NULL,
   `learningchannel` varchar(20) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `articles`
+--
+
+INSERT INTO `articles` (`ida`, `id`, `idc`, `title`, `content`, `pdate`, `learningchannel`) VALUES
+(1, 1, 1, 'Programación en Python', 'Fusce posuere mollis urna. Fusce in leo vitae nisl tincidunt dapibus vitae at magna. Suspendisse in metus pulvinar, iaculis enim eget, feugiat tortor. Etiam ac risus pretium, sollicitudin orci quis, gravida libero. Vestibulum eu arcu vestibulum, congue mi luctus, hendrerit ipsum. Mauris quis congue dolor. Fusce et luctus ex. In sed arcu molestie, vestibulum orci quis, condimentum ligula. Morbi tincidunt nisi sem, vitae sodales felis dapibus quis. Vestibulum vel pretium nisl. In fermentum molestie magna ac tempus. Vivamus mollis ligula lorem, ut pharetra magna pellentesque eu. In vestibulum nulla lobortis imperdiet pellentesque.\r\n\r\nSed erat mauris, facilisis a vehicula nec, eleifend vel mauris. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec vehicula metus in magna venenatis dictum. Integer dapibus euismod quam, a ullamcorper turpis efficitur sed. Suspendisse convallis quam sit amet tempor varius. Aliquam aliquet nec elit et pretium. Fusce sollicitudin accumsan egestas. Donec gravida justo facilisis malesuada rhoncus. Mauris eu enim at nibh rutrum mollis. Morbi varius urna a est tempor euismod. Phasellus ornare imperdiet commodo. Nam hendrerit tempus ex, sit amet aliquam augue laoreet sed. Phasellus felis felis, rhoncus nec ligula ac, ultrices sagittis orci. Quisque at luctus urna.\r\n\r\nDonec ac elit eros. Donec est metus, facilisis molestie lacus nec, gravida tristique odio. Morbi eget lectus feugiat, semper nisl nec, egestas dui. Ut vel ultricies velit. Nam blandit pretium elit, eget pellentesque leo rhoncus ac. Curabitur tincidunt non nisi sed consequat. Morbi quis commodo metus, vel convallis ipsum. Nunc et tempor diam. Vestibulum quis gravida dolor. Maecenas ac egestas velit. Quisque tincidunt ullamcorper dictum. In venenatis molestie laoreet.', '2023-03-15', 'Auditivo');
 
 -- --------------------------------------------------------
 
@@ -48,6 +55,13 @@ CREATE TABLE `comments` (
   `date` date NOT NULL,
   `contents` text COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `comments`
+--
+
+INSERT INTO `comments` (`idc`, `date`, `contents`) VALUES
+(1, '2022-11-02', 'comentario');
 
 -- --------------------------------------------------------
 
@@ -83,10 +97,12 @@ INSERT INTO `user` (`id`, `username`, `email`, `password`, `fullname`, `age`, `s
 --
 
 --
--- Indices de la tabla `article`
+-- Indices de la tabla `articles`
 --
-ALTER TABLE `article`
-  ADD PRIMARY KEY (`ida`);
+ALTER TABLE `articles`
+  ADD PRIMARY KEY (`ida`),
+  ADD KEY `id` (`id`),
+  ADD KEY `idc` (`idc`);
 
 --
 -- Indices de la tabla `comments`
@@ -107,38 +123,38 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT de la tabla `article`
+-- AUTO_INCREMENT de la tabla `articles`
 --
-ALTER TABLE `article`
-  MODIFY `ida` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `articles`
+  MODIFY `ida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `idc` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `article`
+-- Filtros para la tabla `articles`
 --
-ALTER TABLE `article`
-  ADD CONSTRAINT `article_ibfk_1` FOREIGN KEY (`ida`) REFERENCES `user` (`id`);
+ALTER TABLE `articles`
+  ADD CONSTRAINT `articles_ibfk_1` FOREIGN KEY (`id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `comments`
 --
 ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`idc`) REFERENCES `article` (`ida`);
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`idc`) REFERENCES `articles` (`idc`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

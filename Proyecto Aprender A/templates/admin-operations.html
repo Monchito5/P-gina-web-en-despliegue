@@ -53,10 +53,13 @@
                             <td class="column100 column5 centered" data-column="column5">{{ row.5 }}</td>
                             <td class="column100 column6 centered" data-column="column6">{{ row.6 }}</td>
                             <td class="column100 column7 centered" data-column="column7">{{ row.7 }}</td>
-                            <td class="column100 column8 centered" data-column="column8">{{ row.8 }}</td>
+                            <td class="column100 column8 centered" data-column="column8">
+                              {{ row.8 }}
+                              <img class="img-thumbnail" width="100" src="Proyecto Aprender A/uploads/profile/{{ row[8] }}" alt="">
+                            </td>
                             <td class="column100 column9 centered" data-column="column9">
                                 <a href="/edit/{{row.0}}"><button class="btn btn-sm btn-primary m-1"><i class="fa-solid fa-pencil"></i></button></a>
-                                <a href="/delete/{{row.0}}"><button class="btn btn-sm btn-danger m-1" data-bs-toggle="modal" data-bs-target="#delete"><i class="fa-solid fa-trash-can"></i></button></a>
+                                <a href="/delete-user/{{row.0}}"><button class="btn btn-sm btn-danger m-1" data-bs-toggle="modal" data-bs-target="#delete"><i class="fa-solid fa-trash-can"></i></button></a>
                             </td>
                         </tr>
                     {% endfor%}

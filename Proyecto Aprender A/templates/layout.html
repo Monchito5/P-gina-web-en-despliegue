@@ -37,11 +37,18 @@
                 <a class="nav-link active" aria-current="page" href="{{ ('/') }}">Inicio</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ ('/perfilUser') }}">Perfil {{ current_user.username }}</a>
+                <a class="nav-link active" aria-current="page" href="{{ ('/perfilUser') }}">Perfil <span class="badge text-bg-primary fs-6">{{ current_user.username }}</span></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link active" href="{{ ('/homeUser') }}">Noticias</a>
               </li>
+              {% if current_user.is_Monchonetreitor %}
+              <li class="nav-item">
+                <a class="nav-link active" href="{{ ('/admin') }}">Vista admin</a>
+              </li>
+              {% else %}
+              <p></p>
+              {% endif %}
             </ul>
             <form class="d-flex" role="search">
               <input class="form-control me-2" type="search" placeholder="Busca un artículo" aria-label="Busca un artículo">

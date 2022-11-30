@@ -1,6 +1,6 @@
 from multiprocessing import connection
 import re
-from flask import Flask, render_template, session, url_for, request, redirect, jsonify, flash
+from flask import Flask, render_template, session, url_for, request, redirect, jsonify, flash, send_from_directory
 from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
 from flask_wtf.csrf import CSRFProtect
@@ -28,6 +28,7 @@ mail = Mail(learntoApp)
 csrf = CSRFProtect(learntoApp)
 db = MySQL(learntoApp)
 login_manager_app = LoginManager(learntoApp)
+folder = os.path.join('Proyecto Aprender A/uploads/profile')
 
 @login_manager_app.user_loader
 def load_user(id):
@@ -44,9 +45,16 @@ def after_request(response):
     print("Después de la petición")
     return response
 
+@learntoApp.route('Proyecto Aprender A/uploads/profile/<imgName>')
+def uploads(imgName):
+    return send_from_directory(learntoApp.config['folder'], imgName)
+
 @learntoApp.route('/')
 def index():        
-    return render_template('home.html')
+    cursor = db.connection.cursor()
+    cursor.execute("SELECT * FROM user JOIN articles ON ida")
+    data_user = cursor.fetchall()
+    return render_template('home.html', user = data_user)
     # ==============================
     # Rutas administrador y modales
     # ==============================
@@ -170,9 +178,12 @@ def admin_add():
         return redirect(url_for('login-admin'))
     
     # Eliminar usuario - Ruta del botón --------->
-@learntoApp.route('/delete/<int:id>')
+@learntoApp.route('/delete-user/<int:id>')
 def admin_delete(id):
         cursor = db.connection.cursor()
+        cursor.execute("SELECT imgprofile FROM user WHERE id=%s", id)
+        col.updateUser.fetchall()
+        os.remove(os.path.join(learntoApp.config['folder'], col[0][0]))
         cursor.execute("DELETE FROM user WHERE id = {0}".format(id))
         db.connection.commit()
         flash('Usuario eliminado exitosamente')
@@ -184,25 +195,34 @@ def admin_edit(id):
     cursor = db.connection.cursor()
     cursor.execute("SELECT * FROM user WHERE id = {0}".format(id))
     data = cursor.fetchall()
-    
+    return render_template('edit-admin.html', user = data)
+
     # Editar - Actualización de los datos de usuario --------->
-@learntoApp.route('/edit_update', methods = ['POST'])
+@learntoApp.route('/edit-user', methods = ['POST'])
 def admin_edit_update():
     if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
-        password = request.form['password']
         fullname = request.form['fullname']
         age = request.form['age']
         schoolgrade = request.form['schoolgrade']
         auth = request.form['auth']
-        img = request.form['img']
+        img = request.files['img']        
+        id = request.form['id']
+        now = datetime.now()
+        time = now.strftime("%Y%H%M%S")
+
+        if img.filename !='':
+            newNameFoto=time+img.filename
+            img.save("Proyecto Aprender A/uploads/profile/"+newNameFoto)
+            # updateUser.execute("SELECT imgprofile FROM user WHERE id=%s", id)
+            # col.updateUser.fetchall()
+            # os.remove(os.path.join(learntoApp.config['folder'], col[0][0]))
+            # updateUser.execute("UPDATE user SET imgprofile = %s WHERE id = %s", (newNameFoto, id))
+            # db.connection.commit()
         updateUser = db.connection.cursor()
-        if password:
-            hash= generate_password_hash(password)
-            updateUser.execute("UPDATE user SET username = %s, email = %s, password = %s, fullname = %s, age = %s, schoolgrade = %s, auth = %s,  WHERE id = %s",(username, email, hash, fullname, age, schoolgrade, auth, id))
-        else:
-            updateUser.execute("UPDATE user SET username = %s, email = %s, fullname = %s, age = %s, schoolgrade = %s, auth = %s WHERE id = %s",(username, email, fullname, age, schoolgrade, auth, id))
+        datos = (username, email, fullname, age, schoolgrade, auth, newNameFoto, id)
+        updateUser.execute("UPDATE user SET username = %s, email = %s, fullname = %s, age = %s, schoolgrade = %s, auth = %s, imgprofile = %s WHERE id = %s", datos)
         db.connection.commit()
     flash("Actualización de datos completada")
     return redirect(url_for('admin_operations'))
@@ -289,4 +309,5 @@ def perfilUser():
 if __name__=='__main__':
     learntoApp.config.update(DEBUG=True, SECRET_KEY="secret_sauce")
     learntoApp.config['ALLOWED_IMAGE_EXTENSIONS'] = ['txt', 'pdf', 'JPEG','JPG','PNG','WEBP', 'GIF']
+    learntoApp.config['folder'] = folder
     learntoApp.run(debug=True, port=3300)
