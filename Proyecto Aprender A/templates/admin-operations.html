@@ -16,6 +16,19 @@
 {% block contenido %}
 
 <div class="container p-3 table100 ver2 m-b-110">
+  {% with messages = get_flashed_messages() %}
+
+  {% if messages %}
+  <br/>
+  {% for message in messages %}
+  <div class="alert alert-primary alert-dismissible" role="alert">
+      <strong>{{ message }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  {% endwith %}   
   <div class="container my-2">
       <div class="row">
           <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -39,7 +52,7 @@
                   <tfoot class="row100">
                     <tr>
                       <td class="centered" colspan="9">
-                        <a href="{{ '/login-admin' }}"><button class="btn btn-sm btn-success m-1 rowAdd" role="button"><i class="fa-solid fa-user-plus"></i></button></a>
+                        <a href="{{ '/add-admin' }}"><button class="btn btn-sm btn-success m-1 rowAdd" role="button"><i class="fa-solid fa-user-plus"></i></button></a>
                       </td>
                     </tr>
                   </tfoot>
@@ -54,8 +67,7 @@
                             <td class="column100 column6 centered" data-column="column6">{{ row.6 }}</td>
                             <td class="column100 column7 centered" data-column="column7">{{ row.7 }}</td>
                             <td class="column100 column8 centered" data-column="column8">
-                              {{ row.8 }}
-                              <img class="img-thumbnail" width="100" src="Proyecto Aprender A/uploads/profile/{{ row[8] }}" alt="">
+                              <img class="img-thumbnail" width="100" src="/Proyecto Aprender A/uploads/profile/{{ row[8] }}" alt="">
                             </td>
                             <td class="column100 column9 centered" data-column="column9">
                                 <a href="/edit/{{row.0}}"><button class="btn btn-sm btn-primary m-1"><i class="fa-solid fa-pencil"></i></button></a>

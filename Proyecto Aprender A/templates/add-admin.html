@@ -15,6 +15,19 @@
       <div class="signin-signup">
         <div class="mt-5 py-5">
         <form action="/add" class="sign-up-form" method="post" enctype="multipart/form-data">
+          {% with messages = get_flashed_messages() %}
+
+          {% if messages %}
+          <br/>
+          {% for message in messages %}
+          <div class="alert alert-primary alert-dismissible" role="alert">
+              <strong>{{ message }}</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endfor %}
+          {% endif %}
+        
+          {% endwith %} 
           <h2 class="title">Regístrate</h2>
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <div class="input-field">

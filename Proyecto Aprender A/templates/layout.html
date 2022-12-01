@@ -42,7 +42,7 @@
               <li class="nav-item">
                 <a class="nav-link active" href="{{ ('/homeUser') }}">Noticias</a>
               </li>
-              {% if current_user.is_Monchonetreitor %}
+              {% if current_user.username=="Monchonetreitor" %}
               <li class="nav-item">
                 <a class="nav-link active" href="{{ ('/admin') }}">Vista admin</a>
               </li>
