@@ -96,20 +96,114 @@ def articles_operations():
     data = cursor.fetchall()
     return render_template('articles-operations.html', articles = data)
 
-    # Agregar artículo ------->
-
     # Agregar artículo - Ruta del botón --------->
+@learntoApp.route('/admin-add-article', methods = ['GET', 'POST'])
+@login_required
+def admin_add_article():
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        pdate = request.form['pdate']
+        learningchannel = request.form['learningchannel']
 
-    # Eliminar artículo ------->
-
+        addArticle = db.connection.cursor()
+        query = "INSERT INTO articles (title, content, pdate, learningchannel) VALUES (%s, %s, %s, %s)"
+        addArticle.execute(query, (title, content, pdate, learningchannel))
+        db.connection.commit()
+        flash('Artículo agregado exitosamente')
+        return redirect(url_for('admin-articles-operations'))
+    else:
+        flash('¡Algo salió mal!')
+    return render_template('articles-operations.html')
+    
     # Eliminar artículo - Ruta del botón --------->
+@learntoApp.route('/delete-article/<int:ida>')
+def admin_delete_article(id):
+        cursor = db.connection.cursor()
+        cursor.execute("DELETE * FROM article WHERE ida = {0}".format(id))
+        db.connection.commit()
+        flash('Artículo eliminado exitosamente')
+        return redirect(url_for('admin_operations'))
+
 
     # Editar artículo ------->
+@learntoApp.route('/admin-update-article/<int:ida>', methods = ['GET', 'POST'])
+@login_required
+def admin_update_article():
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        pdate = request.form['pdate']
+        learningchannel = request.form['learningchannel']
+        updateArticle = db.connection.cursor()
+        query = "UPDATE articles SET title = %s, content = %s, pdate = %s, learningchannel = %s WHERE id = {0}".format(id);
+        datos = (title, content, pdate, learningchannel, id)
+
+        updateArticle.execute(query, datos)
+        db.connection.commit()
+    flash("Actualización de datos completada")
+    return render_template('articles-operations.html')
 
     # Editar artículo - Ruta del botón --------->
+@learntoApp.route('/admin-article-update/<int:ida>')
+def admin_article_update(id):
+    cursor = db.connection.cursor()
+    cursor.execute("SELECT * FROM articles WHERE id = {0}".format(id))
+    data = cursor.fetchall()
+    return render_template('edit-admin.html', user = data)
 
-    # Agregar usuario ------->
+   # Agregar comentario - Ruta del botón --------->
+@learntoApp.route('/admin-add-comments', methods = ['GET', 'POST'])
+@login_required
+def admin_add_comments():
+    if request.method == 'POST':
+        date = request.form['date']
+        contents = request.form['contents']
 
+        addComments = db.connection.cursor()
+        query = "INSERT INTO comments (date, contents) VALUES (%s, %s)"
+        addComments.execute(query, (date, contents))
+        db.connection.commit()
+        flash("Comentario agregado")
+        return redirect(url_for('admin-comments-operations'))
+    else:
+        flash('¡Algo salió mal!')
+    return render_template('comments-operations.html')
+    
+    # Eliminar comentario - Ruta del botón --------->
+@learntoApp.route('/delete-comments/<int:idc>')
+def admin_delete_comments(id):
+        cursor = db.connection.cursor()
+        cursor.execute("DELETE * FROM comments WHERE idc = {0}".format(id))
+        db.connection.commit()
+        flash('Comentario eliminado exitosamente')
+        return redirect(url_for('admin_operations'))
+
+
+    # Editar comentario ------->
+@learntoApp.route('/admin-update-comments/<int:idc>', methods = ['GET', 'POST'])
+@login_required
+def admin_update_comments():
+    if request.method == 'POST':
+        date = request.form['date']
+        contents = request.form['contents']
+        updateComments = db.connection.cursor()
+        query = "UPDATE comments SET date = %s, contents = %s WHERE idc = {0}".format(id);
+        datos = (date, contents, id)
+
+        updateComments.execute(query, datos)
+        db.connection.commit()
+    flash("Actualización de datos completada")
+    return render_template('articles-operations.html')
+
+    # Editar comentario - Ruta del botón --------->
+@learntoApp.route('/admin-article-update/<int:idc>')
+def admin_comments_update(id):
+    cursor = db.connection.cursor()
+    cursor.execute("SELECT * FROM articles WHERE id = {0}".format(id))
+    data = cursor.fetchall()
+    return render_template('edit-admin.html', user = data)
+    
 @learntoApp.route('/admin-comments-view', methods = ['GET', 'POST'])
 @login_required
 def comments_view():
@@ -125,18 +219,6 @@ def comments_operations():
     cursor.execute("SELECT * FROM comments")
     data = cursor.fetchall()
     return render_template('comments-operations.html', comments = data)
-
-    # Agregar comentario ------->
-
-    # Agregar comentario - Ruta del botón --------->
-
-    # Eliminar comentario ------->
-
-    # Eliminar comentario - Ruta del botón --------->
-
-    # Editar comentario ------->
-
-    # Editar comentario - Ruta del botón --------->
 
 @learntoApp.route('/add-admin', methods = ['GET', 'POST'])
 @login_required
@@ -186,7 +268,7 @@ def admin_delete(id):
         # fila=cursor.fetchall()
         # os.remove(os.path.join(learntoApp.config['folder'],fila[0][0]))
         # cursor.execute("DELETE FROM user WHERE id=%s",(id,))
-        cursor.execute("SELECT * FROM user WHERE id = {0}".format(id))
+        cursor.execute("DELETE * FROM user WHERE id = {0}".format(id))
         db.connection.commit()
         flash('Usuario eliminado exitosamente')
         return redirect(url_for('admin_operations'))
@@ -298,31 +380,89 @@ def loginUser():
     else:
             return render_template('login.html')
 
-
+# ========================
+# Rutas de usuario ------>
+# ========================
 @learntoApp.route('/perfilUser')
 @login_required
 def perfilUser():
     return render_template('perfilUser.html')
 
-@learntoApp.route('/perfil-user-update')
-def perfil_user():
+@learntoApp.route('/edit-user', methods = ['GET', 'POST'])
+@login_required
+def edit_user():
+    return render_template('edit-user.html')
+# ========================
+# Ruta del botón ------>
+# ========================
+@learntoApp.route('/edit-user-update', methods = ['GET', 'POST'])
+def update_user():
     if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
-        password = request.form['password']
         fullname = request.form['fullname']
         age = request.form['age']
         schoolgrade = request.form['schoolgrade']
-        auth = request.form['auth']
-        hash = generate_password_hash(password) 
         updateUser = db.connection.cursor()
-        query = "UPDATE user SET username = %s, email = %s, password = %s, fullname = %s, age = %s, schoolgrade = %s, auth = %s WHERE id = {0}".format(id);
-        datos = (username, email, hash, fullname, age, schoolgrade, auth, id)
+        query = "UPDATE user SET username = %s, email = %s, fullname = %s, age = %s, schoolgrade = %s WHERE id = {0}".format(id);
+        datos = (username, email, fullname, age, schoolgrade, id)
         updateUser.execute(query, datos)
         db.connection.commit()
     flash("Actualización de datos completada")
     return redirect(url_for('perfilUser'))
 
+
+# ========================
+# Rutas de artículo ------>
+# ========================
+@learntoApp.route('/articles', methods = ['GET', 'POST'])
+@login_required
+def articles():
+    return render_template('add-article.html')
+
+# ========================
+# Ruta del botón ------>
+# ========================
+@learntoApp.route('/add-article', methods = ['GET', 'POST'])
+@login_required
+def add_article():
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        pdate = request.form['pdate']
+        learningchannel = request.form['learningchannel']
+
+        addArticle = db.connection.cursor()
+        query = "INSERT INTO articles (title, content, pdate, learningchannel) VALUES (%s, %s, %s, %s)"
+        addArticle.execute(query, (title, content, pdate, learningchannel))
+        db.connection.commit()
+    flash("Artículo publicado con éxito")
+    return redirect(url_for('perfilUser'))
+
+# ========================
+# Rutas de los comentarios ------>
+# ========================
+@learntoApp.route('/comments', methods = ['GET', 'POST'])
+@login_required
+def comments():
+    return render_template('comments.html')
+
+# ========================
+# Ruta del botón ------>
+# ========================
+@learntoApp.route('/add-comments', methods = ['GET', 'POST'])
+@login_required
+def add_comments():
+    if request.method == 'POST':
+        date = request.form['date']
+        contents = request.form['contents']
+
+        addComments = db.connection.cursor()
+        query = "INSERT INTO comments (date, contents) VALUES (%s, %s)"
+        addComments.execute(query, (date, contents))
+        db.connection.commit()
+    flash("Comentario agregado")
+    return redirect(url_for('perfilUser'))
 
 @learntoApp.route('/logout')
 @login_required

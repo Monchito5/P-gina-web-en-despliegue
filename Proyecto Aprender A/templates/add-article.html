@@ -1,5 +1,5 @@
 {% extends "layout-for-user.html" %}
-{% block titulo %} Perfil {{ current_user.username }} {% endblock %}
+{% block titulo %} Artículos {{ current_user.username }} {% endblock %}
 
 {% block css %}
 <link rel="stylesheet" href="{{url_for('static', filename='css/profile-styles.css')}}">
@@ -42,9 +42,9 @@
                 </div>
                 <div class="menu-perfil">
                     <ul>
-                      <li><a href="{{ ('/articles') }}" title="">Artículos</a></li>
-                      <li><a href="{{ ('/datos-profile') }}" title="">Informacion</a></li>
-                      <li><a href="{{ ('/comments') }}" title="">Informacion</a></li>
+                        <li><a href="{{ ('/articles') }}" title="">Artículos</a></li>
+                        <li><a href="{{ ('/datos-profile') }}" title="">Informacion</a></li>
+                        <li><a href="{{ ('/comments') }}" title="">Informacion</a></li>
                     </ul>
                 </div>
         <style>
@@ -58,7 +58,9 @@
             transform: scale(1.4)
         }
         </style>
-        <br>
+        <div class="container-sm rounded-4 form-user shadow-sm">
+
+          </div>
         </div>
       </div>
     </div>
