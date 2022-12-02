@@ -33,7 +33,7 @@
                   <tfoot class="row100">
                     <tr>
                       <td class="centered" colspan="6">
-                        <a href="#"><button class="btn btn-sm btn-success m-1 rowAdd" role="button"><i class="fa-solid fa-user-plus"></i></button></a>
+                        <a href="/comments"><button class="btn btn-sm btn-success m-1 rowAdd" role="button"><i class="fa-solid fa-user-plus"></i></button></a>
                       </td>
                     </tr>
                   </tfoot>
@@ -44,8 +44,8 @@
                             <td class="column100 column2 centered" data-column="column2">{{ row.1 }}</td>
                             <td class="column100 column3 centered" data-column="column3">{{ row.2 }}</td>
                             <td class="column100 column9 centered" data-column="column9">
-                              <a href="#"><button class="btn btn-sm btn-primary m-1"><i class="fa-solid fa-pencil"></i></button></a>
-                              <a href="#"><button class="btn btn-sm btn-danger m-1" data-bs-toggle="modal" data-bs-target="#delete"><i class="fa-solid fa-trash-can"></i></button></a>
+                              <a href="/admin-comments-update/{{row.0}}"><button class="btn btn-sm btn-primary m-1"><i class="fa-solid fa-pencil"></i></button></a>
+                              <a href="/delete-comments/{{row.0}}"><button class="btn btn-sm btn-danger m-1" data-bs-toggle="modal" data-bs-target="#delete"><i class="fa-solid fa-trash-can"></i></button></a>
                           </td>
                         </tr>
                     {% endfor%}

@@ -13,11 +13,7 @@
         <div class="container text-center">
           <div class="portada-perfil bg-colorgradient">
             <div class="avatar-perfil">
-              <img src="http://localhost/multimedia/relleno/img-c9.png" alt="img">
-                <a href="#" class="cambiar-foto">
-                    <i class="fas fa-camera"></i> 
-                    <span>Cambiar foto</span>
-                </a>
+              <img class="img-thumbnail" src="/uploads/profile/{{ current_user.imgprofile }}" alt="">
                   </div>
                   <div class="datos-perfil">
                     <h4 class="titulo-usuario">{{ current_user.fullname }}</h4>
@@ -43,8 +39,7 @@
                 <div class="menu-perfil">
                     <ul>
                         <li><a href="{{ ('/articles') }}" title="">Artículos</a></li>
-                        <li><a href="{{ ('/datos-profile') }}" title="">Informacion</a></li>
-                        <li><a href="{{ ('/comments') }}" title="">Informacion</a></li>
+                        <li><a href="{{ ('/comments') }}" title="">Comentarios</a></li>
                     </ul>
                 </div>
         <style>
@@ -59,10 +54,22 @@
         }
         </style>
         <div class="container-sm rounded-4 form-user shadow-sm ">
+          <form action="/add-comments" class="row g-3" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <h2>Agrega un comentario</h2>
+            <div class="col-12 mb-4">
+              <label class="form-label">Fecha</label>
+              <input name="date" type="date" class="form-control"  pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" required>
+            </div>
             <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                <textarea name="contents" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
                 <label for="floatingTextarea2">Comments</label>
-              </div>
+            </div>
+            <br><br>
+            <div class="col-12 mb-4">
+              <button type="submit" class="btn btn-primary">Agregar comentario</button>
+            </div>
+          </form>
           </div>
         </div>
       </div>

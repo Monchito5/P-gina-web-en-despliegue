@@ -13,11 +13,7 @@
         <div class="container text-center">
           <div class="portada-perfil bg-colorgradient">
             <div class="avatar-perfil">
-              <img src="http://localhost/multimedia/relleno/img-c9.png" alt="img">
-                <a href="#" class="cambiar-foto">
-                    <i class="fas fa-camera"></i> 
-                    <span>Cambiar foto</span>
-                </a>
+              <img class="img-thumbnail" src="/uploads/profile/{{ current_user.imgprofile }}" alt="">
                   </div>
                   <div class="datos-perfil">
                     <h4 class="titulo-usuario">{{ current_user.fullname }}</h4>
@@ -43,8 +39,7 @@
                 <div class="menu-perfil">
                     <ul>
                       <li><a href="{{ ('/articles') }}" title="">Artículos</a></li>
-                      <li><a href="{{ ('/datos-profile') }}" title="">Informacion</a></li>
-                      <li><a href="{{ ('/comments') }}" title="">Informacion</a></li>
+                      <li><a href="{{ ('/comments') }}" title="">Comentarios</a></li>
                     </ul>
                 </div>
         <style>

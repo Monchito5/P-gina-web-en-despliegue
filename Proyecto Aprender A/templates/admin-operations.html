@@ -67,11 +67,11 @@
                             <td class="column100 column6 centered" data-column="column6">{{ row.6 }}</td>
                             <td class="column100 column7 centered" data-column="column7">{{ row.7 }}</td>
                             <td class="column100 column8 centered" data-column="column8">
-                              <img class="img-thumbnail" width="100" src="/Proyecto Aprender A/uploads/profile/{{ row[8] }}" alt="">
+                              <img class="img-thumbnail" width="100" src="/uploads/profile/{{ row[8] }}" alt="">
                             </td>
-                            <td class="column100 column9 centered" data-column="column9">
+                            <td class="column100 column9" width="50" data-column="column9">
                                 <a href="/edit/{{row.0}}"><button class="btn btn-sm btn-primary m-1"><i class="fa-solid fa-pencil"></i></button></a>
-                                <a href="/delete-user/{{row.0}}"><button class="btn btn-sm btn-danger m-1" data-bs-toggle="modal" data-bs-target="#delete"><i class="fa-solid fa-trash-can"></i></button></a>
+                                <a href="/delete-user/{{row.0}}"><button class="btn btn-sm btn-danger m-1"><i class="fa-solid fa-trash-can"></i></button></a>
                             </td>
                         </tr>
                     {% endfor%}
@@ -80,50 +80,6 @@
           </div>
       </div>
   </div>
-<!-- ============================= -->
-<!-- Ventanas modales  -->
-<!-- ============================= -->
-
- <!-- Ventana eliminar -->
- <!-- Button trigger modal -->
- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#delete">
-   Open Delete
- </button>
- 
- 
- <div class="modal fade" id="delete" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Eliminar</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            ¿Está seguro de realizar esta operación?
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Continuar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Confirmación</h1>
-        </div>
-        <div class="modal-body">
-          Esta operación eliminará al usuario previamente seleccionado.
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Aceptar</button>
-        </div>
-      </div>
-    </div>
-  </div>  
-</div>
 
 {% endblock %}
 

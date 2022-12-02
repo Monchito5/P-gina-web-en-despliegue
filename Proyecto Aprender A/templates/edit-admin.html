@@ -15,9 +15,10 @@
       <div class="signin-signup">
         <div class="mt-5 py-5">
         {% for row in user %}
-        <form action="/edit-user{0}" class="sign-up-form" method="post" enctype="multipart/form-data">
+        <form action="/edit-user/{{row.0}}" class="sign-up-form" method="post" enctype="multipart/form-data">
           <h2 class="title">Edición de usuario</h2>
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <input type="hidden" name="olderNameFoto" value="{{ row[8] }}">
           <div class="input-field">
             <i class="fas fa-key"></i>
             <h3>{{ row[0] }}</h3>

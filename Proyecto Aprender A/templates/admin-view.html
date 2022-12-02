@@ -6,8 +6,7 @@
 <link rel="stylesheet" href="{{url_for('static', filename='css/admin-anim_styles.css')}}">
 <link rel="stylesheet" href="{{url_for('static', filename='css/admin_styles.css')}}"/>
 <link rel="stylesheet" href="{{url_for('static', filename='css/animate-admin_copy.css')}}"/>
-<link rel="stylesheet" href="{{url_for('static', filename='css/login_styles.css')}}">
-<link rel="stylesheet" href="{{url_for('static', filename='css/shakeanim.css')}}">
+
 <!-- DataTable -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
 <!-- Font Awesome -->
@@ -17,6 +16,19 @@
 {% block contenido %}
 
 <div class="container p-3 table100 ver2 m-b-110">
+  {% with messages = get_flashed_messages() %}
+
+  {% if messages %}
+  <br/>
+  {% for message in messages %}
+  <div class="alert alert-primary alert-dismissible" role="alert">
+      <strong>{{ message }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  {% endwith %}   
   <div class="container my-2">
       <div class="row">
           <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -46,7 +58,9 @@
                             <td class="column100 column5 centered" data-column="column5">{{ row.5 }}</td>
                             <td class="column100 column6 centered" data-column="column6">{{ row.6 }}</td>
                             <td class="column100 column7 centered" data-column="column7">{{ row.7 }}</td>
-                            <td class="column100 column8 centered" data-column="column8">{{ row.8 }}</td>
+                            <td class="column100 column8 centered" data-column="column8">
+                              <img class="img-thumbnail" width="100" src="/uploads/profile/{{ row[8] }}" alt="">
+                            </td>
                         </tr>
                     {% endfor%}
                   </tbody>
@@ -54,7 +68,6 @@
           </div>
       </div>
   </div>
-</div>
 
 {% endblock %}
 

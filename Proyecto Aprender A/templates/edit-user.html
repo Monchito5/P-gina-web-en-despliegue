@@ -14,11 +14,7 @@
         <div class="container text-center">
           <div class="portada-perfil bg-colorgradient">
             <div class="avatar-perfil">
-              <img src="http://localhost/multimedia/relleno/img-c9.png" alt="img">
-                <a href="#" class="cambiar-foto">
-                    <i class="fas fa-camera"></i> 
-                    <span>Cambiar foto</span>
-                </a>
+              <img class="img-thumbnail" src="/uploads/profile/{{ current_user.imgprofile }}" alt="">
                   </div>
                   <div class="datos-perfil">
                     <h4 class="titulo-usuario">{{ current_user.fullname }}</h4>
@@ -33,8 +29,7 @@
                 <div class="menu-perfil">
                     <ul>
                       <li><a href="{{ ('/articles') }}" title="">Artículos</a></li>
-                      <li><a href="{{ ('/datos-profile') }}" title="">Informacion</a></li>
-                      <li><a href="{{ ('/comments') }}" title="">Informacion</a></li>
+                      <li><a href="{{ ('/comments') }}" title="">Comentarios</a></li>
                     </ul>
                 </div>
         <style>
@@ -80,6 +75,13 @@
               <div class="col-md-2">
                 <label for="inputZip" class="form-label">Edad</label>
                 <input name="age" type="text" value="{{ current_user.age }}" class="form-control" id="tentacles" min="0" max="100" required>
+              </div>
+              <div class="g-col-6">
+                <div class="p-2">
+                  <img src="{{url_for('static', filename='assets/photo-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-initial m-1" style="opacity: 0.3;">
+                  <label for="formFile" class="form-label"></label>
+                  <input name="img" class="form-control" type="file" id="formFile">
+                </div>
               </div>
               <br><br>
               <div class="col-12 mb-4">

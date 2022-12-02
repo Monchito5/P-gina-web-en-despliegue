@@ -27,7 +27,7 @@ class ModelUser():
             cursor.execute(sql)
             row = cursor.fetchone()
             if row != None:
-                return User(id, row[0], row[1], username=row[2], fullname=row[3], age=row[4], schoolgrade=row[5], auth=[6], imgprofile=[7])
+                return User(id, row[0], row[1], username=row[2], fullname=row[3], age=row[4], schoolgrade=row[5], auth=row[6], imgprofile=row[7])
             else:
                 return None
         except Exception as ex:

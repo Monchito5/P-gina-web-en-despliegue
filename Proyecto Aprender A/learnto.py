@@ -96,6 +96,7 @@ def articles_operations():
     data = cursor.fetchall()
     return render_template('articles-operations.html', articles = data)
 
+
     # Agregar artículo - Ruta del botón --------->
 @learntoApp.route('/admin-add-article', methods = ['GET', 'POST'])
 @login_required
