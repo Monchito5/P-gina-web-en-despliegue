@@ -295,42 +295,21 @@ def admin_edit_update():
         auth = request.form['auth']
         hash = generate_password_hash(password) 
         updateUser = db.connection.cursor()
-        query = "UPDATE user SET username = %s, email = %s, password = %s, fullname = %s, age = %s, schoolgrade = %s, auth = %s WHERE id = {0}".format(id);
-        datos = (username, email, hash, fullname, age, schoolgrade, auth, id)
+        query = "UPDATE user SET username = %s, email = %s, password = %s, fullname = %s, age = %s, schoolgrade = %s, auth = %s, imgprofile =%s WHERE id = {0}".format(id);
+        img = request.files['img']
+        # Darle nombre
+        now = datetime.now()
+        time = now.strftime("%Y%H%M%S")
 
-        # if request.files.get('img'):
-        #     folder = '/Proyecto Aprender A/uploads/profile{}'.format(img)
-        #     if os.path.exists(folder):
-        #         os.remove(folder)
-        #     img = request.files['img']
-        #     filename = secure_filename(img.filename)
-        #     img.save(os.path.join(learntoApp.config['folder'], filename))
-        #     updateUser.execute("UPDATE user SET imgprofile = %s WHERE id = %s", (filename, id))
-
-        # if password:
-        #     hash = generate_password_hash(password) 
-        #     updateUser.execute("UPDATE user SET username = %s, email = %s, password = %s, fullname = %s, age = %s, schoolgrade = %s, auth = %s, imgprofile = %s WHERE id = %s", (username, email, hash, fullname, age, schoolgrade, auth, id))
-        # else:
-        #     updateUser.excecute("UPDATE user SET username = %s, email = %s, fullname = %s, age = %s, schoolgrade = %s, auth = %s, imgprofile = %s WHERE id = %s", (username, email, hash, fullname, age, schoolgrade, auth, id))
-        # img = request.files['img']        
-        # now = datetime.now()
-        # time = now.strftime("%Y%H%M%S")
-        # query = "UPDATE user SET username = %s, email = %s, password = %s, fullname = %s, age = %s, schoolgrade = %s, auth = %s, imgprofile = %s WHERE id = %s";
-        # datos = (username, email, hash, fullname, age, schoolgrade, auth, newNameFoto, id)
-        
-        # if img.filename !='':
-        #     newNameFoto=time+img.filename
-        #     img.save("Proyecto Aprender A/uploads/profile/"+newNameFoto)
-            # updateUser.execute("SELECT imgprofile FROM user WHERE id=%s", id)
-            # fila=updateUser.fetchall()
-
-            # os.remove(os.path.join(learntoApp.config['folder'],fila[0][0]))
-            # updateUser.execute("UPDATE user SET imgprofile=%s WHERE id=%s",(newNameFoto,id))
-            # db.connection.commit()
+        if img.filename !='':
+            newNameFoto=time+img.filename
+            img.save("Proyecto Aprender A/uploads/profile/"+newNameFoto)
+        datos = (username, email, hash, fullname, age, schoolgrade, auth, newNameFoto, id)
+        updateUser = db.connection.cursor()
         updateUser.execute(query, datos)
         db.connection.commit()
-    flash("Actualización de datos completada")
-    return redirect(url_for('admin_operations'))
+    flash("Datos actualizados")
+    return redirect(url_for('Perfil'))
 
     # ==============================
     # Registro
@@ -404,9 +383,17 @@ def update_user():
         fullname = request.form['fullname']
         age = request.form['age']
         schoolgrade = request.form['schoolgrade']
+        img = request.files['img']
+        # Darle nombre
+        now = datetime.now()
+        time = now.strftime("%Y%H%M%S")
+
+        if img.filename !='':
+            newNameFoto=time+img.filename
+            img.save("Proyecto Aprender A/uploads/profile/"+newNameFoto)
         updateUser = db.connection.cursor()
-        query = "UPDATE user SET username = %s, email = %s, fullname = %s, age = %s, schoolgrade = %s WHERE id = {0}".format(id);
-        datos = (username, email, fullname, age, schoolgrade, id)
+        query = "UPDATE user SET username = %s, email = %s, fullname = %s, age = %s, schoolgrade = %s, imgprofile = %s WHERE id = {0}".format(id);
+        datos = (username, email, fullname, age, schoolgrade, newNameFoto, id)
         updateUser.execute(query, datos)
         db.connection.commit()
     flash("Actualización de datos completada")
