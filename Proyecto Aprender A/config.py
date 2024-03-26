@@ -12,7 +12,7 @@ class DevelompentConfig(config):
     MAIL_PORT = 465
     MAIL_USERNAME = "learntoapplication@gmail.com"
     MAIL_DEFAULT_SENDER = MAIL_USERNAME
-    MAIL_PASSWORD = "fgdkyxtwwnjhuzvl"
+    MAIL_PASSWORD = "zpjpadmxcccqlztq"
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
 
