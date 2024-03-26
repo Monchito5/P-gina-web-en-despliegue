@@ -380,7 +380,7 @@ def update_user(id,):
         img = request.files['img']    
         updateUser = db.connection.cursor()
         query = "UPDATE user SET username = %s, email = %s, fullname = %s, age = %s, schoolgrade = %s, imgprofile = %s WHERE id = {0}".format(id);
-        datos = (username, email, fullname, age, schoolgrade, newNameFoto, id)
+        datos = (username, email, fullname, age, schoolgrade, id)
         updateUser.execute(query, datos)
         db.connection.commit()
 
