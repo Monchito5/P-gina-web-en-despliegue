@@ -28,7 +28,7 @@ mail = Mail(learntoApp)
 csrf = CSRFProtect(learntoApp)
 db = MySQL(learntoApp)
 login_manager_app = LoginManager(learntoApp)
-folder = os.path.join('/Proyecto Aprender A/uploads/profile')
+folder = os.path.join(os.path.dirname(__file__), 'uploads/profile')
 learntoApp.config['folder'] = folder
 
 @login_manager_app.user_loader
@@ -46,7 +46,7 @@ def after_request(response):
     print("Después de la petición")
     return response
 
-@learntoApp.route('/Proyecto Aprender A/uploads/profile/<imgprofile>')
+@learntoApp.route('/uploads/profile/<imgprofile>')
 def uploads(imgprofile):
     return send_from_directory(learntoApp.config['folder'], imgprofile)
 
@@ -96,7 +96,6 @@ def articles_operations():
     data = cursor.fetchall()
     return render_template('articles-operations.html', articles = data)
 
-
     # Agregar artículo - Ruta del botón --------->
 @learntoApp.route('/admin-add-article', methods = ['GET', 'POST'])
 @login_required
@@ -119,9 +118,9 @@ def admin_add_article():
     
     # Eliminar artículo - Ruta del botón --------->
 @learntoApp.route('/delete-article/<int:ida>')
-def admin_delete_article(id):
+def admin_delete_article(ida):
         cursor = db.connection.cursor()
-        cursor.execute("DELETE * FROM article WHERE ida = {0}".format(id))
+        cursor.execute("DELETE FROM articles WHERE ida = {0}".format(ida))
         db.connection.commit()
         flash('Artículo eliminado exitosamente')
         return redirect(url_for('admin_operations'))
@@ -151,7 +150,7 @@ def admin_article_update(id):
     cursor = db.connection.cursor()
     cursor.execute("SELECT * FROM articles WHERE id = {0}".format(id))
     data = cursor.fetchall()
-    return render_template('edit-admin.html', user = data)
+    return render_template('admin-edit-article.html', articles = data)
 
    # Agregar comentario - Ruta del botón --------->
 @learntoApp.route('/admin-add-comments', methods = ['GET', 'POST'])
@@ -173,9 +172,9 @@ def admin_add_comments():
     
     # Eliminar comentario - Ruta del botón --------->
 @learntoApp.route('/delete-comments/<int:idc>')
-def admin_delete_comments(id):
+def admin_delete_comments(idc):
         cursor = db.connection.cursor()
-        cursor.execute("DELETE * FROM comments WHERE idc = {0}".format(id))
+        cursor.execute("DELETE FROM comments WHERE idc = {0}".format(idc))
         db.connection.commit()
         flash('Comentario eliminado exitosamente')
         return redirect(url_for('admin_operations'))
@@ -183,27 +182,24 @@ def admin_delete_comments(id):
 
     # Editar comentario ------->
 @learntoApp.route('/admin-update-comments/<int:idc>', methods = ['GET', 'POST'])
-@login_required
-def admin_update_comments():
+def admin_update_comments(idc,):
+    data_comments = addComments.fetchall()
     if request.method == 'POST':
         date = request.form['date']
         contents = request.form['contents']
-        updateComments = db.connection.cursor()
-        query = "UPDATE comments SET date = %s, contents = %s WHERE idc = {0}".format(id);
-        datos = (date, contents, id)
-
-        updateComments.execute(query, datos)
+        addComments = db.connection.cursor()
+        addComments.execute("UPDATE comments SET date = %s, contents = %s WHERE idc=%s", (date, contents, idc,))
         db.connection.commit()
     flash("Actualización de datos completada")
-    return render_template('articles-operations.html')
+    return render_template('articles-operations.html', comments = data_comments)
 
     # Editar comentario - Ruta del botón --------->
-@learntoApp.route('/admin-article-update/<int:idc>')
-def admin_comments_update(id):
+@learntoApp.route('/admin-comments-update/<int:idc>')
+def admin_comments_update(idc):
     cursor = db.connection.cursor()
-    cursor.execute("SELECT * FROM articles WHERE id = {0}".format(id))
+    cursor.execute("SELECT * FROM comments WHERE idc = {0}".format(idc))
     data = cursor.fetchall()
-    return render_template('edit-admin.html', user = data)
+    return render_template('admin-edit-comments.html', comments = data)
     
 @learntoApp.route('/admin-comments-view', methods = ['GET', 'POST'])
 @login_required
@@ -265,26 +261,25 @@ def admin_add():
 @learntoApp.route('/delete-user/<int:id>')
 def admin_delete(id):
         cursor = db.connection.cursor()
-        # cursor.execute("SELECT imgprofile FROM user WHERE id=%s", id)
-        # fila=cursor.fetchall()
-        # os.remove(os.path.join(learntoApp.config['folder'],fila[0][0]))
-        # cursor.execute("DELETE FROM user WHERE id=%s",(id,))
-        cursor.execute("DELETE * FROM user WHERE id = {0}".format(id))
+        cursor.execute("SELECT imgprofile FROM user WHERE id=%s", (id,))
+        fila=cursor.fetchall()
+        os.remove(os.path.join(learntoApp.config['folder'],fila[0][0]))
+        cursor.execute("DELETE FROM user WHERE id=%s",(id,))
         db.connection.commit()
         flash('Usuario eliminado exitosamente')
         return redirect(url_for('admin_operations'))
     
     # Editar usuario - Ruta del botón --------->
 @learntoApp.route('/edit/<int:id>')
-def admin_edit(id):
+def admin_edit(id,):
     cursor = db.connection.cursor()
-    cursor.execute("SELECT * FROM user WHERE id = {0}".format(id))
+    cursor.execute("SELECT * FROM user WHERE id=%s", (id,))
     data = cursor.fetchall()
     return render_template('edit-admin.html', user = data)
 
     # Editar - Actualización de los datos de usuario --------->
-@learntoApp.route('/edit-user', methods = ['POST'])
-def admin_edit_update():
+@learntoApp.route('/edit-user/<int:id>', methods = ['POST'])
+def admin_edit_update(id,):
     if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
@@ -293,42 +288,20 @@ def admin_edit_update():
         age = request.form['age']
         schoolgrade = request.form['schoolgrade']
         auth = request.form['auth']
-        hash = generate_password_hash(password) 
+        hash = generate_password_hash(password)
+        img = request.files['img']    
         updateUser = db.connection.cursor()
-        query = "UPDATE user SET username = %s, email = %s, password = %s, fullname = %s, age = %s, schoolgrade = %s, auth = %s WHERE id = {0}".format(id);
-        datos = (username, email, hash, fullname, age, schoolgrade, auth, id)
 
-        # if request.files.get('img'):
-        #     folder = '/Proyecto Aprender A/uploads/profile{}'.format(img)
-        #     if os.path.exists(folder):
-        #         os.remove(folder)
-        #     img = request.files['img']
-        #     filename = secure_filename(img.filename)
-        #     img.save(os.path.join(learntoApp.config['folder'], filename))
-        #     updateUser.execute("UPDATE user SET imgprofile = %s WHERE id = %s", (filename, id))
 
-        # if password:
-        #     hash = generate_password_hash(password) 
-        #     updateUser.execute("UPDATE user SET username = %s, email = %s, password = %s, fullname = %s, age = %s, schoolgrade = %s, auth = %s, imgprofile = %s WHERE id = %s", (username, email, hash, fullname, age, schoolgrade, auth, id))
-        # else:
-        #     updateUser.excecute("UPDATE user SET username = %s, email = %s, fullname = %s, age = %s, schoolgrade = %s, auth = %s, imgprofile = %s WHERE id = %s", (username, email, hash, fullname, age, schoolgrade, auth, id))
-        # img = request.files['img']        
-        # now = datetime.now()
-        # time = now.strftime("%Y%H%M%S")
-        # query = "UPDATE user SET username = %s, email = %s, password = %s, fullname = %s, age = %s, schoolgrade = %s, auth = %s, imgprofile = %s WHERE id = %s";
-        # datos = (username, email, hash, fullname, age, schoolgrade, auth, newNameFoto, id)
-        
-        # if img.filename !='':
-        #     newNameFoto=time+img.filename
-        #     img.save("Proyecto Aprender A/uploads/profile/"+newNameFoto)
-            # updateUser.execute("SELECT imgprofile FROM user WHERE id=%s", id)
-            # fila=updateUser.fetchall()
-
-            # os.remove(os.path.join(learntoApp.config['folder'],fila[0][0]))
-            # updateUser.execute("UPDATE user SET imgprofile=%s WHERE id=%s",(newNameFoto,id))
-            # db.connection.commit()
-        updateUser.execute(query, datos)
-        db.connection.commit()
+        if request.files.get('img'):
+            folder = '/Proyecto Aprender A/uploads/profile{}'.format(img)
+            if os.path.exists(folder):
+                os.remove(folder)
+            img = request.files['img']
+            filename = secure_filename(img.filename)
+            img.save(os.path.join(learntoApp.config['folder'], filename))
+            updateUser.execute("UPDATE user SET username = %s, email = %s, password = %s, fullname = %s, age = %s, schoolgrade = %s, auth = %s, imgprofile = %s WHERE id=%s", (username, email, hash, fullname, age, schoolgrade, auth, filename, id,))
+            db.connection.commit()
     flash("Actualización de datos completada")
     return redirect(url_for('admin_operations'))
 
@@ -396,19 +369,26 @@ def edit_user():
 # ========================
 # Ruta del botón ------>
 # ========================
-@learntoApp.route('/edit-user-update', methods = ['GET', 'POST'])
-def update_user():
+@learntoApp.route('/edit-user-update/<int:id>', methods = ['GET', 'POST'])
+def update_user(id,):
     if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
         fullname = request.form['fullname']
         age = request.form['age']
         schoolgrade = request.form['schoolgrade']
+        img = request.files['img']    
         updateUser = db.connection.cursor()
-        query = "UPDATE user SET username = %s, email = %s, fullname = %s, age = %s, schoolgrade = %s WHERE id = {0}".format(id);
-        datos = (username, email, fullname, age, schoolgrade, id)
-        updateUser.execute(query, datos)
-        db.connection.commit()
+
+        if request.files.get('img'):
+            folder = '/Proyecto Aprender A/uploads/profile{}'.format(img)
+            if os.path.exists(folder):
+                os.remove(folder)
+            img = request.files['img']
+            filename = secure_filename(img.filename)
+            img.save(os.path.join(learntoApp.config['folder'], filename))
+            updateUser.execute("UPDATE user SET username = %s, email = %s, password = %s, fullname = %s, age = %s, schoolgrade = %s, imgprofile = %s WHERE id=%s", (username, email, fullname, age, schoolgrade, filename, id,))
+            db.connection.commit()
     flash("Actualización de datos completada")
     return redirect(url_for('perfilUser'))
 
@@ -434,8 +414,7 @@ def add_article():
         learningchannel = request.form['learningchannel']
 
         addArticle = db.connection.cursor()
-        query = "INSERT INTO articles (title, content, pdate, learningchannel) VALUES (%s, %s, %s, %s)"
-        addArticle.execute(query, (title, content, pdate, learningchannel))
+        addArticle.execute("INSERT INTO articles (title, content, pdate, learningchannel) VALUES (%s, %s, %s, %s)", (title, content, pdate, learningchannel))
         db.connection.commit()
     flash("Artículo publicado con éxito")
     return redirect(url_for('perfilUser'))
@@ -471,8 +450,19 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@learntoApp.route('/passwordRecovery')
-def passwordR():
+@learntoApp.route('/passwordRecovery/<int:id>')
+def passwordR(id,):
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        hash = generate_password_hash(password) 
+        passwordchange = db.connection.cursor()
+        passwordchange.execute("UPDATE user SET email = %s, password= %s WHERE id=%s", (email, hash, id,))
+        db.connection.commit()
+        flash('Contraseña actualizada')
+        return redirect(url_for('admin_operations'))
+    else:
+        flash('¡Algo salió mal!')
     return render_template('passwordRecovery.html')
 
 @learntoApp.errorhandler(404)
@@ -483,6 +473,7 @@ def errorhandler401(e):
 @login_required
 def homeUser():
     return render_template('homeUser.html')
+
 
 
 
