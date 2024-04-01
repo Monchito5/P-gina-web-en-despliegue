@@ -3,6 +3,7 @@ import re
 from flask import Flask, render_template, session, url_for, request, redirect, jsonify, flash, send_from_directory
 from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
+from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager, login_user, logout_user, login_required
 from flask_mysqldb import MySQL
@@ -478,10 +479,9 @@ def errorhandler401(e):
 def homeUser():
     return render_template('homeUser.html')
 
-
-
+learntoApp.wsgi_app = ProxyFix(learntoApp.wsgi_app)
 
 if __name__=='__main__':
     learntoApp.config.update(DEBUG=True, SECRET_KEY="secret_sauce")
     learntoApp.config['ALLOWED_IMAGE_EXTENSIONS'] = ['txt', 'pdf', 'JPEG','JPG','PNG','WEBP', 'GIF']
-    learntoApp.run(debug=True, port=3300)
+    learntoApp.run()
