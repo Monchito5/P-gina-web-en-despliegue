@@ -4,11 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="shortcut icon" href="{{url_for('static', filename='assets/book-open.svg')}}" type="image/x-icon">
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vaafb692b2aea4879b33c060e79fe94621666317369993" integrity="sha512-0ahDYl866UMhKuYcW078ScMalXqtFJggm7TmlUtp0UlD4eQk0Ixfnm5ykXKvGJNFjLMoortdseTfsRT8oCfgGA==" data-cf-beacon='{"rayId":"77350eda8b34ea1e","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2022.11.3","si":100}' crossorigin="anonymous"></script>
+    <script nonce="d194aa81-6dff-45b6-a659-c469866121c7">(function(w,d){!function(cM,cN,cO,cP){cM.zarazData=cM.zarazData||{};cM.zarazData.executed=[];cM.zaraz={deferred:[],listeners:[]};cM.zaraz.q=[];cM.zaraz._f=function(cQ){return function(){var cR=Array.prototype.slice.call(arguments);cM.zaraz.q.push({m:cQ,a:cR})}};for(const cS of["track","set","debug"])cM.zaraz[cS]=cM.zaraz._f(cS);cM.zaraz.init=()=>{var cT=cN.getElementsByTagName(cP)[0],cU=cN.createElement(cP),cV=cN.getElementsByTagName("title")[0];cV&&(cM.zarazData.t=cN.getElementsByTagName("title")[0].text);cM.zarazData.x=Math.random();cM.zarazData.w=cM.screen.width;cM.zarazData.h=cM.screen.height;cM.zarazData.j=cM.innerHeight;cM.zarazData.e=cM.innerWidth;cM.zarazData.l=cM.location.href;cM.zarazData.r=cN.referrer;cM.zarazData.k=cM.screen.colorDepth;cM.zarazData.n=cN.characterSet;cM.zarazData.o=(new Date).getTimezoneOffset();if(cM.dataLayer)for(const cZ of Object.entries(Object.entries(dataLayer).reduce(((c_,da)=>({...c_[1],...da[1]})))))zaraz.set(cZ[0],cZ[1],{scope:"page"});cM.zarazData.q=[];for(;cM.zaraz.q.length;){const db=cM.zaraz.q.shift();cM.zarazData.q.push(db)}cU.defer=!0;for(const dc of[localStorage,sessionStorage])Object.keys(dc||{}).filter((de=>de.startsWith("_zaraz_"))).forEach((dd=>{try{cM.zarazData["z_"+dd.slice(7)]=JSON.parse(dc.getItem(dd))}catch{cM.zarazData["z_"+dd.slice(7)]=dc.getItem(dd)}}));cU.referrerPolicy="origin";cU.src="/cdn-cgi/zaraz/s.js?z="+btoa(encodeURIComponent(JSON.stringify(cM.zarazData)));cT.parentNode.insertBefore(cU,cT)};["complete","interactive"].includes(cN.readyState)?zaraz.init():cM.addEventListener("DOMContentLoaded",zaraz.init)}(w,d,0,"script");})(window,document);</script></head>
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/password-eye.js')}}"></script>
+    <script src="{{url_for('static', filename='js/popper.js')}}"></script>
+    <script src="{{url_for('static', filename='js/jquery.js')}}"></script>
     <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}" />
     <title>{% block titulo %} {% endblock %}</title>
     {% block css %} {% endblock %}
-
+  </head>
 <!-- ================================ -->
 <!-- BARRA DE NAVEGACIÓN -->
 <!-- ================================ -->
@@ -53,80 +60,11 @@
       </div>
     </div>
   </nav>
-</head>
 
 {% block msj %}{% endblock %}
 
 
 {% block contenido %} {% endblock %}
 
-<!-- ======================= -->
-<!-- FOOTER -->
-<!-- ======================= -->
-
-<div class="footer-c">
-  <div class="container-sm">
-    <footer class="py-5">
-      <div class="row">
-        <div class="col-6 col-md-2 mb-3">
-          <h5>Secciones</h5>
-          <ul class="nav flex-column">
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Inicio</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Noticias</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Sobre nosotros</a></li>
-          </ul>
-        </div>
-  
-        <div class="col-6 col-md-2 mb-3 invisible">
-          <h5>Section</h5>
-          <ul class="nav flex-column">
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-          </ul>
-        </div>
-  
-        <div class="col-6 col-md-2 mb-3 invisible">
-          <h5>Section</h5>
-          <ul class="nav flex-column">
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Features</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Pricing</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
-          </ul>
-        </div>
-  
-        <div class="col-md-5 offset-md-1 mb-3">
-          {% if current_user.is_anonymous %}
-          <form action="/loginUser" method="post">
-            <h5>Inicia Sesión</h5>
-            <p>Para ver más contenido únete a la comunidad.</p>
-              <a class="btn btn-primary" href="/loginUser">Iniciar Sesion</a>
-          <br><br>
-          {% else %}
-            <p></p>
-          {% endif %}
-              <div class="redes-footer">
-                <h5>Síguenos</h5>
-                  <a target="_blank" href="#"><img src="{{url_for('static', filename='assets/fb-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-top"></a>
-                  <a target="_blank" href="#"><img src="{{url_for('static', filename='assets/ig-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-top"></a>
-                  <a target="_blank" href="#"><img src="{{url_for('static', filename='assets/yt-icon.svg')}}" alt="" width="30" height="30" class="d-inline-block align-text-top"></a>              
-              </div>
-          </form>
-        </div>
-      </div>
-      <div class="container-sm">
-      <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
-        <p>&copy; 2022 Learn To, D-Corp. Todos los derechos reservados.</p>
-      </div>
-    </div>
-    </footer>
-  </div>
-</div>
-
-    {% block js %} {% endblock %}
-  </body>
+{% block js %} {% endblock %}
 </html>
