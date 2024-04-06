@@ -13,9 +13,12 @@
     <link rel="shortcut icon" href="{{url_for('static', filename='assets/book-open.svg')}}" type="image/x-icon">
     <title>{% block titulo %} {% endblock %}</title>
     {% block css %} {% endblock %}
+</head>
 <!-- ================================ -->
 <!-- BARRA DE NAVEGACIÓN -->
 <!-- ================================ -->
+<body>
+<header>
     <nav class="navbar bg-light fixed-top navbar-ly">
       <div class="container-fluid">
         <a href="{{ ('/') }}"><img src="{{url_for('static', filename='assets/book-open.svg')}}" alt="" width="70" height="44" class="d-inline-block align-text-top"></a>
@@ -62,8 +65,7 @@
         </div>
       </div>
     </nav>
-</head>
-
+</header>
 <div class="container mt-5 py-5 mb-5">
   {% block contenido %} {% endblock %}
 </div>
@@ -135,5 +137,7 @@
 </div>
 
 
+
 {% block js %} {% endblock %}
+</body>
 </html>
