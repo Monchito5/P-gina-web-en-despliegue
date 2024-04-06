@@ -2,7 +2,7 @@
 {% block titulo %} Learn To {% endblock %}
 {% block contenido %}
 
-<main class="container py-3 mt-3">
+<div class="container py-3 mt-3">
   <div class="bg-light p-3 rounded mt-5 main-c">
     <h1>Aprender A</h1>
     {% if current_user.is_anonymous %}
@@ -19,7 +19,7 @@
     {% endif %}
     </a>
   </div>
-</main>
+</div>
 
 <!-- ============================== -->
 <!-- Carrusel -->
@@ -27,7 +27,7 @@
 
 <!-- CONTENIDO -->
 
-<main>
+<div>
   <section class="py-5 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
@@ -38,9 +38,6 @@
           Échale un vistazo a los artículos más vistos por la comunidad.</p>
       </div>
     </div>
-
-
-
   <div class="album py-5 bg-light rounded-5 shadow" style="--bs-bg-opacity: .3;">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -89,12 +86,12 @@
           </div>
         </div>
 </section>
-</main>
+</div>
 <!-- ============================== -->
 <!-- Blog -->
 <!-- ============================== -->
 
-<main class="container">
+<div class="container">
 <div class="row g-5">
   <div class="col-md-8">
     <h3 class="pb-4 mb-4 fst-italic border-bottom">
@@ -262,5 +259,5 @@
     </div>
   </div>
 </div>
-</main>
+</div>
 {% endblock %}
