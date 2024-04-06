@@ -16,9 +16,12 @@
     <link rel="shortcut icon" href="{{url_for('static', filename='assets/book-open.svg')}}" type="image/x-icon">
     <title>{% block titulo %} {% endblock %}</title>
     {% block css %} {% endblock %}
+</head>
 <!-- ================================ -->
 <!-- BARRA DE NAVEGACIÓN -->
 <!-- ================================ -->
+<body>
+<header class="sticky-top">
     <nav class="navbar bg-light fixed-top shadow navbar-ly">
       <div class="container-fluid">
         <a href="/"><img src="{{url_for('static', filename='assets/book-open.svg')}}" alt="" width="70" height="44" class="d-inline-block align-text-top"></a>
@@ -37,7 +40,7 @@
                 <a class="nav-link active" aria-current="page" href="{{ ('/') }}">Inicio</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{ ('/perfilUser') }}">Perfil <span class="badge text-bg-primary fs-6">{{ current_user.username }}</span></a>
+                <a class="nav-link active" aria-current="page" href="{{ ('/perfilUser') }}">Perfil<span class="badge text-bg-primary fs-6">{{ current_user.username }}</span></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link active" href="{{ ('/homeUser') }}">Noticias</a>
@@ -65,10 +68,11 @@
       </div>
     </nav>
   </div>
-</head>
+</header>
 
+<main>
   {% block contenido %} {% endblock %}  
-
+</main>
 <!-- ======================= -->
 <!-- FOOTER -->
 <!-- ======================= -->
@@ -137,4 +141,5 @@
 </div>
 
 {% block js %}{% endblock %}
+</body>
 </html>
